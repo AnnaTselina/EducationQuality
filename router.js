@@ -1,17 +1,18 @@
 //Роутер необходим для маршрутизации с помощью "#" - страница не обновляется, только контент на ней
 //Задача роутера - вызывать методы контроллера
-//Роутер, в зависимости от хэша в адресной строке, вызывает соответствующие методы контроллера
+//Роутер, в зависимости от хэша в адресной строке, вызывает соответствующие методы контроллер
 
-/*import Controller from './control.js';
+export default class Router {
+    constructor() {
+        
+    }
 
-function handleHash() {
-
+    handleHash() {
+        console.log(1);
+    }
+    
 }
 
 
-export default {
-    init() {
-        addEventListener("hashchange", handleHash);
-        handleHash();
-    }
-}*/
+
+

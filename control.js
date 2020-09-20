@@ -1,8 +1,8 @@
 export default class Controller {
-    constructor(model, view){
+    constructor(model, view, router){
         this.model = model;
         this.view = view;          
-
+        this.router = router;
     }
 
     init() {
@@ -10,17 +10,20 @@ export default class Controller {
         //console.log(this.model.checkState());
         this.checkUserAndModal(); 
         
-        //инициализируем event listeners
+        //инициализируем event listeners для модального окна аутентификации
         this.view.bindCreateAccount(this.handleCreateAccount.bind(this));
         this.view.bindLoginUser(this.handleLoginUser.bind(this));
         this.view.bindLogoutUser(this.handleLogoutUser.bind(this));
 
+        //Роутер
+        addEventListener("hashchange", this.router.handleHash);
+        //handleHash();
     }
 
     //функция для отображения модального окна для входа в зависимости от того, есть ли пользователь
     checkUserAndModal(){ 
         this.model.checkState().then(user_state => {
-            console.log(user_state);
+           //console.log(user_state); //наш юзер (проверка: есть или нет)
             if (user_state !== null) {
                 this.view.hideModal(); 
             } else {

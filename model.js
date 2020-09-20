@@ -1,16 +1,11 @@
 export default class Model {
-    constructor(){
-        
-        this.user_state = false; //пользователь      
-        
+    constructor(){        
+        this.user_state = false; //пользователь              
     }    
 
     checkState () {
                   return new Promise(resolve => firebase.auth().onAuthStateChanged(user => resolve(user)));       
     }
-
-
-
       
     create_account(userEmail, userPass) { //создание аккаунта   
         return new Promise((resolve, reject) => {
@@ -21,9 +16,7 @@ export default class Model {
                 // ...
                 window.alert("Error: " + errorMessage);
             }));
-        })
-      
-
+        })   
     }
         
     login(userEmail, userPass) { //вход в систему
