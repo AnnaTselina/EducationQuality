@@ -7,9 +7,25 @@ export default class Router {
         this.controller = controller; //теперь мы можем обращаться к методам контроллера
     }
 
+    getRouteInfo() {
+        const hash = location.hash ? location.hash.slice(1) : ''; //узнаем какой хэш и отрезаем решетку
+        
+        const [name, id] = hash.split("/");
+        
+        return {name, params: { id }};
+    }
+    
+    handleHash() { //на основе имени хэша вызываем соответствующий метод контроллера
+        const { name } = this.getRouteInfo();
+        if (name) {
+            const routeName = name + "Route";
+            this.controller[routeName]();
+        }
+    }
+
     init() {
-        console.log(1);
-        this.controller.checkRouter();
+        addEventListener('hashchange', this.handleHash.bind(this));
+        this.handleHash();
     }
     
 }

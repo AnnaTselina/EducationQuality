@@ -43,8 +43,17 @@ export default class Controller {
         this.checkUserAndModal();         
      }
 
-     checkRouter() {
-         console.log(2);
+     //функции для заполнения контента в блоке с id = "root" в зависимости от хэша в адресной строке (вызываются из роутера)
+     async infoRoute() {
+        console.log('This is infoRoute');
+     }
+
+     async showRatingRoute() {
+        console.log('This is showRatingRoute');
+     }
+
+     async rateRoute() {
+        console.log('This is rateRoute');
      }
   
 }
