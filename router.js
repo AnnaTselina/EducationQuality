@@ -3,12 +3,13 @@
 //Роутер, в зависимости от хэша в адресной строке, вызывает соответствующие методы контроллер
 
 export default class Router {
-    constructor() {
-        
+    constructor(controller) {
+        this.controller = controller; //теперь мы можем обращаться к методам контроллера
     }
 
-    handleHash() {
+    init() {
         console.log(1);
+        this.controller.checkRouter();
     }
     
 }

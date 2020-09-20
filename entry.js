@@ -7,11 +7,12 @@ import Router from './router.js'
 
 //создаем нашу приложеньку и увязываем компоненты MVC
 const appController = new Controller(new Model(), new View(), new Router());
+const appRouter = new Router(appController);
 
 
-
-//Инициализирующая функция
+//Инициализируем контроллер и роутер
 appController.init();
+appRouter.init();
 
 
 
