@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+ <html lang="ru"> 
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <title>Project</title>
+      
+      
+    </head>
+    <body>
+
+     <!--Навигационная панель-->
+        <div class = "nav_panel">
+            
+                <div><a href="#info">EdQ</a></div>
+                <div><a href="#show-rating">Просмотреть оценки</a></div>
+                <div><a href="#rate">Выставить оценки</a></div>                
+                <div><button id ="logout_btn">Выйти</button></div>
+          
+        </div>
+
+        <!--Модальное окно для регистрации-->
+         <div id='modal' class='modal'>
+            <div class="modal-content">
+                <h3>Войти / зарегистрироваться</h3>
+                <div class='input_fields'>
+                <input type='email' placeholder='Email...' id= 'email_field'/><br>
+                <input type='password' placeholder = "Пароль..." id = 'password_field'/><br>
+                
+                <button id='log-acc'>Войти в аккаунт</button>
+                <p>Если вы первый раз на сайте, то введите ваш адрес электронной почты, придумайте запоминающийся пароль и нажните кнопку снизу</p>
+                <button id='create-acc'>Создать новый аккаунт</button>
+                </div>
+
+             </div> 
+        </div>
+       
+    <!--Основное содержание-->
+    <div id="root"></div>
+
+
+        <!--Подключаем Firebase-->
+            <!-- The core Firebase JS SDK is always required and must be listed first -->
+            <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script> 
+            <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-auth.js"></script>
+
+            <!-- TODO: Add SDKs for Firebase products that you want to use
+                https://firebase.google.com/docs/web/setup#available-libraries -->
+
+            <script>
+            // Your web app's Firebase configuration
+            var firebaseConfig = {
+                apiKey: "AIzaSyDuXDxF5Lhvj3XirvGX85czcrza241tFcY",
+                authDomain: "edqu-a3b4e.firebaseapp.com",
+                databaseURL: "https://edqu-a3b4e.firebaseio.com",
+                projectId: "edqu-a3b4e",
+                storageBucket: "edqu-a3b4e.appspot.com",
+                messagingSenderId: "877975923767",
+                appId: "1:877975923767:web:2e0de08770e12004f5a3b2"
+            };
+            // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
+            
+            </script>
+
+        <!--используем только один файл entry, который компилирует весь mvc -->
+        <script src="entry.js" type="module"></script>
+    </body>
+</html>
