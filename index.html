@@ -13,12 +13,12 @@
 
      <!--Навигационная панель-->
         <div class = "nav_panel">
-            
+           
                 <div><a href="#info">EdQ</a></div>
                 <div><a href="#showRating">Просмотреть оценки</a></div>
                 <div><a href="#rate">Выставить оценки</a></div>                
                 <div><button id ="logout_btn">Выйти</button></div>
-          
+           
         </div>
 
         <!--Модальное окно для регистрации-->
@@ -38,13 +38,34 @@
         </div>
        
     <!--Основное содержание-->
-    <div id="root"></div>
+    <div id="root">
+
+        <div id="parameters_choice">
+        <form>
+            <h3>Выберите необходимые параметры:</h3>
+            <label>ВУЗ:</label><select id="uni_choice"><option value = "0"> </option></select><br>
+            <label>Дисциплина:</label><select id="subject_choice"><option value = "0"> </option></select><br>
+            <label>Преподаватель:</label><select id="teacher_choice"><option value = "0"> </option></select><br>
+            <label>Тип занятия:</label>
+                <select id="type_of_class">
+                    <option value = "0"> </option>
+                    <option value = "1">Лекции</option>
+                    <option value = "2">Практические занятия</option>
+                    <option value = "3">Лабораторные работы</option>
+                </select><br>
+            <input type="submit" id="evaluate_button" value="Оценить">
+        </form>
+        </div>
+
+        
+    </div>
 
 
         <!--Подключаем Firebase-->
             <!-- The core Firebase JS SDK is always required and must be listed first -->
             <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script> 
             <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-auth.js"></script>
+            <script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-database.js"></script>
 
             <!-- TODO: Add SDKs for Firebase products that you want to use
                 https://firebase.google.com/docs/web/setup#available-libraries -->
@@ -62,6 +83,8 @@
             };
             // Initialize Firebase
             firebase.initializeApp(firebaseConfig);
+            // Get a reference to the database service
+            var database = firebase.database();
             
             </script>
 

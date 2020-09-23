@@ -4,9 +4,22 @@
     font-family: 'Montserrat', sans-serif;
 }
 
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    background-color: rgba(100, 46, 95, 0.116);
+}
+
+#root {
+  margin: 20px 200px;   
+}
+
 /*для навигационной панели*/
 .nav_panel {
-    background-color: rgb(80, 19, 80);
+    background-color:rgb(87, 20, 87);
     padding: 0px 200px;
     display: flex;
     justify-content: space-between;
@@ -138,5 +151,53 @@
     cursor: pointer;
     }
   
+/*Вкладка "Выставить оценки", содержимое*/
+#parameters_choice {
+    background-color: rgb(255, 255, 255);
+    padding: 30px;
+    border: 2px solid rgb(87, 20, 87);
+    border-radius: 10px;
+    box-shadow: 2px 2px 3px 2px darkgrey;
+}
 
+#parameters_choice h3 {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+#parameters_choice form {
+    text-align: center;
+}
+
+#parameters_choice label {
+    display: inline-block;   
+    width: 190px;
+    font-size: 18px;
+    text-align: left;
+}
+
+#parameters_choice select {
+    width: 40%;
+    height: 40px;
+    margin-bottom: 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+}
+
+#parameters_choice option {
+    height: 40px;
+}
+
+#evaluate_button {
+    background: rgba(100, 46, 95, 0.116);
+    font-family: 'Montserrat', sans-serif;
+    color: rgb(87, 20, 87);
+    border-radius: 5px;
+    padding: 15px;
+    display: block;
+    width: 150px;
+    margin: 0 auto;
+    border: 2px solid rgb(87, 20, 87);
+    font-weight: 700;
+}
 
