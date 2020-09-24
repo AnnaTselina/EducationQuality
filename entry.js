@@ -6,7 +6,10 @@ import Controller from './control.js';
 import Router from './router.js'
 
 //создаем нашу приложеньку и увязываем компоненты MVC
-const appController = new Controller(new Model(), new View(), new Router());
+
+const appView = new View();
+const appModel = new Model(appView);
+const appController = new Controller(appModel, appView);
 const appRouter = new Router(appController);
 
 

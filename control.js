@@ -1,8 +1,7 @@
 export default class Controller {
     constructor(model, view){
         this.model = model;
-        this.view = view;         
-       
+        this.view = view;      
     }
 
     init() {
@@ -53,7 +52,8 @@ export default class Controller {
      }
 
      async rateRoute() {
-        console.log('This is rateRoute');
+        //console.log('This is rateRoute');
+        this.model.getParameters();
      }
   
 }

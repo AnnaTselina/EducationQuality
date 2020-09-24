@@ -1,6 +1,6 @@
 export default class Model {
-    constructor(){        
-        this.user_state = false; //пользователь              
+    constructor(view){        
+        this.view = view; //пользователь              
     }    
 
     checkState () {
@@ -33,6 +33,10 @@ export default class Model {
 
     logout() {
         firebase.auth().signOut();
+    }
+
+    getParameters() {
+        this.view.insertHtml(this.view.htmlLayouts.get_parameters);
     }
 
 

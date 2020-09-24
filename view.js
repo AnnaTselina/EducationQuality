@@ -11,6 +11,9 @@ export default class View {
         this.emailField = document.getElementById('email_field');
         this.passwordField = document.getElementById('password_field');
         
+        this.htmlLayouts = {
+            get_parameters:  '<div id="parameters_choice"><form><h3>Выберите необходимые параметры:</h3><label>ВУЗ:</label><select id="uni_choice"><option value = "0"> </option></select><br><label>Дисциплина:</label><select id="subject_choice"><option value = "0"> </option></select><br><label>Преподаватель:</label><select id="teacher_choice"><option value = "0"> </option></select><br><label>Тип занятия:</label><select id="type_of_class"><option value = "0"> </option><option value = "1">Лекции</option><option value = "2">Практические занятия</option><option value = "3">Лабораторные работы</option></select><br><input type="submit" id="evaluate_button" value="Оценить"></form></div>'
+        }
     }
 
     //поиск элемента (пока только по ID)
@@ -60,7 +63,12 @@ export default class View {
              handler();
             }  
         )
-    }
+     }
+
+     //добавить innerHTML 
+     insertHtml(text) {
+         this.app.innerHTML = text;
+     }
 
     }
 
