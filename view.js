@@ -10,6 +10,8 @@ export default class View {
         this.loginUser = document.getElementById('log-acc');
         this.emailField = document.getElementById('email_field');
         this.passwordField = document.getElementById('password_field');
+
+        
         
         this.htmlLayouts = {
             get_parameters:  '<div id="parameters_choice"><form><h3>Выберите необходимые параметры:</h3><label>ВУЗ:</label><select id="uni_choice"><option value = "0"> </option></select><br><label>Дисциплина:</label><select id="subject_choice"><option value = "0"> </option></select><br><label>Преподаватель:</label><select id="teacher_choice"><option value = "0"> </option></select><br><label>Тип занятия:</label><select id="type_of_class"><option value = "0"> </option><option value = "1">Лекции</option><option value = "2">Практические занятия</option><option value = "3">Лабораторные работы</option></select><br><input type="submit" id="evaluate_button" value="Оценить"></form></div>'
@@ -69,6 +71,24 @@ export default class View {
      insertHtml(text) {
          this.app.innerHTML = text;
      }
+
+     parametersInsertion(result) {
+        let uni_choice = document.getElementById('uni_choice');
+         result.forEach(function(doc) {
+            
+             var opt = document.createElement('option');
+                opt.textContent = doc.id;
+                uni_choice.appendChild(opt);
+
+         })   
+         uni_choice.addEventListener('change', function() {
+            let selected_uni = uni_choice.options[uni_choice.selectedIndex].innerHTML;
+            console.log(selected_uni);
+        })    
+     }
+
+     
+
 
     }
 

@@ -9,7 +9,7 @@ export default class Router {
 
     getRouteInfo() {
         const hash = location.hash ? location.hash.slice(1) : ''; //узнаем какой хэш и отрезаем решетку
-        
+      
         const [name, id] = hash.split("/");
         
         return {name, params: { id }};
@@ -24,6 +24,7 @@ export default class Router {
     }
 
     init() {
+        
         addEventListener('hashchange', this.handleHash.bind(this));
         this.handleHash();
     }

@@ -19,7 +19,7 @@ export default class Controller {
     //функция для отображения модального окна для входа в зависимости от того, есть ли пользователь
     checkUserAndModal(){ 
         this.model.checkState().then(user_state => {
-           //console.log(user_state); //наш юзер (проверка: есть или нет)
+         
             if (user_state !== null) {
                 this.view.hideModal(); 
             } else {
@@ -53,7 +53,7 @@ export default class Controller {
 
      async rateRoute() {
         //console.log('This is rateRoute');
-        this.model.getParameters();
+        this.model.handleRateRoute();
      }
   
 }

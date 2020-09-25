@@ -35,8 +35,17 @@ export default class Model {
         firebase.auth().signOut();
     }
 
-    getParameters() {
+    getParameters_Uni() {        
+       return new Promise(resolve => db.collection("Universities").get().then(querySnapshot => resolve(querySnapshot)));             
+    }
+
+    handleRateRoute(){
         this.view.insertHtml(this.view.htmlLayouts.get_parameters);
+        this.getParameters_Uni().then(result => {
+            this.view.parametersInsertion(result);
+        })
+     
+               
     }
 
 
