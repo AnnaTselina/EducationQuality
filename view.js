@@ -1,5 +1,11 @@
 export default class View {
     constructor(){
+        this.model = null;
+        this.setModel = function(myModel) {
+            this.model = myModel;
+        }
+
+
         //Корневой элемент, куда помещаем все содержимое
         this.app = document.getElementById('root');
         this.modal = document.getElementById('modal');
@@ -14,7 +20,7 @@ export default class View {
         
         
         this.htmlLayouts = {
-            get_parameters:  '<div id="parameters_choice"><form><h3>Выберите необходимые параметры:</h3><label>ВУЗ:</label><select id="uni_choice"><option value = "0"> </option></select><br><label>Дисциплина:</label><select id="subject_choice"><option value = "0"> </option></select><br><label>Преподаватель:</label><select id="teacher_choice"><option value = "0"> </option></select><br><label>Тип занятия:</label><select id="type_of_class"><option value = "0"> </option><option value = "1">Лекции</option><option value = "2">Практические занятия</option><option value = "3">Лабораторные работы</option></select><br><input type="submit" id="evaluate_button" value="Оценить"></form></div>'
+            get_parameters:  '<div id="parameters_choice"><form><h3>Выберите необходимые параметры:</h3><label>ВУЗ:</label><select id="uni_choice"><option value = "0"> </option></select><br><label>Дисциплина:</label><select id="subject_choice"><option value = "0"> </option></select><br><label>Преподаватель:</label><select id="teacher_choice"><option value = "0"> </option></select><br><label>Тип занятия:</label><select id="type_of_class"><option value = "0"> </option></select><br><input type="submit" id="evaluate_button" value="Оценить"></form></div>'
         }
     }
 
@@ -67,24 +73,63 @@ export default class View {
         )
      }
 
-     //добавить innerHTML 
-     insertHtml(text) {
-         this.app.innerHTML = text;
-     }
+     //работаем с окном с параметрами
+     workWithRatingParameters() {
+         this.app.innerHTML = this.htmlLayouts.get_parameters;
+         let uni_choice = document.getElementById('uni_choice');
+         let subject_choice = document.getElementById('subject_choice');
+         let teacher_choice = document.getElementById('teacher_choice');
+         let type_choice = document.getElementById('type_of_class');
 
-     parametersInsertion(result) {
-        let uni_choice = document.getElementById('uni_choice');
-         result.forEach(function(doc) {
+        //сохраняем выбранные значения
+        let chosen_uni;
+        let chosen_subj;
+
+        //параметры для университета       
+        this.model.getParameters_Uni().then(result => { //отправляемся в модель для получения данных
+            result.forEach(function(doc) {            
+                var opt = document.createElement('option');
+                   opt.textContent = doc.id;
+                   uni_choice.appendChild(opt);   
+            })   
+        })
+        var self = this;
+        
+        uni_choice.addEventListener('change', function() {
             
-             var opt = document.createElement('option');
-                opt.textContent = doc.id;
-                uni_choice.appendChild(opt);
-
-         })   
-         uni_choice.addEventListener('change', function() {
             let selected_uni = uni_choice.options[uni_choice.selectedIndex].innerHTML;
-            console.log(selected_uni);
-        })    
+            chosen_uni = selected_uni;
+            //чистим имеющиеся опции в полях ниже 
+            subject_choice.innerHTML = "<option value = '0'> </option>";
+            teacher_choice.innerHTML = "<option value = '0'> </option>";
+            type_choice.innerHTML = "<option value = '0'> </option>";
+            //добавляем нужные опции в поле "Дисциплина"            
+            self.model.getParameters_Subj(selected_uni).then(result => {
+                result.forEach(function(doc) {
+                    var opt = document.createElement('option');
+                    opt.textContent = doc.id;
+                    subject_choice.appendChild(opt);  
+                })
+            })
+        }) 
+        
+        //Слушаем что в поле "Дисциплина" и подставляем нужные значения в "Преподавателей"
+        subject_choice.addEventListener('change', function() {
+            let selected_subj = subject_choice.options[subject_choice.selectedIndex].innerHTML;
+            chosen_subj = selected_subj;
+            //чистим имеющиеся опции в полях ниже 
+            teacher_choice.innerHTML = "<option value = '0'> </option>";
+            type_choice.innerHTML = "<option value = '0'> </option>";
+            //Добавляем нужные опции в поле "Преподаватель"
+            self.model.getParameters_Teacher(chosen_uni, selected_subj).then(result => {
+                result.forEach(function(doc) {
+                    var opt = document.createElement('option');
+                    opt.textContent = doc.id;
+                    teacher_choice.appendChild(opt);  
+                })
+            })
+        })
+       
      }
 
      

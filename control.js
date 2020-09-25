@@ -52,7 +52,6 @@ export default class Controller {
      }
 
      async rateRoute() {
-        //console.log('This is rateRoute');
         this.model.handleRateRoute();
      }
   

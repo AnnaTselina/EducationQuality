@@ -5,12 +5,7 @@
             <label>Дисциплина:</label><select id="subject_choice"><option value = "0"> </option></select><br>
             <label>Преподаватель:</label><select id="teacher_choice"><option value = "0"> </option></select><br>
             <label>Тип занятия:</label>
-                <select id="type_of_class">
-                    <option value = "0"> </option>
-                    <option value = "1">Лекции</option>
-                    <option value = "2">Практические занятия</option>
-                    <option value = "3">Лабораторные работы</option>
-                </select><br>
+                <select id="type_of_class"><option value = "0"> </option></select><br>
             <input type="submit" id="evaluate_button" value="Оценить">
         </form>
         </div>

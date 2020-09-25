@@ -35,20 +35,21 @@ export default class Model {
         firebase.auth().signOut();
     }
 
-    getParameters_Uni() {        
-       return new Promise(resolve => db.collection("Universities").get().then(querySnapshot => resolve(querySnapshot)));             
-    }
-
     handleRateRoute(){
-        this.view.insertHtml(this.view.htmlLayouts.get_parameters);
-        this.getParameters_Uni().then(result => {
-            this.view.parametersInsertion(result);
-        })
-     
-               
+        this.view.workWithRatingParameters(); //запускаем окошко с параметрами для выбора         
     }
 
+    getParameters_Uni() {        
+        return new Promise(resolve => db.collection("Universities").get().then(querySnapshot => resolve(querySnapshot)));             
+    }
 
+    getParameters_Subj(uni) {
+        return new Promise(resolve => db.collection("Universities").doc(uni).collection("Subjects").get().then(querySnapshot => resolve(querySnapshot)));
+      }
+    
+    getParameters_Teacher(uni, subj) {
+        return new Promise(resolve => db.collection("Universities").doc(uni).collection("Subjects").doc(subj).collection("teachers").get().then(querySnapshot => resolve(querySnapshot)));
+    } 
     }
    
      

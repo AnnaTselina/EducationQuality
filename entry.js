@@ -12,6 +12,7 @@ const appModel = new Model(appView);
 const appController = new Controller(appModel, appView);
 const appRouter = new Router(appController);
 
+appView.setModel(appModel);
 
 //Инициализируем контроллер и роутер
 appController.init();
