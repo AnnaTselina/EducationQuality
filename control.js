@@ -28,7 +28,7 @@ export default class Controller {
         });      
     }
 
-    //Вызов функции создания фаакаунта в Model
+    //Вызов функции создания аккаунта в Model
     handleCreateAccount(userEmail, userPass) {               
        this.model.create_account(userEmail, userPass).then(setTimeout(this.checkUserAndModal.bind(this), 2000));            
     }

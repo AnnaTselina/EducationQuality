@@ -82,15 +82,13 @@ export default class View {
          let type_choice = document.getElementById('type_of_class');
          let submit_button = document.getElementById('evaluate_button');
 
-    
-
         //сохраняем выбранные значения
         let chosen_uni;
         let chosen_subj;
         let chosen_teacher;
         let chosen_type;
 
-        checkFields();
+        checkFields(); //задизейбливаем кнопку
 
         //параметры для университета       
         this.model.getParameters_Uni().then(result => { //отправляемся в модель для получения данных

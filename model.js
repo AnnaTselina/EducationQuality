@@ -1,6 +1,6 @@
 export default class Model {
     constructor(view){        
-        this.view = view; //пользователь              
+        this.view = view;            
     }    
 
     checkState () {
@@ -55,12 +55,6 @@ export default class Model {
     }
     }
    
-     
-
-    //в модели мы только работаем с данными
-    //дай мне список преподов
-    //дай мне список критериев
-    //отправь оценки в базу данных
-    //дай мне информацию по выбранному преподу
+  
 
 

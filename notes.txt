@@ -6,7 +6,7 @@
             <label>Преподаватель:</label><select id="teacher_choice"><option value = "0"> </option></select><br>
             <label>Тип занятия:</label>
                 <select id="type_of_class"><option value = "0"> </option></select><br>
-            <input type="submit" id="evaluate_button" value="Оценить">
+            <button id="evaluate_button">Оценить</button>
         </form>
         </div>
         
