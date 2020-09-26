@@ -20,7 +20,7 @@ export default class View {
         
         
         this.htmlLayouts = {
-            get_parameters:  '<div id="parameters_choice"><form><h3>Выберите необходимые параметры:</h3><label>ВУЗ:</label><select id="uni_choice"><option value = "0"> </option></select><br><label>Дисциплина:</label><select id="subject_choice"><option value = "0"> </option></select><br><label>Преподаватель:</label><select id="teacher_choice"><option value = "0"> </option></select><br><label>Тип занятия:</label><select id="type_of_class"><option value = "0"> </option></select><br><input type="submit" id="evaluate_button" value="Оценить"></form></div>'
+            get_parameters:  '<div id="parameters_choice"><form><h3>Выберите необходимые параметры:</h3><label>ВУЗ:</label><select id="uni_choice"><option value = "0"> </option></select><br><label>Дисциплина:</label><select id="subject_choice"><option value = "0"> </option></select><br><label>Преподаватель:</label><select id="teacher_choice"><option value = "0"> </option></select><br><label>Тип занятия:</label><select id="type_of_class"><option value = "0"> </option></select><br><button id="evaluate_button">Оценить</button></form></div>'
         }
     }
 
@@ -80,11 +80,17 @@ export default class View {
          let subject_choice = document.getElementById('subject_choice');
          let teacher_choice = document.getElementById('teacher_choice');
          let type_choice = document.getElementById('type_of_class');
+         let submit_button = document.getElementById('evaluate_button');
+
+    
 
         //сохраняем выбранные значения
         let chosen_uni;
         let chosen_subj;
         let chosen_teacher;
+        let chosen_type;
+
+        checkFields();
 
         //параметры для университета       
         this.model.getParameters_Uni().then(result => { //отправляемся в модель для получения данных
@@ -112,6 +118,7 @@ export default class View {
                     subject_choice.appendChild(opt);  
                 })
             })
+            checkFields();
         }) 
         
         //Слушаем что в поле "Дисциплина" и подставляем нужные значения в "Преподавателей"
@@ -129,6 +136,7 @@ export default class View {
                     teacher_choice.appendChild(opt);  
                 })
             })
+            checkFields();
         })
 
         //Слушаем что в поле "Преподаватели" и подставляем значения в "Тип"
@@ -145,7 +153,43 @@ export default class View {
                     type_choice.appendChild(opt); 
                 })
             })
+            checkFields();
         })
+
+        //Достаем выбранную опцию из поля "Тип"
+        type_choice.addEventListener('change', function() {
+            let selected_type = type_choice.options[type_choice.selectedIndex].innerHTML;
+            chosen_type = selected_type;
+            checkFields();
+        })
+
+        //Проверка заполнения полей и раздизейбливания кнопки
+        function checkFields() {
+            if (type_choice.value.length == 1) {
+                submit_button.disabled = true;
+                submit_button.style.backgroundColor = '#fff';
+                submit_button.style.color = 'rgb(87, 20, 87)';
+                submit_button.style.cursor = 'default';
+            } else {
+                submit_button.disabled = false;
+                submit_button.style.backgroundColor = 'rgba(91, 50, 110, 0.199)';
+                submit_button.style.color = 'black';
+                submit_button.style.cursor = 'pointer';
+                submit_button.onmouseover = function() {
+                    submit_button.style.backgroundColor = 'rgb(87, 20, 87)';
+                    submit_button.style.color = '#fff';
+            }
+                submit_button.onmouseout = function() {              
+                    submit_button.style.backgroundColor = 'rgba(91, 50, 110, 0.199)';
+                    submit_button.style.color = 'rgb(3, 3, 3)';
+                }
+            }
+        }
+
+        //При нажатии на "Оценить"
+        submit_button.onclick = function() {
+            console.log(chosen_uni, chosen_subj, chosen_teacher, chosen_type);
+        }
        
      }
 
