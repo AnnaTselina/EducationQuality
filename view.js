@@ -84,6 +84,7 @@ export default class View {
         //сохраняем выбранные значения
         let chosen_uni;
         let chosen_subj;
+        let chosen_teacher;
 
         //параметры для университета       
         this.model.getParameters_Uni().then(result => { //отправляемся в модель для получения данных
@@ -126,6 +127,22 @@ export default class View {
                     var opt = document.createElement('option');
                     opt.textContent = doc.id;
                     teacher_choice.appendChild(opt);  
+                })
+            })
+        })
+
+        //Слушаем что в поле "Преподаватели" и подставляем значения в "Тип"
+        teacher_choice.addEventListener('change', function() {
+            let selected_teacher = teacher_choice.options[teacher_choice.selectedIndex].innerHTML;
+            chosen_teacher = selected_teacher;
+            //чистим имеющиеся опции в полях ниже           
+            type_choice.innerHTML = "<option value = '0'> </option>";
+            //Добавляем нужные опции в поле "Тип"
+            self.model.getParameters_TypeOfClass(chosen_uni, chosen_subj, selected_teacher).then(result => {
+                result.forEach(function(doc) {
+                    var opt = document.createElement('option');
+                    opt.textContent = doc.id;
+                    type_choice.appendChild(opt); 
                 })
             })
         })

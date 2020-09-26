@@ -50,6 +50,9 @@ export default class Model {
     getParameters_Teacher(uni, subj) {
         return new Promise(resolve => db.collection("Universities").doc(uni).collection("Subjects").doc(subj).collection("teachers").get().then(querySnapshot => resolve(querySnapshot)));
     } 
+    getParameters_TypeOfClass(uni, subj, teacher) {
+        return new Promise(resolve => db.collection("Universities").doc(uni).collection("Subjects").doc(subj).collection("teachers").doc(teacher).collection("TypeOfClass").get().then(querySnapshot => resolve(querySnapshot)));
+    }
     }
    
      
