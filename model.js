@@ -48,9 +48,8 @@ export default class Model {
     }
 
     handleChosenOption(field, chosen_option) {        
-        this.setChosenParameters(field.id, chosen_option); //запоминаем выбранные параметры   
-        console.log(this.chosen_parameters);      
-        this.view.handleParameterTypes(field, chosen_option); //обрабатываем выбор
+        this.setChosenParameters(field.id, chosen_option); //запоминаем выбранные параметры                
+        this.view.handleParameterTypes(field, chosen_option); //обрабатываем выбор во View
     }
 
     getParameters_Uni() {        
@@ -59,7 +58,7 @@ export default class Model {
 
     getParameters_Subj(uni) {
         return new Promise(resolve => db.collection("Universities").doc(uni).collection("Subjects").get().then(querySnapshot => resolve(querySnapshot)));
-      }
+    }
     
     getParameters_Teacher(uni, subj) {
         return new Promise(resolve => db.collection("Universities").doc(uni).collection("Subjects").doc(subj).collection("teachers").get().then(querySnapshot => resolve(querySnapshot)));
@@ -67,6 +66,13 @@ export default class Model {
     getParameters_TypeOfClass(uni, subj, teacher) {
         return new Promise(resolve => db.collection("Universities").doc(uni).collection("Subjects").doc(subj).collection("teachers").doc(teacher).collection("TypeOfClass").get().then(querySnapshot => resolve(querySnapshot)));
     }
+
+    confirmEvaluation(){        
+        this.view.chosenParamConfirm(Object.values(this.chosen_parameters)); //передаем во View итоговые параметры для подтверждения
+    }
+
+
+
     }
    
   

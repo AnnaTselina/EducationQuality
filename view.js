@@ -21,15 +21,13 @@ export default class View {
 
         //элементы для RateRoute
         this.rateRouteElements = {};
-
-             
         
         this.htmlLayouts = {
             get_parameters:  '<div id="parameters_choice"><form><h3>Выберите необходимые параметры:</h3><label>ВУЗ:</label><select id="uni_choice"><option value = "0"> </option></select><br><label>Дисциплина:</label><select id="subject_choice"><option value = "0"> </option></select><br><label>Преподаватель:</label><select id="teacher_choice"><option value = "0"> </option></select><br><label>Тип занятия:</label><select id="type_of_class"><option value = "0"> </option></select><br><button id="evaluate_button">Оценить</button></form></div>'
         }
 
         this.setElement = function(group, name, value) { //функция для записи элемента
-             group[name] = value;
+            group[name] = value;
         }
     }
 
@@ -46,12 +44,12 @@ export default class View {
             }
         });  
     }
-     
+    
      //достаем значения инпутов в модальном окне
-     get _userEmailAndPass() {
-         let values = [this.emailField.value, this.passwordField.value]
-         return values;
-     }   
+    get _userEmailAndPass() {
+        let values = [this.emailField.value, this.passwordField.value]
+        return values;
+    }   
 
     //Обработчики событий
     bindCreateAccount(handler) {
@@ -66,7 +64,7 @@ export default class View {
     
     bindLoginUser(handler) {
         this.loginUser.addEventListener('click', event => {
-             event.preventDefault();
+            event.preventDefault();
             if (this._userEmailAndPass[0].length !== 0 && this._userEmailAndPass[1].length !== 0) {                         
                 handler(this._userEmailAndPass[0], this._userEmailAndPass[1]).then(setTimeout(this.checkUserStateAndModal.bind(this), 2000));
             }  
@@ -75,56 +73,47 @@ export default class View {
 
     bindLogoutUser(handler) {
         this.logout_btn.addEventListener('click', event => {
-             event.preventDefault();
-             handler();
-             this.checkUserStateAndModal();
+            event.preventDefault();
+            handler();
+            this.checkUserStateAndModal();
             }  
         )        
-     }
+    }
 
      //работаем с окном с параметрами
-     workWithRatingParameters() {
-         this.app.innerHTML = this.htmlLayouts.get_parameters;
-         let uni_choice = document.getElementById('uni_choice');
-         let subject_choice = document.getElementById('subject_choice');
-         let teacher_choice = document.getElementById('teacher_choice');
-         let type_choice = document.getElementById('type_of_class');
-         let submit_button = document.getElementById('evaluate_button');
+    workWithRatingParameters() {
+        this.app.innerHTML = this.htmlLayouts.get_parameters;
+        let uni_choice = document.getElementById('uni_choice');
+        let subject_choice = document.getElementById('subject_choice');
+        let teacher_choice = document.getElementById('teacher_choice');
+        let type_choice = document.getElementById('type_of_class');
+        let submit_button = document.getElementById('evaluate_button');
         
 
          //записываем все элементы в конструктор, чтобы к ним мог обратиться контроллер
-         this.setElement(this.rateRouteElements, "uni_choice", uni_choice);
-         this.setElement(this.rateRouteElements, "subject_choice", subject_choice);
-         this.setElement(this.rateRouteElements, "teacher_choice", teacher_choice);
-         this.setElement(this.rateRouteElements, "type_choice", type_choice);
-         this.setElement(this.rateRouteElements, "submit_button", submit_button);
-         
+        this.setElement(this.rateRouteElements, "uni_choice", uni_choice);
+        this.setElement(this.rateRouteElements, "subject_choice", subject_choice);
+        this.setElement(this.rateRouteElements, "teacher_choice", teacher_choice);
+        this.setElement(this.rateRouteElements, "type_choice", type_choice);
+        this.setElement(this.rateRouteElements, "submit_button", submit_button);
+        
         this.parametersFieldCheckup(); //дизейблим кнопку изначально
 
          //подгружаем из модели параметры для университета       
          this.model.getParameters_Uni().then(result => { //отправляемся в модель для получения данных
-             result.forEach(function(doc) {            
-                 var opt = document.createElement('option');
+            result.forEach(function(doc) {            
+                var opt = document.createElement('option');
                     opt.textContent = doc.id;
                     uni_choice.appendChild(opt);   
-             })   
-         })
-        /*
-      
-         //При нажатии на "Оценить"
-        /*this.rateRouteElements.submit_button.onclick = function() {
-            //self.confirmEvaluation(chosen_subj, chosen_teacher, chosen_type);
-        }*/
-       
-     }
+            })   
+        })
+    }
 
-     handleParameterTypes(field, chosen_option) {
-         var self = this;        
-
-
+    handleParameterTypes(field, chosen_option) {
+        var self = this;    
+        
         switch (field.id) {
-            case "uni_choice":
-                
+            case "uni_choice":                
                 //чистим имеющиеся опции в полях ниже 
                 self.rateRouteElements["subject_choice"].innerHTML = "<option value = '0'> </option>";
                 self.rateRouteElements["teacher_choice"].innerHTML = "<option value = '0'> </option>";
@@ -139,8 +128,8 @@ export default class View {
                 })
                 this.parametersFieldCheckup();
                 break;
-            case "subject_choice":
 
+            case "subject_choice":
                 //чистим имеющиеся опции в полях ниже 
                 self.rateRouteElements["teacher_choice"].innerHTML = "<option value = '0'> </option>";
                 self.rateRouteElements["type_choice"].innerHTML = "<option value = '0'> </option>";
@@ -154,6 +143,7 @@ export default class View {
                 })
                 this.parametersFieldCheckup();
                 break;
+
             case "teacher_choice":
                 //чистим имеющиеся опции в полях ниже           
                 self.rateRouteElements["type_choice"].innerHTML = "<option value = '0'> </option>";
@@ -167,48 +157,43 @@ export default class View {
                 })
                 this.parametersFieldCheckup();
                 break;
+
             case "type_of_class":
                 this.parametersFieldCheckup();
                 break;
         }
         
-     }
+    }
 
-             //Функция дизейбливания кнопки в зависимости от заполненности полей
-             parametersFieldCheckup() {                              
-                var submit_button = this.rateRouteElements["submit_button"];
-            
-                if (this.rateRouteElements["type_choice"].value.length == 1) {
-                    submit_button.disabled = true;
-                    submit_button.style.backgroundColor = '#fff';
-                    submit_button.style.color = 'rgb(87, 20, 87)';
-                    submit_button.style.cursor = 'default';
-                } else {
-                    submit_button.disabled = false;
-                    submit_button.style.backgroundColor = 'rgba(91, 50, 110, 0.199)';
-                    submit_button.style.color = 'black';
-                    submit_button.style.cursor = 'pointer';
-                    submit_button.onmouseover = function() {
-                        submit_button.style.backgroundColor = 'rgb(87, 20, 87)';
-                        submit_button.style.color = '#fff';
-                }
-                    submit_button.onmouseout = function() {              
-                        submit_button.style.backgroundColor = 'rgba(91, 50, 110, 0.199)';
-                        submit_button.style.color = 'rgb(3, 3, 3)';
+    //Функция дизейбливания кнопки в зависимости от заполненности полей
+    parametersFieldCheckup() {                              
+        var submit_button = this.rateRouteElements["submit_button"];            
+        if (this.rateRouteElements["type_choice"].value.length == 1) {
+            submit_button.disabled = true;
+            submit_button.style.backgroundColor = '#fff';
+            submit_button.style.color = 'rgb(87, 20, 87)';
+            submit_button.style.cursor = 'default';
+        } else {
+            submit_button.disabled = false;
+            submit_button.style.backgroundColor = 'rgba(91, 50, 110, 0.199)';
+            submit_button.style.color = 'black';
+            submit_button.style.cursor = 'pointer';
+            submit_button.onmouseover = function() {
+                submit_button.style.backgroundColor = 'rgb(87, 20, 87)';
+                submit_button.style.color = '#fff';
+                    }
+            submit_button.onmouseout = function() {              
+                submit_button.style.backgroundColor = 'rgba(91, 50, 110, 0.199)';
+                submit_button.style.color = 'rgb(3, 3, 3)';
                     }
             }
-        }
+    }
     
-/*
-     confirmEvaluation(subj, teacher, type) {
-        this.app.innerHTML = "<div id='form_with_criterias'><div class='heading_criterias'><h3>Выбранные параметры</h3><p>Выбранная дисциплина: " + subj + "</p><p>Выбранный преподаватель: " + teacher + "</p><p>Тип занятия: " + type + "</p><button id='start_evaluating_button'>Начать</button></div></div> ";
-        document.getElementById('start_evaluating_button').onclick = function() {
-            
-        }
-     }*/
-
-     
-
+    //работа с окошком для подтверждения параметров перед выставлением критериев
+    chosenParamConfirm(parameters){
+        console.log(parameters[0], parameters[1], parameters[2], parameters [3]);
+    }
+        
 
     }
 

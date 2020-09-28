@@ -49,7 +49,14 @@ export default class Controller {
                         self.model.handleChosenOption(e.target, e.target.options[e.target.selectedIndex].innerHTML);
                     })
                 } else if (elements[i].tagName === "BUTTON") {
-                    //console.log("this is button");
+                    elements[i].addEventListener("click", event =>{
+                        event.preventDefault();
+                        switch (event.target.id) {
+                            case "evaluate_button": 
+                                self.model.confirmEvaluation();
+                            break;
+                        }
+                    })
                 }
             }            
         })
