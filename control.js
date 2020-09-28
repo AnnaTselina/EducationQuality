@@ -52,8 +52,15 @@ export default class Controller {
                     elements[i].addEventListener("click", event =>{
                         event.preventDefault();
                         switch (event.target.id) {
+                            //TODO: не работает
                             case "evaluate_button": 
                                 self.model.confirmEvaluation();
+                            break;
+                            case "start_evaluation":
+                                console.log(1);
+                            break;
+                            case "change_parameters":
+                                console.log(2);
                             break;
                         }
                     })

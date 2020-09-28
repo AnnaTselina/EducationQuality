@@ -23,7 +23,8 @@ export default class View {
         this.rateRouteElements = {};
         
         this.htmlLayouts = {
-            get_parameters:  '<div id="parameters_choice"><form><h3>Выберите необходимые параметры:</h3><label>ВУЗ:</label><select id="uni_choice"><option value = "0"> </option></select><br><label>Дисциплина:</label><select id="subject_choice"><option value = "0"> </option></select><br><label>Преподаватель:</label><select id="teacher_choice"><option value = "0"> </option></select><br><label>Тип занятия:</label><select id="type_of_class"><option value = "0"> </option></select><br><button id="evaluate_button">Оценить</button></form></div>'
+            get_parameters:  '<div id="parameters_choice"><form><h3>Выберите необходимые параметры:</h3><label>ВУЗ:</label><select id="uni_choice"><option value = "0"> </option></select><br><label>Дисциплина:</label><select id="subject_choice"><option value = "0"> </option></select><br><label>Преподаватель:</label><select id="teacher_choice"><option value = "0"> </option></select><br><label>Тип занятия:</label><select id="type_of_class"><option value = "0"> </option></select><br><button id="evaluate_button">Оценить</button></form></div>',
+            confirmation_window: " <div id = 'confirmation_window'><h4>Подтвердите выбранные параметры</h4><table><tr><td>ВУЗ:</td><td id = 'chosen_uni_text'> </td></tr><tr><td>Дисциплина:</td><td id = 'chosen_subj_text'> </td></tr><tr><td>Преподаватель:</td><td id = 'chosen_teacher_text'> </td></tr><tr><td>Тип занятий:</td><td id = 'chosen_type_text'> </td></tr></table><div class = 'confirmation_buttons'><button id = 'start_evaluation'>Верно, начать оценивание</button> <button id= 'change_parameters'>Выбрать другие параметры</button></div></div>"  
         }
 
         this.setElement = function(group, name, value) { //функция для записи элемента
@@ -192,6 +193,16 @@ export default class View {
     //работа с окошком для подтверждения параметров перед выставлением критериев
     chosenParamConfirm(parameters){
         console.log(parameters[0], parameters[1], parameters[2], parameters [3]);
+        this.app.innerHTML = this.htmlLayouts.confirmation_window;
+        //отображаем выбранные параметры
+        document.getElementById('chosen_uni_text').innerHTML = parameters[0];
+        document.getElementById('chosen_subj_text').innerHTML = parameters[1];
+        document.getElementById('chosen_teacher_text').innerHTML = parameters[2];
+        document.getElementById('chosen_type_text').innerHTML = parameters[3];
+        
+        //записываем кнопки подтверждения и выбора других параметров для ивент листнеров
+        this.setElement(this.rateRouteElements, "start_evaluation", document.getElementById("start_evaluation"));
+        this.setElement(this.rateRouteElements, "change_parameters", document.getElementById("change_parameters"));     
     }
         
 
