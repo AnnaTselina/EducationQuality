@@ -17,7 +17,7 @@ appView.setModel(appModel);
 //Инициализируем контроллер и роутер
 appController.init();
 appRouter.init();
-
+appView.init();
 
 
 

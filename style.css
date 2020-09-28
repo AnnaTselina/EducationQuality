@@ -201,3 +201,15 @@ body {
     font-weight: 700;
 }
 
+/*Форма с оценкой критериев*/
+.heading_criterias, .main_criterias {
+    background-color: rgb(255, 255, 255);
+    padding: 30px;
+    border: 2px solid rgb(87, 20, 87);
+    border-radius: 10px;
+    box-shadow: 2px 2px 3px 2px darkgrey;
+}
+
+.main_criterias {
+    margin-top: 20px;
+}

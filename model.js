@@ -1,10 +1,16 @@
 export default class Model {
     constructor(view){        
-        this.view = view;            
+        this.view = view;  
+        
+        this.chosen_parameters = {};
     }    
+    setChosenParameters(field, chosen_option) {
+        this.chosen_parameters[field] = chosen_option;
+    }
+  
 
     checkState () {
-                  return new Promise(resolve => firebase.auth().onAuthStateChanged(user => resolve(user)));       
+        return new Promise(resolve => firebase.auth().onAuthStateChanged(user => resolve(user)));       
     }
       
     create_account(userEmail, userPass) { //создание аккаунта   
@@ -35,8 +41,16 @@ export default class Model {
         firebase.auth().signOut();
     }
 
-    handleRateRoute(){
-        this.view.workWithRatingParameters(); //запускаем окошко с параметрами для выбора         
+
+    /*методы для RateRoute*/ 
+    async handleRateRoute(){
+       this.view.workWithRatingParameters(); //запускаем окошко с параметрами для выбора         
+    }
+
+    handleChosenOption(field, chosen_option) {        
+        this.setChosenParameters(field.id, chosen_option); //запоминаем выбранные параметры   
+        console.log(this.chosen_parameters);      
+        this.view.handleParameterTypes(field, chosen_option); //обрабатываем выбор
     }
 
     getParameters_Uni() {        

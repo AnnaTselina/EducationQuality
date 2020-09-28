@@ -5,41 +5,27 @@ export default class Controller {
     }
 
     init() {
-        //проверяем нужно ли окно регистрации (входная точка) 
        
-        this.checkUserAndModal(); 
-        
+   
+
         //инициализируем event listeners для модального окна аутентификации
         this.view.bindCreateAccount(this.handleCreateAccount.bind(this));
         this.view.bindLoginUser(this.handleLoginUser.bind(this));
         this.view.bindLogoutUser(this.handleLogoutUser.bind(this));
-
         }
 
-    //функция для отображения модального окна для входа в зависимости от того, есть ли пользователь
-    checkUserAndModal(){ 
-        this.model.checkState().then(user_state => {
-         
-            if (user_state !== null) {
-                this.view.hideModal(); 
-            } else {
-                this.view.showModal();
-            }
-        });      
-    }
-
+  
     //Вызов функции создания аккаунта в Model
-    handleCreateAccount(userEmail, userPass) {               
-       this.model.create_account(userEmail, userPass).then(setTimeout(this.checkUserAndModal.bind(this), 2000));            
+    async handleCreateAccount(userEmail, userPass) {               
+       this.model.create_account(userEmail, userPass);            
     }
 
-    handleLoginUser(userEmail, userPass) {             
-        this.model.login(userEmail, userPass).then(setTimeout(this.checkUserAndModal.bind(this), 2000));        
+    async handleLoginUser(userEmail, userPass) {             
+        this.model.login(userEmail, userPass);        
      }
 
      handleLogoutUser() {               
-        this.model.logout();   
-        this.checkUserAndModal();         
+        this.model.logout();                
      }
 
      //функции для заполнения контента в блоке с id = "root" в зависимости от хэша в адресной строке (вызываются из роутера)
@@ -51,9 +37,25 @@ export default class Controller {
         console.log('This is showRatingRoute');
      }
 
-     async rateRoute() {
-        this.model.handleRateRoute();
+     rateRoute() {
+         var self = this;
+         //сначала подгружаем верстку через модель, достаем необходимые элементы и вешаем листнеры на них
+        this.model.handleRateRoute().then(function() {
+            //вешаем на управляющие элементы обработчики событий
+           let elements = Object.values(self.view.rateRouteElements); 
+            for (var i=0; i< elements.length; i++) {
+                if(elements[i].tagName === "SELECT") {
+                    elements[i].addEventListener('change', function(e) {
+                        self.model.handleChosenOption(e.target, e.target.options[e.target.selectedIndex].innerHTML);
+                    })
+                } else if (elements[i].tagName === "BUTTON") {
+                    //console.log("this is button");
+                }
+            }            
+        })
      }
+
+     
   
 }
 
