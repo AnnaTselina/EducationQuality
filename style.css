@@ -240,5 +240,18 @@ body {
     font-weight: 600;
 }
 
+/*окошки с выставлением оценок*/
+#evaluation_window {
+    background-color: rgb(255, 255, 255);
+    padding: 30px;
+    border: 2px solid rgb(87, 20, 87);
+    border-radius: 10px;
+    box-shadow: 2px 2px 3px 2px darkgrey;
+    margin-top: 20px;
+}
+
+#evaluation_window button{
+    float: right;
+}
 
 

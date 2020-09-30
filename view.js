@@ -24,7 +24,8 @@ export default class View {
         
         this.htmlLayouts = {
             get_parameters:  '<div id="parameters_choice"><form><h3>Выберите необходимые параметры:</h3><label>ВУЗ:</label><select id="uni_choice"><option value = "0"> </option></select><br><label>Дисциплина:</label><select id="subject_choice"><option value = "0"> </option></select><br><label>Преподаватель:</label><select id="teacher_choice"><option value = "0"> </option></select><br><label>Тип занятия:</label><select id="type_of_class"><option value = "0"> </option></select><br><button id="evaluate_button">Оценить</button></form></div>',
-            confirmation_window: " <div id = 'confirmation_window'><h4>Подтвердите выбранные параметры</h4><table><tr><td>ВУЗ:</td><td id = 'chosen_uni_text'> </td></tr><tr><td>Дисциплина:</td><td id = 'chosen_subj_text'> </td></tr><tr><td>Преподаватель:</td><td id = 'chosen_teacher_text'> </td></tr><tr><td>Тип занятий:</td><td id = 'chosen_type_text'> </td></tr></table><div class = 'confirmation_buttons'><button id = 'start_evaluation'>Верно, начать оценивание</button> <button id= 'change_parameters'>Выбрать другие параметры</button></div></div>"  
+            confirmation_window: " <div id = 'confirmation_window'><h4>Подтвердите выбранные параметры</h4><table><tr><td>ВУЗ:</td><td id = 'chosen_uni_text'> </td></tr><tr><td>Дисциплина:</td><td id = 'chosen_subj_text'> </td></tr><tr><td>Преподаватель:</td><td id = 'chosen_teacher_text'> </td></tr><tr><td>Тип занятий:</td><td id = 'chosen_type_text'> </td></tr></table><div class = 'confirmation_buttons'><button id = 'start_evaluation'>Верно, начать оценивание</button> <button id= 'change_parameters'>Выбрать другие параметры</button></div></div>",
+            evaluation_window: '<div id ="evaluation_window"><p id="criteria_name"></p><div id="criteria_stars">Звездочки</div><button id="next_criteria">Дальше</button></div> '
         }
 
         this.setElement = function(group, name, value) { //функция для записи элемента
@@ -203,11 +204,35 @@ export default class View {
         this.setElement(this.rateRouteElements, "start_evaluation", document.getElementById("start_evaluation"));
         this.setElement(this.rateRouteElements, "change_parameters", document.getElementById("change_parameters"));     
     }
-//TODO: оСТАНОВИЛИСЬ ЗДЕСЬ
+
     evaluationProcess(criterias) {
-        console.log(criterias);
+        var self = this;
+        this.app.insertAdjacentHTML("beforeend", '<div id="evaluation_field"></div>') //добавляем контейнер, где будут меняться критерии
         
+        let sortedCriteria = criterias.sort();        
+        
+        let i = 0;
+        
+        this.criteriasIteration(i, sortedCriteria.length, sortedCriteria);
+
     }
+
+
+    //ЭТО РЕКУРСИВНЫЙ МЕТОД КЛАССА, ОХРЕНЕТЬ, ДА????
+    criteriasIteration(n, length, array) {        
+        var self = this;
+        if (n == length) {            
+            return; //условие остановки
+        } else {
+            document.getElementById("evaluation_field").innerHTML = self.htmlLayouts.evaluation_window;
+            document.getElementById('criteria_name').innerHTML = array[n];
+            n++;
+            document.getElementById("next_criteria").addEventListener('click', function(){
+                return self.criteriasIteration(n, length, array);
+            })
+        }
+    }
+    
         
 
     }
