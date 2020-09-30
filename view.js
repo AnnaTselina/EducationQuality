@@ -191,8 +191,7 @@ export default class View {
     }
     
     //работа с окошком для подтверждения параметров перед выставлением критериев
-    chosenParamConfirm(parameters){
-        console.log(parameters[0], parameters[1], parameters[2], parameters [3]);
+    chosenParamConfirm(parameters){        
         this.app.innerHTML = this.htmlLayouts.confirmation_window;
         //отображаем выбранные параметры
         document.getElementById('chosen_uni_text').innerHTML = parameters[0];
@@ -203,6 +202,11 @@ export default class View {
         //записываем кнопки подтверждения и выбора других параметров для ивент листнеров
         this.setElement(this.rateRouteElements, "start_evaluation", document.getElementById("start_evaluation"));
         this.setElement(this.rateRouteElements, "change_parameters", document.getElementById("change_parameters"));     
+    }
+//TODO: оСТАНОВИЛИСЬ ЗДЕСЬ
+    evaluationProcess(criterias) {
+        console.log(criterias);
+        
     }
         
 

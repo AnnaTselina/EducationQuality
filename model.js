@@ -43,7 +43,7 @@ export default class Model {
 
 
     /*методы для RateRoute*/ 
-    async handleRateRoute(){
+    async handleParameters(){
        this.view.workWithRatingParameters(); //запускаем окошко с параметрами для выбора         
     }
 
@@ -67,10 +67,23 @@ export default class Model {
         return new Promise(resolve => db.collection("Universities").doc(uni).collection("Subjects").doc(subj).collection("teachers").doc(teacher).collection("TypeOfClass").get().then(querySnapshot => resolve(querySnapshot)));
     }
 
-    confirmEvaluation(){        
+    async confirmEvaluation(){        
         this.view.chosenParamConfirm(Object.values(this.chosen_parameters)); //передаем во View итоговые параметры для подтверждения
     }
 
+    //TODO: нужен ли здесь асинк(зависит от контроллера)
+    async startEvaluation() {
+        var self = this;
+        //достаем в модели критерии для выбранного типа занятий и передаем во View
+        this.getCriterias_Evaluation().then(result => {
+            self.view.evaluationProcess(Object.keys(result.data()));           
+        });
+        
+    }
+
+    getCriterias_Evaluation() {        
+        return new Promise(resolve => db.collection("Criterias").doc(this.chosen_parameters["type_of_class"]).get().then(documentSnapshot => resolve(documentSnapshot)));
+    }
 
 
     }

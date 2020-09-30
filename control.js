@@ -1,7 +1,12 @@
 export default class Controller {
     constructor(model, view){
         this.model = model;
-        this.view = view;      
+        this.view = view;  
+        
+        this.rateRouteState = "parameters_choice"; //состояние окна Rate по умолчанию
+        this.changeRateRouteState = function (state) {
+            this.rateRouteState = state;
+        }
     }
 
     init() {
@@ -37,36 +42,52 @@ export default class Controller {
         console.log('This is showRatingRoute');
      }
 
-     rateRoute() {
+     rateRoute() {     
+         //сначала подгружаем верстку через модель, достаем необходимые элементы и вешаем листнеры на них, затем иницируем слушатель событий
+         let step = this.rateRouteState;
+         switch (step) {
+            case "parameters_choice":
+                this.model.handleParameters().then(this.rateRouteEventController());
+                break;
+            case "confirmation":               
+                this.model.confirmEvaluation().then(this.rateRouteEventController());
+            break;
+            case "evaluation":
+                //TODO: проверить нужен ли здесь вызов контроллера
+                this.model.startEvaluation().then(this.rateRouteEventController());
+            break;
+         }        
+     }
+
+     rateRouteEventController() {
          var self = this;
-         //сначала подгружаем верстку через модель, достаем необходимые элементы и вешаем листнеры на них
-        this.model.handleRateRoute().then(function() {
-            //вешаем на управляющие элементы обработчики событий
-           let elements = Object.values(self.view.rateRouteElements); 
-            for (var i=0; i< elements.length; i++) {
-                if(elements[i].tagName === "SELECT") {
-                    elements[i].addEventListener('change', function(e) {
-                        self.model.handleChosenOption(e.target, e.target.options[e.target.selectedIndex].innerHTML);
-                    })
-                } else if (elements[i].tagName === "BUTTON") {
-                    elements[i].addEventListener("click", event =>{
-                        event.preventDefault();
-                        switch (event.target.id) {
-                            //TODO: не работает
-                            case "evaluate_button": 
-                                self.model.confirmEvaluation();
-                            break;
-                            case "start_evaluation":
-                                console.log(1);
-                            break;
-                            case "change_parameters":
-                                console.log(2);
-                            break;
-                        }
-                    })
-                }
-            }            
-        })
+        //вешаем на управляющие элементы обработчики событий
+        let elements = Object.values(self.view.rateRouteElements); 
+        for (var i=0; i< elements.length; i++) {
+            if(elements[i].tagName === "SELECT") {
+                elements[i].addEventListener('change', function(e) {
+                    self.model.handleChosenOption(e.target, e.target.options[e.target.selectedIndex].innerHTML);
+                })
+            } else if (elements[i].tagName === "BUTTON") {
+                elements[i].addEventListener("click", event =>{
+                    event.preventDefault();
+                    switch (event.target.id) {                      
+                        case "evaluate_button": 
+                            self.changeRateRouteState("confirmation"); //указываем состояние 
+                            self.rateRoute();
+                        break;
+                        case "start_evaluation":
+                            self.changeRateRouteState("evaluation");
+                            self.rateRoute();
+                        break;
+                        case "change_parameters":
+                            self.changeRateRouteState("parameters_choice");
+                            self.rateRoute();
+                        break;
+                    }
+                })
+            }
+        } 
      }
 
      
