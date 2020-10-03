@@ -42,7 +42,8 @@ export default class Controller {
         console.log('This is showRatingRoute');
      }
 
-     rateRoute() {     
+     rateRoute() {  
+           
          //сначала подгружаем верстку через модель, достаем необходимые элементы и вешаем листнеры на них, затем иницируем слушатель событий
          let step = this.rateRouteState;
          switch (step) {
@@ -52,24 +53,33 @@ export default class Controller {
             case "confirmation":               
                 this.model.confirmEvaluation().then(this.rateRouteEventController());
             break;
-            case "evaluation":
-                //TODO: проверить нужен ли здесь вызов контроллера
-                this.model.startEvaluation().then(this.rateRouteEventController());
-            break;
+            case "evaluation":      
+                var self = this;          
+               
+                this.model.startEvaluation().then(function() {                    
+                    setTimeout( () => {                                                                     
+                        self.rateRouteEventController();
+                      }, 1000);
+                     
+                    
+                })
+                break;
          }        
      }
 
      rateRouteEventController() {
          var self = this;
         //вешаем на управляющие элементы обработчики событий
-        let elements = Object.values(self.view.rateRouteElements); 
+        let elements = Object.entries(self.view.rateRouteElements);        
         for (var i=0; i< elements.length; i++) {
-            if(elements[i].tagName === "SELECT") {
-                elements[i].addEventListener('change', function(e) {
+           
+            if(elements[i][1].tagName === "SELECT") {
+                elements[i][1].addEventListener('change', function(e) {
                     self.model.handleChosenOption(e.target, e.target.options[e.target.selectedIndex].innerHTML);
                 })
-            } else if (elements[i].tagName === "BUTTON") {
-                elements[i].addEventListener("click", event =>{
+            } else if (elements[i][1].tagName === "BUTTON") {
+                elements[i][1].addEventListener("click", event =>{
+                    
                     event.preventDefault();
                     switch (event.target.id) {                      
                         case "evaluate_button": 
@@ -84,10 +94,36 @@ export default class Controller {
                             self.changeRateRouteState("parameters_choice");
                             self.rateRoute();
                         break;
+                        case "next_criteria_button":
+                            //отправляем критерии в модель
+                            let name_of_criteria = document.getElementById('criteria_name').innerHTML;
+                            let value_for_criteria = document.getElementById('criteria_stars').firstChild.dataset.stars;                            
+                            self.model.setEvaluatedCriterias(name_of_criteria, value_for_criteria);
+                            
+                        break;
+                        
                     }
                 })
+            } 
+            else if(typeof elements[i] === "object") {                
+                if (elements[i][0] === 'stars') {                    
+                    elements[i][1].forEach(star => {
+                        star.addEventListener('click', function(e) {                            
+                            let starEl = e.currentTarget;           
+                            starEl.parentNode.setAttribute('data-stars', starEl.dataset.rating);
+                           
+                           
+                        });
+                        })
+                }
             }
+            
+            
         } 
+     }
+
+     getMarks() {
+
      }
 
      

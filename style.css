@@ -250,8 +250,54 @@ body {
     margin-top: 20px;
 }
 
-#evaluation_window button{
-    float: right;
+#next_criteria {
+    text-align: right;
+}
+#next_criteria button {
+    border: none;
+    background-color: transparent;
+    outline: none;
+    cursor: pointer;
 }
 
+#next_criteria button svg {
+    pointer-events: none;
+}
+
+#criteria_stars {
+    margin: 20px 0;
+    display: flex;
+}
+
+.stars {
+    cursor: pointer;
+    display: flex;
+}
+.stars:hover .star polygon {
+    fill: rgb(87, 20, 87) !important;
+}
+.stars .star polygon {
+    fill: #d8d8d8;
+}
+.stars .star:hover ~ .star polygon {
+    fill: #d8d8d8 !important;
+}
+.stars[data-stars] .star polygon {
+    fill: rgb(87, 20, 87);
+}
+.stars[data-stars="1"] .star:nth-child(1) ~ .star polygon {
+    fill: #d8d8d8;
+}
+.stars[data-stars="2"] .star:nth-child(2) ~ .star polygon {
+    fill: #d8d8d8;
+}
+.stars[data-stars="3"] .star:nth-child(3) ~ .star polygon {
+    fill: #d8d8d8;
+}
+.stars[data-stars="4"] .star:nth-child(4) ~ .star polygon {
+    fill: #d8d8d8;
+}
+.stars[data-stars="5"] .star:nth-child(5) ~ .star polygon {
+    fill: #d8d8d8;
+}
 

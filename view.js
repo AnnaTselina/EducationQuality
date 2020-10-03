@@ -20,12 +20,16 @@ export default class View {
         
 
         //элементы для RateRoute
-        this.rateRouteElements = {};
+        this.rateRouteElements = {
+            
+        };
+      
         
         this.htmlLayouts = {
             get_parameters:  '<div id="parameters_choice"><form><h3>Выберите необходимые параметры:</h3><label>ВУЗ:</label><select id="uni_choice"><option value = "0"> </option></select><br><label>Дисциплина:</label><select id="subject_choice"><option value = "0"> </option></select><br><label>Преподаватель:</label><select id="teacher_choice"><option value = "0"> </option></select><br><label>Тип занятия:</label><select id="type_of_class"><option value = "0"> </option></select><br><button id="evaluate_button">Оценить</button></form></div>',
             confirmation_window: " <div id = 'confirmation_window'><h4>Подтвердите выбранные параметры</h4><table><tr><td>ВУЗ:</td><td id = 'chosen_uni_text'> </td></tr><tr><td>Дисциплина:</td><td id = 'chosen_subj_text'> </td></tr><tr><td>Преподаватель:</td><td id = 'chosen_teacher_text'> </td></tr><tr><td>Тип занятий:</td><td id = 'chosen_type_text'> </td></tr></table><div class = 'confirmation_buttons'><button id = 'start_evaluation'>Верно, начать оценивание</button> <button id= 'change_parameters'>Выбрать другие параметры</button></div></div>",
-            evaluation_window: '<div id ="evaluation_window"><p id="criteria_name"></p><div id="criteria_stars">Звездочки</div><button id="next_criteria">Дальше</button></div> '
+            evaluation_window_with_stars: '  <div id ="evaluation_window"> <p id="criteria_name"></p> <div id="criteria_stars"> <div class="stars" data-stars="1"> <svg height="50" width="50" class="star rating" data-rating="1"> <polygon id="star" points="23,0,28.290067270632257,15.718847050625474,44.874299874788534,15.892609129376208,31.559508646656383,25.781152949374526,36.519060802726884,41.60739087062379,23,32,9.48093919727312,41.60739087062379,14.440491353343619,25.78115294937453,1.1257001252114662,15.892609129376215,17.70993272936774,15.718847050625474" style="fill-rule:nonzero;"></polygon> </svg> <svg height="50" width="50" class="star rating" data-rating="2"> <polygon id="star" points="23,0,28.290067270632257,15.718847050625474,44.874299874788534,15.892609129376208,31.559508646656383,25.781152949374526,36.519060802726884,41.60739087062379,23,32,9.48093919727312,41.60739087062379,14.440491353343619,25.78115294937453,1.1257001252114662,15.892609129376215,17.70993272936774,15.718847050625474" style="fill-rule:nonzero;"></polygon> </svg> <svg height="50" width="50" class="star rating" data-rating="3"> <polygon id="star" points="23,0,28.290067270632257,15.718847050625474,44.874299874788534,15.892609129376208,31.559508646656383,25.781152949374526,36.519060802726884,41.60739087062379,23,32,9.48093919727312,41.60739087062379,14.440491353343619,25.78115294937453,1.1257001252114662,15.892609129376215,17.70993272936774,15.718847050625474" style="fill-rule:nonzero;"></polygon> </svg> <svg height="50" width="50" class="star rating" data-rating="4"> <polygon id="star" points="23,0,28.290067270632257,15.718847050625474,44.874299874788534,15.892609129376208,31.559508646656383,25.781152949374526,36.519060802726884,41.60739087062379,23,32,9.48093919727312,41.60739087062379,14.440491353343619,25.78115294937453,1.1257001252114662,15.892609129376215,17.70993272936774,15.718847050625474" style="fill-rule:nonzero;"></polygon> </svg> <svg height="50" width="50" class="star rating" data-rating="5"> <polygon id="star" points="23,0,28.290067270632257,15.718847050625474,44.874299874788534,15.892609129376208,31.559508646656383,25.781152949374526,36.519060802726884,41.60739087062379,23,32,9.48093919727312,41.60739087062379,14.440491353343619,25.78115294937453,1.1257001252114662,15.892609129376215,17.70993272936774,15.718847050625474" style="fill-rule:nonzero;"></polygon> </svg> </div> </div> <div id="next_criteria"> <button id ="next_criteria_button"> <svg width="31" height="28"> <path d="M21.205,5.007c-0.429-0.444-1.143-0.444-1.587,0c-0.429,0.429-0.429,1.143,0,1.571l8.047,8.047H1.111 C0.492,14.626,0,15.118,0,15.737c0,0.619,0.492,1.127,1.111,1.127h26.554l-8.047,8.032c-0.429,0.444-0.429,1.159,0,1.587 c0.444,0.444,1.159,0.444,1.587,0l9.952-9.952c0.444-0.429,0.444-1.143,0-1.571L21.205,5.007z" fill="#571457" data-original="#1e201d"/> </svg> </button> </div> </div> ',
+            evaluation_window_min: '         <div id ="evaluation_window"><p id="criteria_name"></p><div id="criteria_stars"><div class="stars" data-stars="1"></div></div><div id="next_criteria"></div></div>'
         }
 
         this.setElement = function(group, name, value) { //функция для записи элемента
@@ -207,29 +211,38 @@ export default class View {
 
     evaluationProcess(criterias) {
         var self = this;
-        this.app.insertAdjacentHTML("beforeend", '<div id="evaluation_field"></div>') //добавляем контейнер, где будут меняться критерии
+        this.app.insertAdjacentHTML("beforeend", '<div id="evaluation_field"></div>') //добавляем контейнер, где будут меняться критерии          
+        let i = 0;    
+        document.getElementById("evaluation_field").innerHTML = self.htmlLayouts.evaluation_window_with_stars;   //добавляем верстку со звездами, чтобы достать их  
+        let starsEl = document.querySelectorAll('.star.rating');
+        self.setElement(self.rateRouteElements, "stars", starsEl); //отправили звезды в конструктор
+        self.setElement(self.rateRouteElements, "next_criteria_button", document.getElementById('next_criteria_button')); //отправили стрелку в конструктор
+      
         
-        let sortedCriteria = criterias.sort();        
-        
-        let i = 0;
-        
-        this.criteriasIteration(i, sortedCriteria.length, sortedCriteria);
 
+        this.criteriasIteration(i, criterias.length, criterias);
     }
 
 
     //ЭТО РЕКУРСИВНЫЙ МЕТОД КЛАССА, ОХРЕНЕТЬ, ДА????
-    criteriasIteration(n, length, array) {        
+    criteriasIteration(n, length, array) { 
+             
         var self = this;
-        if (n == length) {            
+        if (n == length) { 
             return; //условие остановки
         } else {
-            document.getElementById("evaluation_field").innerHTML = self.htmlLayouts.evaluation_window;
+            document.getElementById("evaluation_field").innerHTML = self.htmlLayouts.evaluation_window_min;            
             document.getElementById('criteria_name').innerHTML = array[n];
+            //теперь добавляем звезды
+            for (let i = 0; i < self.rateRouteElements['stars'].length; i++) {
+                document.getElementsByClassName('stars')[0].appendChild(self.rateRouteElements['stars'][i]);
+                
+            }
+            document.getElementById('next_criteria').appendChild(self.rateRouteElements["next_criteria_button"]);
             n++;
-            document.getElementById("next_criteria").addEventListener('click', function(){
+            document.getElementById("next_criteria").onclick =  function(){
                 return self.criteriasIteration(n, length, array);
-            })
+            }
         }
     }
     

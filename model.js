@@ -3,11 +3,15 @@ export default class Model {
         this.view = view;  
         
         this.chosen_parameters = {};
+        this.evaluated_criterias = {}; //тут должны храниться критерии и оценки
     }    
     setChosenParameters(field, chosen_option) {
         this.chosen_parameters[field] = chosen_option;
     }
-  
+    setEvaluatedCriterias(criteria, value) {
+        this.evaluated_criterias[criteria] = value;
+        
+    }
 
     checkState () {
         return new Promise(resolve => firebase.auth().onAuthStateChanged(user => resolve(user)));       
@@ -71,12 +75,16 @@ export default class Model {
         this.view.chosenParamConfirm(Object.values(this.chosen_parameters)); //передаем во View итоговые параметры для подтверждения
     }
 
-    //TODO: нужен ли здесь асинк(зависит от контроллера)
+  
     async startEvaluation() {
         var self = this;
         //достаем в модели критерии для выбранного типа занятий и передаем во View
         this.getCriterias_Evaluation().then(result => {
-            self.view.evaluationProcess(Object.keys(result.data()));           
+            let sortedData = Object.keys(result.data()).sort();
+            for (let i=0; i<sortedData.length; i++) {
+                self.setEvaluatedCriterias(sortedData[i], null); //записываем в модель критерии
+            }
+            self.view.evaluationProcess(sortedData);           
         });
         
     }
