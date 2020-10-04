@@ -93,6 +93,19 @@ export default class Model {
         return new Promise(resolve => db.collection("Criterias").doc(this.chosen_parameters["type_of_class"]).get().then(documentSnapshot => resolve(documentSnapshot)));
     }
 
+    async askForComment() {
+        this.view.leave_comment();
+    }
+
+    async evaluationFinished() {
+        console.log(this.evaluated_criterias);
+        //TODO: отправить критерии по параметрам в firestore
+
+        //TODO: отобразить окошко с благодарностью и кнопкой "Оценить ещё"
+        let values = Object.entries(this.evaluated_criterias);
+        this.view.evaluation_closure(values);
+    }
+
 
     }
    

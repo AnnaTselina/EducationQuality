@@ -54,25 +54,31 @@ export default class Controller {
                 this.model.confirmEvaluation().then(this.rateRouteEventController());
             break;
             case "evaluation":      
-                var self = this;          
-               
+                var self = this;      
                 this.model.startEvaluation().then(function() {                    
                     setTimeout( () => {                                                                     
                         self.rateRouteEventController();
-                      }, 1000);
-                     
+                    }, 1000);
                     
                 })
                 break;
+            case "leaving_comment":
+                this.model.askForComment().then(this.rateRouteEventController());
+            break;
+
+            case "closing_window":
+                this.model.evaluationFinished().then(this.rateRouteEventController());
+            break;
          }        
      }
 
      rateRouteEventController() {
+        
          var self = this;
         //вешаем на управляющие элементы обработчики событий
         let elements = Object.entries(self.view.rateRouteElements);        
         for (var i=0; i< elements.length; i++) {
-           
+            
             if(elements[i][1].tagName === "SELECT") {
                 elements[i][1].addEventListener('change', function(e) {
                     self.model.handleChosenOption(e.target, e.target.options[e.target.selectedIndex].innerHTML);
@@ -81,7 +87,9 @@ export default class Controller {
                 elements[i][1].addEventListener("click", event =>{
                     
                     event.preventDefault();
-                    switch (event.target.id) {                      
+                    
+                    switch (event.target.id) {  
+                                           
                         case "evaluate_button": 
                             self.changeRateRouteState("confirmation"); //указываем состояние 
                             self.rateRoute();
@@ -99,7 +107,22 @@ export default class Controller {
                             let name_of_criteria = document.getElementById('criteria_name').innerHTML;
                             let value_for_criteria = document.getElementById('criteria_stars').firstChild.dataset.stars;                            
                             self.model.setEvaluatedCriterias(name_of_criteria, value_for_criteria);
-                            
+                            if (self.view.criteriaEvaluationState === "done") {
+                                self.changeRateRouteState('leaving_comment');
+                                self.rateRoute();
+                            };
+                        break;
+                        case "finish_evaluation":
+                            let commentField = document.getElementById("comment").value;
+                            if (commentField.length != 0) { //если комментарий есть
+                                self.model.setEvaluatedCriterias('comment', commentField);
+                            }                                
+                                self.changeRateRouteState('closing_window');
+                                self.rateRoute();                            
+                        break;
+                        case "evaluate_more":
+                            self.changeRateRouteState("parameters_choice");
+                            self.rateRoute();
                         break;
                         
                     }
@@ -110,9 +133,7 @@ export default class Controller {
                     elements[i][1].forEach(star => {
                         star.addEventListener('click', function(e) {                            
                             let starEl = e.currentTarget;           
-                            starEl.parentNode.setAttribute('data-stars', starEl.dataset.rating);
-                           
-                           
+                            starEl.parentNode.setAttribute('data-stars', starEl.dataset.rating);                           
                         });
                         })
                 }

@@ -28,13 +28,17 @@ export default class View {
         this.htmlLayouts = {
             get_parameters:  '<div id="parameters_choice"><form><h3>Выберите необходимые параметры:</h3><label>ВУЗ:</label><select id="uni_choice"><option value = "0"> </option></select><br><label>Дисциплина:</label><select id="subject_choice"><option value = "0"> </option></select><br><label>Преподаватель:</label><select id="teacher_choice"><option value = "0"> </option></select><br><label>Тип занятия:</label><select id="type_of_class"><option value = "0"> </option></select><br><button id="evaluate_button">Оценить</button></form></div>',
             confirmation_window: " <div id = 'confirmation_window'><h4>Подтвердите выбранные параметры</h4><table><tr><td>ВУЗ:</td><td id = 'chosen_uni_text'> </td></tr><tr><td>Дисциплина:</td><td id = 'chosen_subj_text'> </td></tr><tr><td>Преподаватель:</td><td id = 'chosen_teacher_text'> </td></tr><tr><td>Тип занятий:</td><td id = 'chosen_type_text'> </td></tr></table><div class = 'confirmation_buttons'><button id = 'start_evaluation'>Верно, начать оценивание</button> <button id= 'change_parameters'>Выбрать другие параметры</button></div></div>",
-            evaluation_window_with_stars: '  <div id ="evaluation_window"> <p id="criteria_name"></p> <div id="criteria_stars"> <div class="stars" data-stars="1"> <svg height="50" width="50" class="star rating" data-rating="1"> <polygon id="star" points="23,0,28.290067270632257,15.718847050625474,44.874299874788534,15.892609129376208,31.559508646656383,25.781152949374526,36.519060802726884,41.60739087062379,23,32,9.48093919727312,41.60739087062379,14.440491353343619,25.78115294937453,1.1257001252114662,15.892609129376215,17.70993272936774,15.718847050625474" style="fill-rule:nonzero;"></polygon> </svg> <svg height="50" width="50" class="star rating" data-rating="2"> <polygon id="star" points="23,0,28.290067270632257,15.718847050625474,44.874299874788534,15.892609129376208,31.559508646656383,25.781152949374526,36.519060802726884,41.60739087062379,23,32,9.48093919727312,41.60739087062379,14.440491353343619,25.78115294937453,1.1257001252114662,15.892609129376215,17.70993272936774,15.718847050625474" style="fill-rule:nonzero;"></polygon> </svg> <svg height="50" width="50" class="star rating" data-rating="3"> <polygon id="star" points="23,0,28.290067270632257,15.718847050625474,44.874299874788534,15.892609129376208,31.559508646656383,25.781152949374526,36.519060802726884,41.60739087062379,23,32,9.48093919727312,41.60739087062379,14.440491353343619,25.78115294937453,1.1257001252114662,15.892609129376215,17.70993272936774,15.718847050625474" style="fill-rule:nonzero;"></polygon> </svg> <svg height="50" width="50" class="star rating" data-rating="4"> <polygon id="star" points="23,0,28.290067270632257,15.718847050625474,44.874299874788534,15.892609129376208,31.559508646656383,25.781152949374526,36.519060802726884,41.60739087062379,23,32,9.48093919727312,41.60739087062379,14.440491353343619,25.78115294937453,1.1257001252114662,15.892609129376215,17.70993272936774,15.718847050625474" style="fill-rule:nonzero;"></polygon> </svg> <svg height="50" width="50" class="star rating" data-rating="5"> <polygon id="star" points="23,0,28.290067270632257,15.718847050625474,44.874299874788534,15.892609129376208,31.559508646656383,25.781152949374526,36.519060802726884,41.60739087062379,23,32,9.48093919727312,41.60739087062379,14.440491353343619,25.78115294937453,1.1257001252114662,15.892609129376215,17.70993272936774,15.718847050625474" style="fill-rule:nonzero;"></polygon> </svg> </div> </div> <div id="next_criteria"> <button id ="next_criteria_button"> <svg width="31" height="28"> <path d="M21.205,5.007c-0.429-0.444-1.143-0.444-1.587,0c-0.429,0.429-0.429,1.143,0,1.571l8.047,8.047H1.111 C0.492,14.626,0,15.118,0,15.737c0,0.619,0.492,1.127,1.111,1.127h26.554l-8.047,8.032c-0.429,0.444-0.429,1.159,0,1.587 c0.444,0.444,1.159,0.444,1.587,0l9.952-9.952c0.444-0.429,0.444-1.143,0-1.571L21.205,5.007z" fill="#571457" data-original="#1e201d"/> </svg> </button> </div> </div> ',
-            evaluation_window_min: '         <div id ="evaluation_window"><p id="criteria_name"></p><div id="criteria_stars"><div class="stars" data-stars="1"></div></div><div id="next_criteria"></div></div>'
+            evaluation_window_with_stars: '<div id ="evaluation_window"> <p id="criteria_name"></p> <div id="criteria_stars"> <div class="stars" data-stars="1"> <svg height="50" width="50" class="star rating" data-rating="1"> <polygon id="star" points="23,0,28.290067270632257,15.718847050625474,44.874299874788534,15.892609129376208,31.559508646656383,25.781152949374526,36.519060802726884,41.60739087062379,23,32,9.48093919727312,41.60739087062379,14.440491353343619,25.78115294937453,1.1257001252114662,15.892609129376215,17.70993272936774,15.718847050625474" style="fill-rule:nonzero;"></polygon> </svg> <svg height="50" width="50" class="star rating" data-rating="2"> <polygon id="star" points="23,0,28.290067270632257,15.718847050625474,44.874299874788534,15.892609129376208,31.559508646656383,25.781152949374526,36.519060802726884,41.60739087062379,23,32,9.48093919727312,41.60739087062379,14.440491353343619,25.78115294937453,1.1257001252114662,15.892609129376215,17.70993272936774,15.718847050625474" style="fill-rule:nonzero;"></polygon> </svg> <svg height="50" width="50" class="star rating" data-rating="3"> <polygon id="star" points="23,0,28.290067270632257,15.718847050625474,44.874299874788534,15.892609129376208,31.559508646656383,25.781152949374526,36.519060802726884,41.60739087062379,23,32,9.48093919727312,41.60739087062379,14.440491353343619,25.78115294937453,1.1257001252114662,15.892609129376215,17.70993272936774,15.718847050625474" style="fill-rule:nonzero;"></polygon> </svg> <svg height="50" width="50" class="star rating" data-rating="4"> <polygon id="star" points="23,0,28.290067270632257,15.718847050625474,44.874299874788534,15.892609129376208,31.559508646656383,25.781152949374526,36.519060802726884,41.60739087062379,23,32,9.48093919727312,41.60739087062379,14.440491353343619,25.78115294937453,1.1257001252114662,15.892609129376215,17.70993272936774,15.718847050625474" style="fill-rule:nonzero;"></polygon> </svg> <svg height="50" width="50" class="star rating" data-rating="5"> <polygon id="star" points="23,0,28.290067270632257,15.718847050625474,44.874299874788534,15.892609129376208,31.559508646656383,25.781152949374526,36.519060802726884,41.60739087062379,23,32,9.48093919727312,41.60739087062379,14.440491353343619,25.78115294937453,1.1257001252114662,15.892609129376215,17.70993272936774,15.718847050625474" style="fill-rule:nonzero;"></polygon> </svg> </div> </div> <div id="next_criteria"> <button id ="next_criteria_button"> <svg width="31" height="28"> <path d="M21.205,5.007c-0.429-0.444-1.143-0.444-1.587,0c-0.429,0.429-0.429,1.143,0,1.571l8.047,8.047H1.111 C0.492,14.626,0,15.118,0,15.737c0,0.619,0.492,1.127,1.111,1.127h26.554l-8.047,8.032c-0.429,0.444-0.429,1.159,0,1.587 c0.444,0.444,1.159,0.444,1.587,0l9.952-9.952c0.444-0.429,0.444-1.143,0-1.571L21.205,5.007z" fill="#571457" data-original="#1e201d"/> </svg> </button> </div> </div> ',
+            evaluation_window_min: '<div id ="evaluation_window"><p id="criteria_name"></p><div id="criteria_stars"><div class="stars" data-stars="1"></div></div><div id="next_criteria"></div></div>',
+            leave_comment_field: '<div id="leave_comment"><h3>Хотите ли вы оставить отзыв? </h3><p>Пожалуйста, помните об уважении. Комментарии, содержащие нецензурные выражения будут удаляться.</p><textarea id = "comment" placeholder = "Хороший преподаватель и занятия интересные..." maxlength = "300"></textarea><br><div class ="button_area"><button id="finish_evaluation">Готово</button></div></div>',
+            thank_you_window: ' <div id="thank_you_window"><h3>Спасибо за ваше мнение!</h3><p>Ваши оценки: </p><table></table><button id="evaluate_more">Оценить еще</button></div> '
         }
 
         this.setElement = function(group, name, value) { //функция для записи элемента
             group[name] = value;
         }
+
+        this.criteriaEvaluationState = null;
     }
 
     init() {
@@ -210,6 +214,12 @@ export default class View {
     }
 
     evaluationProcess(criterias) {
+        //удаляем 2 ненужные кнопки
+        document.getElementById("start_evaluation").remove();
+        document.getElementById("change_parameters").remove();
+        document.getElementById('confirmation_window').getElementsByTagName('h4')[0].innerHTML = "Выбранные параметры";
+
+
         var self = this;
         this.app.insertAdjacentHTML("beforeend", '<div id="evaluation_field"></div>') //добавляем контейнер, где будут меняться критерии          
         let i = 0;    
@@ -228,8 +238,10 @@ export default class View {
     criteriasIteration(n, length, array) { 
              
         var self = this;
-        if (n == length) { 
-            return; //условие остановки
+        if (n == length) { //условие остановки
+            
+            //self.leave_comment();            
+            return; 
         } else {
             document.getElementById("evaluation_field").innerHTML = self.htmlLayouts.evaluation_window_min;            
             document.getElementById('criteria_name').innerHTML = array[n];
@@ -241,12 +253,32 @@ export default class View {
             document.getElementById('next_criteria').appendChild(self.rateRouteElements["next_criteria_button"]);
             n++;
             document.getElementById("next_criteria").onclick =  function(){
+                if (n == (length-1)) {
+                    self.criteriaEvaluationState = 'done';
+                }
                 return self.criteriasIteration(n, length, array);
             }
+            
         }
     }
     
+    leave_comment() {        
+        document.getElementById("evaluation_field").innerHTML = this.htmlLayouts.leave_comment_field;
+        this.setElement(this.rateRouteElements, "finish_evaluation", document.getElementById('finish_evaluation'));
+    }
+
+    evaluation_closure(val) {
+        this.app.innerHTML = this.htmlLayouts.thank_you_window;
+        this.setElement(this.rateRouteElements, "evaluate_more", document.getElementById('evaluate_more'));
+        let table = document.getElementById('thank_you_window').getElementsByTagName('table')[0];
         
+        
+        for (let i=0; i<val.length; i++) {
+            table.insertAdjacentHTML('beforeend', "<tr><td>"+ val[i][0] + "</td><td>" +val[i][1] + "</td></tr")
+            console.log(val[i][0] + ': ' + val[i][1]);
+        }
+        
+    }
 
     }
 
