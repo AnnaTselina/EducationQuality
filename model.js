@@ -133,18 +133,19 @@ export default class Model {
                     setValues();
                 } else {
                     console.log('there is something');
+                    getValues().then(result => updateValues(result)); //получаем текущие значения полей и переписываем их
                 }
             });
 
       //функция в случае если не было оценок
         let setValues = function() {
         currentRef.set({
-            "Кол-во оценивших": 1,
+            "Количество оценивших": 1,
             "Общая оценка": avgPoint,
             "Оценившие": [currentUser],
             "Комментарии": []
         }).then(function() {             
-          if (comment) { //если есть коммент, то записываем его            
+          if (comment[currentUser]) { //если есть коммент, то записываем его            
             currentRef.update({
                 "Комментарии": [comment]                                  
             })
@@ -155,8 +156,56 @@ export default class Model {
             });
         }
         })
+        }
+        //функция автоматического инкрементирования в firesore
+        const increment = firebase.firestore.FieldValue.increment(1);
 
-    }
+        //функции в случае если оценки уже выставлялись
+        async function getValues() {            
+           return currentRef.get().then(function(doc){                
+               let curAvgPoint = doc.data()['Общая оценка']; //достаем текущую общую оценку
+               let curCriterias = doc.data()['Критерии']; //достаем текущие общие значения критериев
+               let curNumEval = doc.data()["Количество оценивших"] 
+               return [curAvgPoint, curCriterias, curNumEval];
+            });            
+        }
+
+        let updateValues = function(result) {
+            let curAvgPoint = result[0];
+            let curCriterias = Object.entries(result[1]);
+            let curNumEval = result[2];
+
+            let newCriterias = Object.entries(marks);
+            let finalCriterias = {};
+
+
+            //подсчитываем новые общие критерии перебрав оба массива
+            for (let i=0; i<curCriterias.length; i++) {
+                for (let j=0; j<newCriterias.length; j++) {                        
+                    if (curCriterias[i][0] === newCriterias[j][0]) {                        
+                        finalCriterias[curCriterias[i][0]] = ((Number(curCriterias[i][1])*curNumEval + Number(newCriterias[j][1]))/(curNumEval+1)).toFixed(1);
+                    }
+                }                
+            }
+            
+            
+
+            //находим новую общую оценку
+            let newAvgPoint = ((curAvgPoint*curNumEval + avgPoint)/(curNumEval+1)).toFixed(1); //(общая текущая оценка*текущее кол-во оценивших + средняя оценка от конкретного пользователя) / (текущее количество оценивших + текущий пользователь) .....ну и округляем до десятых
+            
+            currentRef.update({
+                "Количество оценивших": increment, //Инкрементируем количество оценивших
+                "Общая оценка": newAvgPoint, //записываем новую рассчитанную общую оценку
+                "Критерии": finalCriterias, //записываем новые общие оценки для критериев
+                "Оценившие": firebase.firestore.FieldValue.arrayUnion(currentUser) //добавляем нового пользователя в массив  (добавляется только в случае если до этого не был)              
+            }).then(function() {
+                if (comment[currentUser]) {                    
+                    currentRef.update({
+                        "Комментарии": firebase.firestore.FieldValue.arrayUnion(comment) //добавляем комментарий
+                    })
+                }
+            })
+        }
 
 
     }
