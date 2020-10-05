@@ -10,8 +10,6 @@ export default class Controller {
     }
 
     init() {
-       
-   
 
         //инициализируем event listeners для модального окна аутентификации
         this.view.bindCreateAccount(this.handleCreateAccount.bind(this));
@@ -19,34 +17,34 @@ export default class Controller {
         this.view.bindLogoutUser(this.handleLogoutUser.bind(this));
         }
 
-  
+
     //Вызов функции создания аккаунта в Model
     async handleCreateAccount(userEmail, userPass) {               
-       this.model.create_account(userEmail, userPass);            
+        this.model.create_account(userEmail, userPass);            
     }
 
     async handleLoginUser(userEmail, userPass) {             
         this.model.login(userEmail, userPass);        
-     }
+    }
 
-     handleLogoutUser() {               
+    handleLogoutUser() {               
         this.model.logout();                
-     }
+    }
 
      //функции для заполнения контента в блоке с id = "root" в зависимости от хэша в адресной строке (вызываются из роутера)
-     async infoRoute() {
+    async infoRoute() {
         console.log('This is infoRoute');
-     }
+    }
 
-     async showRatingRoute() {
+    async showRatingRoute() {
         console.log('This is showRatingRoute');
-     }
+    }
 
-     rateRoute() {  
-           
+    rateRoute() {  
+
          //сначала подгружаем верстку через модель, достаем необходимые элементы и вешаем листнеры на них, затем иницируем слушатель событий
-         let step = this.rateRouteState;
-         switch (step) {
+        let step = this.rateRouteState;
+        switch (step) {
             case "parameters_choice":
                 this.model.handleParameters().then(this.rateRouteEventController());
                 break;
@@ -69,12 +67,12 @@ export default class Controller {
             case "closing_window":
                 this.model.evaluationFinished().then(this.rateRouteEventController());
             break;
-         }        
-     }
+        }        
+    }
 
-     rateRouteEventController() {
+    rateRouteEventController() {
         
-         var self = this;
+        var self = this;
         //вешаем на управляющие элементы обработчики событий
         let elements = Object.entries(self.view.rateRouteElements);        
         for (var i=0; i< elements.length; i++) {
@@ -89,7 +87,6 @@ export default class Controller {
                     event.preventDefault();
                     
                     switch (event.target.id) {  
-                                           
                         case "evaluate_button": 
                             self.changeRateRouteState("confirmation"); //указываем состояние 
                             self.rateRoute();
@@ -103,10 +100,13 @@ export default class Controller {
                             self.rateRoute();
                         break;
                         case "next_criteria_button":
-                            //отправляем критерии в модель
+                            //отправляем критерии в модель  
+
                             let name_of_criteria = document.getElementById('criteria_name').innerHTML;
-                            let value_for_criteria = document.getElementById('criteria_stars').firstChild.dataset.stars;                            
+                            let value_for_criteria = document.getElementById('criteria_stars').firstChild.dataset.stars;
+                                                    
                             self.model.setEvaluatedCriterias(name_of_criteria, value_for_criteria);
+                            
                             if (self.view.criteriaEvaluationState === "done") {
                                 self.changeRateRouteState('leaving_comment');
                                 self.rateRoute();
@@ -115,7 +115,8 @@ export default class Controller {
                         case "finish_evaluation":
                             let commentField = document.getElementById("comment").value;
                             if (commentField.length != 0) { //если комментарий есть
-                                self.model.setEvaluatedCriterias('comment', commentField);
+                                self.model.setComment(commentField);
+
                             }                                
                                 self.changeRateRouteState('closing_window');
                                 self.rateRoute();                            
@@ -141,13 +142,10 @@ export default class Controller {
             
             
         } 
-     }
+    } 
+    
+    
 
-     getMarks() {
 
-     }
-
-     
-  
 }
 

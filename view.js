@@ -23,7 +23,7 @@ export default class View {
         this.rateRouteElements = {
             
         };
-      
+
         
         this.htmlLayouts = {
             get_parameters:  '<div id="parameters_choice"><form><h3>Выберите необходимые параметры:</h3><label>ВУЗ:</label><select id="uni_choice"><option value = "0"> </option></select><br><label>Дисциплина:</label><select id="subject_choice"><option value = "0"> </option></select><br><label>Преподаватель:</label><select id="teacher_choice"><option value = "0"> </option></select><br><label>Тип занятия:</label><select id="type_of_class"><option value = "0"> </option></select><br><button id="evaluate_button">Оценить</button></form></div>',
@@ -219,7 +219,6 @@ export default class View {
         document.getElementById("change_parameters").remove();
         document.getElementById('confirmation_window').getElementsByTagName('h4')[0].innerHTML = "Выбранные параметры";
 
-
         var self = this;
         this.app.insertAdjacentHTML("beforeend", '<div id="evaluation_field"></div>') //добавляем контейнер, где будут меняться критерии          
         let i = 0;    
@@ -227,24 +226,23 @@ export default class View {
         let starsEl = document.querySelectorAll('.star.rating');
         self.setElement(self.rateRouteElements, "stars", starsEl); //отправили звезды в конструктор
         self.setElement(self.rateRouteElements, "next_criteria_button", document.getElementById('next_criteria_button')); //отправили стрелку в конструктор
-      
-        
-
+        self.setElement(self.rateRouteElements, 'criteria_name', document.getElementById('criteria_name'));
         this.criteriasIteration(i, criterias.length, criterias);
     }
 
 
     //ЭТО РЕКУРСИВНЫЙ МЕТОД КЛАССА, ОХРЕНЕТЬ, ДА????
     criteriasIteration(n, length, array) { 
-             
+
         var self = this;
         if (n == length) { //условие остановки
             
             //self.leave_comment();            
             return; 
         } else {
-            document.getElementById("evaluation_field").innerHTML = self.htmlLayouts.evaluation_window_min;            
-            document.getElementById('criteria_name').innerHTML = array[n];
+            document.getElementById("evaluation_field").innerHTML = self.htmlLayouts.evaluation_window_min; 
+            document.getElementById('criteria_name').innerHTML = array[n]; 
+            
             //теперь добавляем звезды
             for (let i = 0; i < self.rateRouteElements['stars'].length; i++) {
                 document.getElementsByClassName('stars')[0].appendChild(self.rateRouteElements['stars'][i]);
@@ -261,6 +259,8 @@ export default class View {
             
         }
     }
+
+    
     
     leave_comment() {        
         document.getElementById("evaluation_field").innerHTML = this.htmlLayouts.leave_comment_field;
@@ -275,7 +275,7 @@ export default class View {
         
         for (let i=0; i<val.length; i++) {
             table.insertAdjacentHTML('beforeend', "<tr><td>"+ val[i][0] + "</td><td>" +val[i][1] + "</td></tr")
-            console.log(val[i][0] + ': ' + val[i][1]);
+            
         }
         
     }
