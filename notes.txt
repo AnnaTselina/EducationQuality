@@ -65,30 +65,7 @@
 
 
 
-        <div id ="evaluation_window">
-            <p id="criteria_name"></p>
-            <div id="criteria_stars"> 
-                <div class="stars" data-stars="1">
-                    
-                </div>
-            </div>
-            <div id="next_criteria">    
-                
-            </div>
-    </div>
-
-   
-        <div id ="evaluation_window"><p id="criteria_name"></p><div id="criteria_stars"><div class="stars" data-stars="1"></div></div><div id="next_criteria"></div></div>
-
-
-
-
-
-
-
-
-
-         <div id="leave_comment">
+        <div id="leave_comment">
                 <h3>Хотите ли вы оставить отзыв? </h3>
                 <p>Пожалуйста, помните об уважении. Комментарии, содержащие нецензурные выражения будут удаляться.</p>
                 <textarea id = "comment" placeholder = "Хороший преподаватель и занятия интересные..." maxlength = "300"></textarea><br>
@@ -109,3 +86,6 @@
        </div>
 
           <div id='thank_you_window'><h3>Спасибо за ваше мнение!</h3><p>Ваши оценки: </p><table></table><button id="evaluate_more">Оценить еще</button></div>  
+
+
+let starsEl = document.querySelectorAll('.star.rating');

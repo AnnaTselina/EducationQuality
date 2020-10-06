@@ -51,14 +51,9 @@ export default class Controller {
             case "confirmation":               
                 this.model.confirmEvaluation().then(this.rateRouteEventController());
             break;
-            case "evaluation":      
+            case "evaluation":      //TODO: вся фигня со звездами и стрелкой начинается здесь 
                 var self = this;      
-                this.model.startEvaluation().then(function() {                    
-                    setTimeout( () => {                                                                     
-                        self.rateRouteEventController();
-                    }, 1000);
-                    
-                })
+                this.model.startEvaluation().then(this.evaluationEventController());
                 break;
             case "leaving_comment":
                 this.model.askForComment().then(this.rateRouteEventController());
@@ -99,19 +94,10 @@ export default class Controller {
                             self.changeRateRouteState("parameters_choice");
                             self.rateRoute();
                         break;
-                        case "next_criteria_button":
+                        /*case "next_criteria_button": //TODO: ТУТ БАГ С INNERHTML
                             //отправляем критерии в модель  
 
-                            let name_of_criteria = document.getElementById('criteria_name').innerHTML;
-                            let value_for_criteria = document.getElementById('criteria_stars').firstChild.dataset.stars;
-                                                    
-                            self.model.setEvaluatedCriterias(name_of_criteria, value_for_criteria);
-                            
-                            if (self.view.criteriaEvaluationState === "done") {
-                                self.changeRateRouteState('leaving_comment');
-                                self.rateRoute();
-                            };
-                        break;
+                        break;*/
                         case "finish_evaluation":
                             let commentField = document.getElementById("comment").value;
                             if (commentField.length != 0) { //если комментарий есть
@@ -129,21 +115,38 @@ export default class Controller {
                     }
                 })
             } 
-            else if(typeof elements[i] === "object") {                
-                if (elements[i][0] === 'stars') {                    
-                    elements[i][1].forEach(star => {
-                        star.addEventListener('click', function(e) {                            
-                            let starEl = e.currentTarget;           
-                            starEl.parentNode.setAttribute('data-stars', starEl.dataset.rating);                           
-                        });
-                        })
-                }
-            }
             
             
         } 
     } 
     
+    evaluationEventController() {
+        var self = this;
+        document.addEventListener('click', function(e){                       
+            if (e.target.parentNode.tagName === 'svg'){
+                e.target.parentNode.parentNode.setAttribute('data-stars', e.target.parentNode.dataset.rating); 
+                
+            }
+            if(e.target.id === "next_criteria_button"){ 
+                //здесь операции по окончании рекурсии               
+                if (self.view.criteriaI > (Object.keys(self.model.evaluated_criterias).length)) {
+                     //записываем результат в модель
+                    let results = Object.entries(self.view.result_of_evaluation);
+                    for (let i=0; i<results.length; i++) {
+                        self.model.setEvaluatedCriterias(results[i][0], results[i][1]);
+                    }
+                    self.view.criteriaI = 0; //обнуляем счетчик итераций
+
+                    self.changeRateRouteState('leaving_comment');
+                    self.rateRoute();
+
+                }
+
+                
+                
+            };
+        })
+    }
     
 
 

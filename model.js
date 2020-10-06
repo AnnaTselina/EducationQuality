@@ -100,7 +100,9 @@ export default class Model {
         this.view.leave_comment();
     }
 
-    async evaluationFinished() {               
+    async evaluationFinished() {     
+        
+        //TODO:  отключили отправку данных в firebase
         this.sendData();      
         let values = Object.entries(this.evaluated_criterias);
         this.view.evaluation_closure(values);
