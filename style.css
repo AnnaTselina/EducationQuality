@@ -190,6 +190,12 @@ body {
     
 }
 
+#notifications {
+    height: 20px;
+    margin: 10px 0 20px 0;
+    color: rgb(189, 58, 58);
+}
+
 #evaluate_button {
     background: rgba(100, 46, 95, 0.116);
     font-family: 'Montserrat', sans-serif;

@@ -51,7 +51,7 @@ export default class Controller {
             case "confirmation":               
                 this.model.confirmEvaluation().then(this.rateRouteEventController());
             break;
-            case "evaluation":      //TODO: вся фигня со звездами и стрелкой начинается здесь 
+            case "evaluation":      
                 var self = this;      
                 this.model.startEvaluation().then(this.evaluationEventController());
                 break;
@@ -84,7 +84,7 @@ export default class Controller {
                     switch (event.target.id) {  
                         case "evaluate_button": 
                             self.changeRateRouteState("confirmation"); //указываем состояние 
-                            self.rateRoute();
+                            self.rateRoute(); 
                         break;
                         case "start_evaluation":
                             self.changeRateRouteState("evaluation");
@@ -94,10 +94,6 @@ export default class Controller {
                             self.changeRateRouteState("parameters_choice");
                             self.rateRoute();
                         break;
-                        /*case "next_criteria_button": //TODO: ТУТ БАГ С INNERHTML
-                            //отправляем критерии в модель  
-
-                        break;*/
                         case "finish_evaluation":
                             let commentField = document.getElementById("comment").value;
                             if (commentField.length != 0) { //если комментарий есть

@@ -24,7 +24,7 @@ export default class View {
 
         
         this.htmlLayouts = {
-            get_parameters:  '<div id="parameters_choice"><form><h3>Выберите необходимые параметры:</h3><label>ВУЗ:</label><select id="uni_choice"><option value = "0"> </option></select><br><label>Дисциплина:</label><select id="subject_choice"><option value = "0"> </option></select><br><label>Преподаватель:</label><select id="teacher_choice"><option value = "0"> </option></select><br><label>Тип занятия:</label><select id="type_of_class"><option value = "0"> </option></select><br><button id="evaluate_button">Оценить</button></form></div>',
+            get_parameters:  '<div id="parameters_choice"><form><h3>Выберите необходимые параметры:</h3><label>ВУЗ:</label><select id="uni_choice"><option value = "0"> </option></select><br><label>Дисциплина:</label><select id="subject_choice"><option value = "0"> </option></select><br><label>Преподаватель:</label><select id="teacher_choice"><option value = "0"> </option></select><br><label>Тип занятия:</label><select id="type_of_class"><option value = "0"> </option></select><br><div id="notifications"></div><button id="evaluate_button">Оценить</button></form></div>', 
             confirmation_window: " <div id = 'confirmation_window'><h4>Подтвердите выбранные параметры</h4><table><tr><td>ВУЗ:</td><td id = 'chosen_uni_text'> </td></tr><tr><td>Дисциплина:</td><td id = 'chosen_subj_text'> </td></tr><tr><td>Преподаватель:</td><td id = 'chosen_teacher_text'> </td></tr><tr><td>Тип занятий:</td><td id = 'chosen_type_text'> </td></tr></table><div class = 'confirmation_buttons'><button id = 'start_evaluation'>Верно, начать оценивание</button> <button id= 'change_parameters'>Выбрать другие параметры</button></div></div>",
             evaluation_window: '<div id ="evaluation_window"> <p id="criteria_name"></p> <div id="criteria_stars"> <div class="stars" data-stars="1"> <svg height="50" width="50" class="star rating" data-rating="1"> <polygon id="star" points="23,0,28.290067270632257,15.718847050625474,44.874299874788534,15.892609129376208,31.559508646656383,25.781152949374526,36.519060802726884,41.60739087062379,23,32,9.48093919727312,41.60739087062379,14.440491353343619,25.78115294937453,1.1257001252114662,15.892609129376215,17.70993272936774,15.718847050625474" style="fill-rule:nonzero;"></polygon> </svg> <svg height="50" width="50" class="star rating" data-rating="2"> <polygon id="star" points="23,0,28.290067270632257,15.718847050625474,44.874299874788534,15.892609129376208,31.559508646656383,25.781152949374526,36.519060802726884,41.60739087062379,23,32,9.48093919727312,41.60739087062379,14.440491353343619,25.78115294937453,1.1257001252114662,15.892609129376215,17.70993272936774,15.718847050625474" style="fill-rule:nonzero;"></polygon> </svg> <svg height="50" width="50" class="star rating" data-rating="3"> <polygon id="star" points="23,0,28.290067270632257,15.718847050625474,44.874299874788534,15.892609129376208,31.559508646656383,25.781152949374526,36.519060802726884,41.60739087062379,23,32,9.48093919727312,41.60739087062379,14.440491353343619,25.78115294937453,1.1257001252114662,15.892609129376215,17.70993272936774,15.718847050625474" style="fill-rule:nonzero;"></polygon> </svg> <svg height="50" width="50" class="star rating" data-rating="4"> <polygon id="star" points="23,0,28.290067270632257,15.718847050625474,44.874299874788534,15.892609129376208,31.559508646656383,25.781152949374526,36.519060802726884,41.60739087062379,23,32,9.48093919727312,41.60739087062379,14.440491353343619,25.78115294937453,1.1257001252114662,15.892609129376215,17.70993272936774,15.718847050625474" style="fill-rule:nonzero;"></polygon> </svg> <svg height="50" width="50" class="star rating" data-rating="5"> <polygon id="star" points="23,0,28.290067270632257,15.718847050625474,44.874299874788534,15.892609129376208,31.559508646656383,25.781152949374526,36.519060802726884,41.60739087062379,23,32,9.48093919727312,41.60739087062379,14.440491353343619,25.78115294937453,1.1257001252114662,15.892609129376215,17.70993272936774,15.718847050625474" style="fill-rule:nonzero;"></polygon> </svg> </div> </div> <div id="next_criteria"> <button id ="next_criteria_button"> <svg width="31" height="28"> <path d="M21.205,5.007c-0.429-0.444-1.143-0.444-1.587,0c-0.429,0.429-0.429,1.143,0,1.571l8.047,8.047H1.111 C0.492,14.626,0,15.118,0,15.737c0,0.619,0.492,1.127,1.111,1.127h26.554l-8.047,8.032c-0.429,0.444-0.429,1.159,0,1.587 c0.444,0.444,1.159,0.444,1.587,0l9.952-9.952c0.444-0.429,0.444-1.143,0-1.571L21.205,5.007z" fill="#571457" data-original="#1e201d"/> </svg> </button> </div> </div> ',
             leave_comment_field: '<div id="leave_comment"><h3>Хотите ли вы оставить отзыв? </h3><p>Пожалуйста, помните об уважении. Комментарии, содержащие нецензурные выражения будут удаляться.</p><textarea id = "comment" placeholder = "Хороший преподаватель и занятия интересные..." maxlength = "300"></textarea><br><div class ="button_area"><button id="finish_evaluation">Готово</button></div></div>',
@@ -127,9 +127,12 @@ export default class View {
 
     handleParameterTypes(field, chosen_option) {
         var self = this;    
-        
+        var notification = document.createElement('p');
+        notification.innerHTML = "Вы уже оценивали по данным параметрам. Пожалуйста, выберите другие."
+
         switch (field.id) {
-            case "uni_choice":                
+            case "uni_choice":
+                document.getElementById('notifications').innerHTML = " ";                
                 //чистим имеющиеся опции в полях ниже 
                 self.rateRouteElements["subject_choice"].innerHTML = "<option value = '0'> </option>";
                 self.rateRouteElements["teacher_choice"].innerHTML = "<option value = '0'> </option>";
@@ -146,6 +149,7 @@ export default class View {
                 break;
 
             case "subject_choice":
+                document.getElementById('notifications').innerHTML = " ";  
                 //чистим имеющиеся опции в полях ниже 
                 self.rateRouteElements["teacher_choice"].innerHTML = "<option value = '0'> </option>";
                 self.rateRouteElements["type_choice"].innerHTML = "<option value = '0'> </option>";
@@ -161,6 +165,7 @@ export default class View {
                 break;
 
             case "teacher_choice":
+                document.getElementById('notifications').innerHTML = " ";  
                 //чистим имеющиеся опции в полях ниже           
                 self.rateRouteElements["type_choice"].innerHTML = "<option value = '0'> </option>";
                 //Добавляем нужные опции в поле "Тип"
@@ -175,16 +180,29 @@ export default class View {
                 break;
 
             case "type_of_class":
-                this.parametersFieldCheckup();
+                document.getElementById('notifications').innerHTML = " "; 
+                //ЗДЕСЬ ДЕЛАЕМ ПРОВЕРКУ ОЦЕНИВАЛ ЛИ ПОЛЬЗОВАТЕЛЬ РАНЬШЕ ПО ЭТИМ ПАРАМЕТРАМ И В ЗАВИСИМОСТИ ОТ РЕЗУЛЬТАТА РАЗДИЗЕЙБЛИВАЕМ КНОПКУ ИЛИ ПИШЕМ УВЕДОМЛЕНИЕ
+                self.model.checkUserPast().then(result => {                    
+                    if (result == 0) { //если все ок
+                        while (document.getElementById('notifications').firstChild) {
+                            document.getElementById('notifications').removeChild(document.getElementById('notifications').firstChild);
+                        }
+                        this.parametersFieldCheckup(); 
+                    } else {
+                        document.getElementById('notifications').appendChild(notification);
+                        this.parametersFieldCheckup("disable"); 
+                    }
+                })
                 break;
+
         }
         
     }
 
     //Функция дизейбливания кнопки в зависимости от заполненности полей
-    parametersFieldCheckup() {                              
+    parametersFieldCheckup(state) {                              
         var submit_button = this.rateRouteElements["submit_button"];            
-        if (this.rateRouteElements["type_choice"].value.length == 1) {
+        if (this.rateRouteElements["type_choice"].value.length == 1 || state == "disable") {
             submit_button.disabled = true;
             submit_button.style.backgroundColor = '#fff';
             submit_button.style.color = 'rgb(87, 20, 87)';
@@ -250,7 +268,6 @@ export default class View {
                 let value_for_criteria = document.getElementsByClassName('stars')[0].dataset.stars;                 
                 self.write_result_of_evaluation(name_of_criteria, value_for_criteria);
                 
-
                 return self.criteriasIteration(length, array);
             }
             

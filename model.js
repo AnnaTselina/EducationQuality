@@ -74,6 +74,25 @@ export default class Model {
         return new Promise(resolve => db.collection("Universities").doc(uni).collection("Subjects").doc(subj).collection("teachers").doc(teacher).collection("TypeOfClass").get().then(querySnapshot => resolve(querySnapshot)));
     }
 
+//ФУНКЦИЯ ПРОВЕРКИ ОЦЕНИВАЛ ЛИ ПОЛЬЗОВАТЕЛЬ СУЩНОСТЬ РАНЬШЕ
+    async checkUserPast(){        
+        return db.collection("Universities").doc(this.chosen_parameters["uni_choice"]).collection("Subjects").doc(this.chosen_parameters["subject_choice"]).collection("teachers").doc(this.chosen_parameters["teacher_choice"]).collection("TypeOfClass").doc(this.chosen_parameters["type_of_class"]).get().then(documentSnapshot => {
+            if (Object.keys(documentSnapshot.data()).length == 0){ //если документ пока пустой, то все ок
+                return 0;  //0-все ок, 1 -пользователь уже оценивал
+            } else {
+                let list = documentSnapshot.data()["Оценившие"];
+                if (list.includes(firebase.auth().currentUser.email)) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+            
+        })
+        
+    }
+
+
     async confirmEvaluation(){        
         this.view.chosenParamConfirm(Object.values(this.chosen_parameters)); //передаем во View итоговые параметры для подтверждения
     }
@@ -100,9 +119,7 @@ export default class Model {
         this.view.leave_comment();
     }
 
-    async evaluationFinished() {     
-        
-        //TODO:  отключили отправку данных в firebase
+    async evaluationFinished() {  
         this.sendData();      
         let values = Object.entries(this.evaluated_criterias);
         this.view.evaluation_closure(values);
@@ -164,11 +181,11 @@ export default class Model {
 
         //функции в случае если оценки уже выставлялись
         async function getValues() {            
-           return currentRef.get().then(function(doc){                
-               let curAvgPoint = doc.data()['Общая оценка']; //достаем текущую общую оценку
-               let curCriterias = doc.data()['Критерии']; //достаем текущие общие значения критериев
-               let curNumEval = doc.data()["Количество оценивших"] 
-               return [curAvgPoint, curCriterias, curNumEval];
+            return currentRef.get().then(function(doc){                
+                let curAvgPoint = doc.data()['Общая оценка']; //достаем текущую общую оценку
+                let curCriterias = doc.data()['Критерии']; //достаем текущие общие значения критериев
+                let curNumEval = doc.data()["Количество оценивших"] 
+                return [curAvgPoint, curCriterias, curNumEval];
             });            
         }
 
@@ -212,9 +229,6 @@ export default class Model {
 
     }
 
-    getCurrentState() {
-        return new Promise(resolve => db.collection("Universities").doc(this.chosen_parameters["uni_choice"]).collection("Subjects").doc(this.chosen_parameters["subject_choice"]).collection("teachers").doc(this.chosen_parameters["teacher_choice"]).collection("TypeOfClass").doc(this.chosen_parameters["type_of_class"]).get().then(documentSnapshot => resolve(documentSnapshot.data())));
-    }
 
 
     }
