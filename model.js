@@ -15,6 +15,11 @@ export default class Model {
     setComment(com) {
         this.addedComment = com;
     }
+    async cleanData() {
+        this.chosen_parameters = {};
+        this.evaluated_criterias = {}; //тут должны храниться критерии и оценки
+        this.addedComment = null;
+    }
 
     checkState () {
         return new Promise(resolve => firebase.auth().onAuthStateChanged(user => resolve(user)));       
@@ -121,12 +126,11 @@ export default class Model {
 
     async evaluationFinished() {  
         this.sendData();      
-        let values = Object.entries(this.evaluated_criterias);
-        this.view.evaluation_closure(values);
-        //очищаем данные
-        this.chosen_parameters = {};
-        this.evaluated_criterias = {};
-        this.addedComment = null;
+        let values = Object.entries(this.evaluated_criterias);      
+        let comment = this.addedComment;
+        this.cleanData();
+        this.view.evaluation_closure(values, comment); 
+        
     }
 
     //отправка оценок в Firestore
@@ -147,11 +151,9 @@ export default class Model {
         
         let currentRef = db.collection("Universities").doc(self.chosen_parameters["uni_choice"]).collection("Subjects").doc(self.chosen_parameters["subject_choice"]).collection("teachers").doc(self.chosen_parameters["teacher_choice"]).collection("TypeOfClass").doc(self.chosen_parameters["type_of_class"]);
             currentRef.get().then(documentSnapshot => {           
-                if (Object.keys(documentSnapshot.data()).length == 0) { //если до этого никогда не оценивали
-                    console.log('never evaluated before');
+                if (Object.keys(documentSnapshot.data()).length == 0) { //если до этого никогда не оценивали                   
                     setValues();
-                } else {
-                    console.log('there is something');
+                } else {                   
                     getValues().then(result => updateValues(result)); //получаем текущие значения полей и переписываем их
                 }
             });

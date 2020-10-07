@@ -127,12 +127,12 @@ export default class Controller {
                 //здесь операции по окончании рекурсии               
                 if (self.view.criteriaI > (Object.keys(self.model.evaluated_criterias).length)) {
                      //записываем результат в модель
-                    let results = Object.entries(self.view.result_of_evaluation);
+                    let results = Object.entries(self.view.result_of_evaluation);                    
                     for (let i=0; i<results.length; i++) {
                         self.model.setEvaluatedCriterias(results[i][0], results[i][1]);
                     }
                     self.view.criteriaI = 0; //обнуляем счетчик итераций
-
+                    self.view.result_of_evaluation = {}; // обнуляем результаты оценки
                     self.changeRateRouteState('leaving_comment');
                     self.rateRoute();
 

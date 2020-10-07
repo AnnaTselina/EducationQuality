@@ -281,16 +281,18 @@ export default class View {
         this.setElement(this.rateRouteElements, "finish_evaluation", document.getElementById('finish_evaluation'));
     }
 
-    evaluation_closure(val) {
+    evaluation_closure(val, com) {
+        
         this.app.innerHTML = this.htmlLayouts.thank_you_window;
         this.setElement(this.rateRouteElements, "evaluate_more", document.getElementById('evaluate_more'));
-        let table = document.getElementById('thank_you_window').getElementsByTagName('table')[0];
-        
-        
+        let table = document.getElementById('thank_you_window').getElementsByTagName('table')[0];    
         for (let i=0; i<val.length; i++) {
-            table.insertAdjacentHTML('beforeend', "<tr><td>"+ val[i][0] + "</td><td>" +val[i][1] + "</td></tr")
-            
+            table.insertAdjacentHTML('beforeend', "<tr><td>"+ val[i][0] + "</td><td>" +val[i][1] + "</td></tr");            
         }
+        if (com !== null) {
+            table.insertAdjacentHTML('beforeend', "<tr><td>Комментарий: </td><td> " + com + "</td></tr")
+        } 
+
         
     }
 
