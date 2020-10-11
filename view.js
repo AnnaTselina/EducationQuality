@@ -335,12 +335,85 @@ export default class View {
         img.src = "http://bseu.by/personalpages/Lavrova/lavrova.jpg";
         img.className += 'personalPhoto';
         card.appendChild(img);
-        let otherText = '<p>Дисциплина: <span id="subject_name">' + data['Дисциплина'] +'</span></p><p>Преподаватель: <span id = "teacher_name">'+ data['Преподаватель']+'</span></p><p>Тип занятия: <span id="type_of_class_name">'+ data['Тип занятия']+ '</span></p><p>Общая оценка: <span id="average_point">'+ data['Общая оценка']+'</span></p><p>Количество оценок: <span id="number_of_evaluations">'+ data['Количество оценивших']+'</span></p><button class="show">Просмотреть</button>'
+        let otherText = '<p>Дисциплина: <span id="subject_name">' + data['Дисциплина'] +'</span></p><p>Преподаватель: <span id = "teacher_name">'+ data['Преподаватель']+'</span></p><p>Тип занятия: <span id="type_of_class_name">'+ data['Тип занятия']+ '</span></p><p>Общая оценка: <span id="average_point">'+ data['Общая оценка']+'</span></p><p>Количество оценок: <span id="number_of_evaluations">'+ data['Количество оценивших']+'</span></p>'
         card.insertAdjacentHTML('beforeend', otherText);
-
+        let button = document.createElement('button');
+        button.className += "show";
+        button.innerHTML = "Просмотреть";
+        card.appendChild(button);
         this.showRatingElements['littleCardsBox'].appendChild(card);
+        var self = this;    
+        button.addEventListener('click', function() {
+                self.showMoreInformation(data);
+            })
         })
         
+    }
+
+    showMoreInformation(d){
+        //тут все модальное окно
+        let modal = document.createElement('div');
+        modal.className += 'modal';
+
+        let modalContent = document.createElement('div');
+        modalContent.className += 'bigCard';
+        let img = document.createElement('img');
+        img.src = "http://bseu.by/personalpages/Lavrova/lavrova.jpg";
+        img.className += 'personalPhoto';
+        modalContent.appendChild(img);
+        let otherText = '<table><tr><td>Дисциплина: </td><td>'+ d['Дисциплина'] +'</td></tr><tr><td>Преподаватель: </td><td>'+ d['Преподаватель'] +'</td></tr><tr><td>Тип занятия: </td><td>'+ d['Тип занятия'] +'</td></tr><tr><td>Общая оценка: </td><td>' + d['Общая оценка']+ '</td></tr><tr><td>Количество оценивших: </td><td>'+d['Количество оценивших']+'</td></tr></table>';
+        modalContent.insertAdjacentHTML('beforeend', otherText);
+        let criteriaHeading = document.createElement('p');
+        criteriaHeading.innerHTML = 'Критерии:';
+        criteriaHeading.style.textAlign = "center";
+        modalContent.appendChild(criteriaHeading);
+        let criteriaTable = document.createElement('table');
+        criteriaTable.style.margin = "0 auto";
+        let criterias = Object.entries(d['Критерии']);
+        for (let i =0; i< criterias.length; i++) {
+            let row = '<tr><td>'+ criterias[i][0] +'</td><td>'+ criterias[i][1] +'</td></tr>';
+            criteriaTable.insertAdjacentHTML('beforeend', row);
+        }
+        modalContent.appendChild(criteriaTable);
+
+
+        let commentHeading = document.createElement('p');
+        commentHeading.innerHTML = "Комментарии";
+        modalContent.appendChild(commentHeading);
+        
+        if (d["Комментарии"]. length != 0){    
+            for (let i = 0; i<d["Комментарии"].length; i++) {
+                
+                let commentBlock = document.createElement('div');
+                let commentName = document.createElement('p');
+                commentName.innerHTML = Object.keys(d["Комментарии"][i])[0];
+                let commentContent = document.createElement('p');
+                commentContent.innerHTML = Object.values(d["Комментарии"][i])[0];
+                commentBlock.appendChild(commentName);
+                commentBlock.appendChild(commentContent);
+                modalContent.appendChild(commentBlock);
+            }   
+
+        } else {
+            let noComment = document.createElement('p');
+            noComment.innerHTML = "Комментариев нет";
+            modalContent.appendChild(noComment);
+        }
+        
+
+        let closeButton = document.createElement('button');
+        closeButton.innerHTML = 'Скрыть';
+        modalContent.appendChild(closeButton);
+
+        
+
+        modal.appendChild(modalContent);
+        this.showRatingElements['littleCardsBox'].appendChild(modal);
+
+        var self = this;
+        closeButton.addEventListener('click', function() {
+            self.showRatingElements['littleCardsBox'].removeChild(modal);
+        })
     }
     
 

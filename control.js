@@ -156,13 +156,17 @@ export default class Controller {
                 elements["textBoxSearch"].disabled = false;
             } else {
                 elements["textBoxSearch"].disabled = true;
-            }
-            
-           
+            }      
         })
-
         elements["textBoxSearch"].addEventListener('keyup', async (e) => await this.model.searchByName(e.target.value));
         
+        /*
+        elements['littleCardsBox'].addEventListener('click', function(event) {
+            let target = event.target;            
+            if(target.classList.contains('show')) {
+                console.log(target.parentNode);
+            }
+        })*/
     }
 
 
