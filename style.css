@@ -399,3 +399,69 @@ body {
     color: rgb(87, 20, 87);
     cursor: pointer;
 }
+
+
+
+/*Show rating route*/
+#choose_uni {
+    width: 10%;
+    height: 40px;
+    
+}
+
+#textBoxSearch {
+    height: 40px;
+    width: 80%;
+    display: block;
+    float: right;
+    box-sizing: border-box;
+    padding: 5px;
+}
+
+/*блок с маленькими карточками*/
+#littleCardsBox {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+/*Оформление маленькой карточки*/
+.littleCard {
+    margin-top: 20px;
+    background-color: rgb(255, 255, 255);
+    padding: 30px;
+    border: 2px solid rgb(87, 20, 87);
+    border-radius: 10px;
+    box-shadow: 2px 2px 3px 2px darkgrey;
+    width: 400px;
+}
+
+.littleCard .personalPhoto {
+    height: 100px;
+    float: left;
+    margin-right: 20px;
+}
+
+.littleCard p {
+    color: rgb(87, 20, 87);
+    margin-bottom: 7px;     
+}
+
+.littleCard button {
+    display: block;
+    margin: 0 auto;
+    margin-top: 10px;
+    background: rgb(87, 20, 87);
+    color: #fff;   
+    border-radius: 5px;
+    padding: 10px;      
+    transition: 0.3s;
+    border: 1px solid rgb(87, 20, 87);    
+    font-size: 16px;
+}
+.littleCard button:hover {
+    background-color: rgb(220, 147, 235);
+    color: rgb(87, 20, 87);
+    cursor: pointer;
+
+}

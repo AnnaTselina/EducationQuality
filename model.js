@@ -5,6 +5,10 @@ export default class Model {
         this.chosen_parameters = {};
         this.evaluated_criterias = {}; //тут должны храниться критерии и оценки
         this.addedComment = null;
+
+
+        //showRatingRoute
+        this.uniToSearchIn = null;
     }    
     setChosenParameters(field, chosen_option) {
         this.chosen_parameters[field] = chosen_option;
@@ -15,6 +19,8 @@ export default class Model {
     setComment(com) {
         this.addedComment = com;
     }
+    
+
     async cleanData() {
         this.chosen_parameters = {};
         this.evaluated_criterias = {}; //тут должны храниться критерии и оценки
@@ -56,6 +62,7 @@ export default class Model {
 
     /*методы для RateRoute*/ 
     async handleParameters(){
+        //TODO: ТУТ НАЧИНАЕТСЯ ВЗАИМОДЕЙСТВИЕ С RATErOUTE
        this.view.workWithRatingParameters(); //запускаем окошко с параметрами для выбора         
     }
 
@@ -65,23 +72,24 @@ export default class Model {
     }
 
     getParameters_Uni() {        
-        return new Promise(resolve => db.collection("Universities").get().then(querySnapshot => resolve(querySnapshot)));             
+        return new Promise(resolve => db.collection("Lists").get().then(querySnapshot => resolve(querySnapshot)));             
     }
 
     getParameters_Subj(uni) {
-        return new Promise(resolve => db.collection("Universities").doc(uni).collection("Subjects").get().then(querySnapshot => resolve(querySnapshot)));
+        return new Promise(resolve => db.collection("Lists").doc(uni).collection("Subjects").get().then(querySnapshot => resolve(querySnapshot)));
     }
-    
+
     getParameters_Teacher(uni, subj) {
-        return new Promise(resolve => db.collection("Universities").doc(uni).collection("Subjects").doc(subj).collection("teachers").get().then(querySnapshot => resolve(querySnapshot)));
+        return new Promise(resolve => db.collection("Lists").doc(uni).collection("Subjects").doc(subj).collection("teachers").get().then(querySnapshot => resolve(querySnapshot)));
     } 
+    
     getParameters_TypeOfClass(uni, subj, teacher) {
-        return new Promise(resolve => db.collection("Universities").doc(uni).collection("Subjects").doc(subj).collection("teachers").doc(teacher).collection("TypeOfClass").get().then(querySnapshot => resolve(querySnapshot)));
+        return new Promise(resolve => db.collection("Lists").doc(uni).collection("Subjects").doc(subj).collection("teachers").doc(teacher).collection("TypeOfClass").get().then(querySnapshot => resolve(querySnapshot)));
     }
 
 //ФУНКЦИЯ ПРОВЕРКИ ОЦЕНИВАЛ ЛИ ПОЛЬЗОВАТЕЛЬ СУЩНОСТЬ РАНЬШЕ
     async checkUserPast(){        
-        return db.collection("Universities").doc(this.chosen_parameters["uni_choice"]).collection("Subjects").doc(this.chosen_parameters["subject_choice"]).collection("teachers").doc(this.chosen_parameters["teacher_choice"]).collection("TypeOfClass").doc(this.chosen_parameters["type_of_class"]).get().then(documentSnapshot => {
+        return db.collection("Lists").doc(this.chosen_parameters["uni_choice"]).collection("Subjects").doc(this.chosen_parameters["subject_choice"]).collection("teachers").doc(this.chosen_parameters["teacher_choice"]).collection("TypeOfClass").doc(this.chosen_parameters["type_of_class"]).get().then(documentSnapshot => {
             if (Object.keys(documentSnapshot.data()).length == 0){ //если документ пока пустой, то все ок
                 return 0;  //0-все ок, 1 -пользователь уже оценивал
             } else {
@@ -134,7 +142,7 @@ export default class Model {
     }
 
     //отправка оценок в Firestore
-    sendData(){   
+    async sendData(){   
         var self = this;
         //считаем общий балл
         const reducer = (accumulator, currentValue) => accumulator + currentValue;
@@ -147,54 +155,92 @@ export default class Model {
             [currentUser]: self.addedComment
         };
         let marks = self.evaluated_criterias;
+        let parameters = self.chosen_parameters;
+        
+
+        let surnameOfTeacher = parameters["teacher_choice"].split(" ", 1);
+        let valuesForKeywords = [surnameOfTeacher[0], parameters["subject_choice"]];
         
         
-        let currentRef = db.collection("Universities").doc(self.chosen_parameters["uni_choice"]).collection("Subjects").doc(self.chosen_parameters["subject_choice"]).collection("teachers").doc(self.chosen_parameters["teacher_choice"]).collection("TypeOfClass").doc(self.chosen_parameters["type_of_class"]);
+        let currentRef = db.collection("Lists").doc(parameters["uni_choice"]).collection("Subjects").doc(parameters["subject_choice"]).collection("teachers").doc(parameters["teacher_choice"]).collection("TypeOfClass").doc(parameters["type_of_class"]);
             currentRef.get().then(documentSnapshot => {           
-                if (Object.keys(documentSnapshot.data()).length == 0) { //если до этого никогда не оценивали                   
-                    setValues();
-                } else {                   
-                    getValues().then(result => updateValues(result)); //получаем текущие значения полей и переписываем их
+                if (Object.keys(documentSnapshot.data()).length == 0) { //если до этого никогда не оценивали   
+                                        
+                    let keywords = self.generateKeywords(valuesForKeywords); 
+                    //запрашиваем ссылку на фотографию и вызываем функцию создания документа       
+                    let photo = db.collection("Lists").doc(parameters["uni_choice"]).collection("Subjects").doc(parameters["subject_choice"]).collection("teachers").doc(parameters["teacher_choice"]).get().then(documentSnapshot => {
+                        return documentSnapshot.data()["photoURL"];
+                    }); 
+                    photo.then(res => {
+                        setValues(keywords, res);
+                    })       
+                    
+                } else {    
+                    //находим документ
+                    let r = db.collection(parameters["uni_choice"]);
+                    let q = r.where("Дисциплина", "==", parameters["subject_choice"]).where("Преподаватель", "==", parameters["teacher_choice"]).where("Тип занятия", "==", parameters["type_of_class"]);               
+                    //getValues(ref, query).then(result => console.log(result)/*updateValues(result)*/); //получаем текущие значения полей и переписываем их
+                    updateValues(r, q);
                 }
             });
-
+        
       //функция в случае если не было оценок
-        let setValues = function() {
-        currentRef.set({
-            "Количество оценивших": 1,
-            "Общая оценка": avgPoint,
-            "Оценившие": [currentUser],
-            "Комментарии": []
-        }).then(function() {             
-          if (comment[currentUser]) { //если есть коммент, то записываем его            
-            currentRef.update({
-                "Комментарии": [comment]                                  
+        let setValues = function(keyv, ph) {
+            
+            //генерируем новый документ
+            var newRef = db.collection(parameters["uni_choice"]).doc();        
+            newRef.set({
+                "keywords": keyv,
+                "Дисциплина": parameters["subject_choice"],
+                "Преподаватель": parameters["teacher_choice"],
+                "Тип занятия": parameters["type_of_class"],
+                "Количество оценивших": 1,
+                "Общая оценка": avgPoint,          
+                "Комментарии": [],
+                "photoURL": ph,
+            }).then(function() {             
+            if (comment[currentUser]) { //если есть коммент, то записываем его            
+                newRef.update({
+                    "Комментарии": [comment]                                  
+                })
+            } 
+            for(let i =0; i < Object.entries(marks).length; i++) {
+                newRef.update({
+                    "Критерии": marks
+                });
+            }
             })
-        } 
-        for(let i =0; i < Object.entries(marks).length; i++) {
-            currentRef.update({
-                "Критерии": marks
-            });
-        }
-        })
+            //добавляем оценившего в список в Lists
+            currentRef.set({
+                "Оценившие": [currentUser]
+            })
+
         }
         //функция автоматического инкрементирования в firesore
         const increment = firebase.firestore.FieldValue.increment(1);
 
         //функции в случае если оценки уже выставлялись
-        async function getValues() {            
-            return currentRef.get().then(function(doc){                
-                let curAvgPoint = doc.data()['Общая оценка']; //достаем текущую общую оценку
-                let curCriterias = doc.data()['Критерии']; //достаем текущие общие значения критериев
-                let curNumEval = doc.data()["Количество оценивших"] 
-                return [curAvgPoint, curCriterias, curNumEval];
-            });            
+        async function getValues(que) {  
+            return que.get().then(querySnapshot => {
+                let obj = {};
+                querySnapshot.forEach(doc => {      
+                    obj['docId'] = doc.id;              
+                    obj['curAvgPoint'] = doc.data()['Общая оценка']; //достаем текущую общую оценку
+                    obj['curCriterias'] = doc.data()['Критерии']; //достаем текущие общие значения критериев
+                    obj['curNumEval'] = doc.data()["Количество оценивших"];                                 
+                })
+                return obj;
+            })  
         }
 
-        let updateValues = function(result) {
-            let curAvgPoint = result[0];
-            let curCriterias = Object.entries(result[1]);
-            let curNumEval = result[2];
+        async function updateValues(refer, query) {
+            let result = await getValues(query);
+            console.log(result);           
+            let ref = refer;
+            let docId = result['docId']
+            let curAvgPoint = result['curAvgPoint'];
+            let curCriterias = Object.entries(result['curCriterias']);
+            let curNumEval = result['curNumEval'];
 
             let newCriterias = Object.entries(marks);
             let finalCriterias = {};
@@ -208,29 +254,78 @@ export default class Model {
                     }
                 }                
             }
-            
-            
 
             //находим новую общую оценку
             let newAvgPoint = ((curAvgPoint*curNumEval + avgPoint)/(curNumEval+1)).toFixed(1); //(общая текущая оценка*текущее кол-во оценивших + средняя оценка от конкретного пользователя) / (текущее количество оценивших + текущий пользователь) .....ну и округляем до десятых
             
-            currentRef.update({
+            ref.doc(docId).update({
                 "Количество оценивших": increment, //Инкрементируем количество оценивших
                 "Общая оценка": newAvgPoint, //записываем новую рассчитанную общую оценку
-                "Критерии": finalCriterias, //записываем новые общие оценки для критериев
-                "Оценившие": firebase.firestore.FieldValue.arrayUnion(currentUser) //добавляем нового пользователя в массив  (добавляется только в случае если до этого не был)              
+                "Критерии": finalCriterias, //записываем новые общие оценки для критериев                            
             }).then(function() {
                 if (comment[currentUser]) {                    
-                    currentRef.update({
+                    ref.doc(docId).update({
                         "Комментарии": firebase.firestore.FieldValue.arrayUnion(comment) //добавляем комментарий
                     })
                 }
             })
+
+            currentRef.update({
+                "Оценившие": firebase.firestore.FieldValue.arrayUnion(currentUser) //добавляем нового пользователя в массив  (добавляется только в случае если до этого не был) 
+            })
         }
 
-
+        
     }
 
+
+    //методы для showRatingRoute
+
+
+    //методы для генерации keywords
+    createKeywords(name) {
+        const arrName = [];
+        let curName = '';
+        name.split('').forEach(letter => {
+          curName += letter;
+          arrName.push(curName);
+        });
+        return arrName;
+    }
+
+    generateKeywords(names) {        
+        const [surName, subjName] = names;
+        
+        const keywordSurnameFirst = this.createKeywords(`${surName.toLowerCase()} ${subjName.toLowerCase()}`);
+        const keywordSubjNameFirst = this.createKeywords(`${subjName.toLowerCase()} ${surName.toLowerCase()}`);
+        return [
+            ...new Set([
+                '',
+                ...keywordSurnameFirst,
+                ...keywordSubjNameFirst
+            ])
+        ];
+    }
+
+    async showRatingParameters(){       
+        this.view.displayShowRatingParameters(); //подгружаем поля с параметрами
+    }
+
+    //записываем выбранный университет
+    handleChosenUniInShowRating(uni) {
+        this.uniToSearchIn = uni;
+    }
+
+
+    async searchByName(search) {      
+        let snapshot = await db.collectionGroup(this.uniToSearchIn)
+        .where ('keywords', 'array-contains', search.toLowerCase())
+        //TODO: дописать .orderBy('')
+        .get();
+        this.view.showLittleCards(snapshot);
+        }
+        
+    
 
 
     }

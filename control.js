@@ -36,10 +36,6 @@ export default class Controller {
         console.log('This is infoRoute');
     }
 
-    async showRatingRoute() {
-        console.log('This is showRatingRoute');
-    }
-
     rateRoute() {  
 
          //сначала подгружаем верстку через модель, достаем необходимые элементы и вешаем листнеры на них, затем иницируем слушатель событий
@@ -144,7 +140,39 @@ export default class Controller {
         })
     }
     
+    showRatingRoute() {
+        
+      this.model.showRatingParameters().then(this.showRatingEventController());       
+       
+    }
+
+    showRatingEventController(){
+        var self = this;
+        let elements = this.view.showRatingElements;
+        
+        elements["choose_uni"].addEventListener('change', function(e) {
+            if (e.target.options[e.target.selectedIndex].innerHTML.length !== 0) {
+                self.model.handleChosenUniInShowRating(e.target.options[e.target.selectedIndex].innerHTML); //получаем выбранное значение в поле select 
+                elements["textBoxSearch"].disabled = false;
+            } else {
+                elements["textBoxSearch"].disabled = true;
+            }
+            
+           
+        })
+
+        elements["textBoxSearch"].addEventListener('keyup', async (e) => await this.model.searchByName(e.target.value));
+        
+    }
+
+
+
+
+
+
 
 
 }
+
+
 

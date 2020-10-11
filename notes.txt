@@ -90,3 +90,25 @@
 
 
 let starsEl = document.querySelectorAll('.star.rating');
+
+
+
+<select id="choose_uni"><option></option></select>
+        <input type="text" disabled id="textBoxSearch" placeholder="Петрова Бухгалтерский учет"><br>
+
+        <div id='littleCardsBox'>
+
+        </div>
+
+
+
+            <div class="littleCard">
+                <img src="" class="personalPhoto">
+                <p>Дисциплина: <span id="subject_name"></span></p>
+                <p>Преподаватель: <span id = "teacher_name"></span></p>
+                <p>Тип занятия: <span id="type_of_class_name"></span></p>
+                <p>Общая оценка: <span id="average_point"></span></p>
+                <p>Количество оценок: <span id="number_of_evaluations"></span></p>
+                <button class="show">Просмотреть</button>
+            </div>
+
