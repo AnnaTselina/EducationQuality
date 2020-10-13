@@ -10,34 +10,97 @@ export default class Controller {
     }
 
     init() {
-
-        //инициализируем event listeners для модального окна аутентификации
-        this.view.bindCreateAccount(this.handleCreateAccount.bind(this));
-        this.view.bindLoginUser(this.handleLoginUser.bind(this));
-        this.view.bindLogoutUser(this.handleLogoutUser.bind(this));
-        }
-
-
-    //Вызов функции создания аккаунта в Model
-    async handleCreateAccount(userEmail, userPass) {               
-        this.model.create_account(userEmail, userPass);            
+        this.checkUserState();
     }
 
-    async handleLoginUser(userEmail, userPass) {             
-        this.model.login(userEmail, userPass);        
+
+    checkUserState(){
+        return this.model.checkState().then(user_state => {         
+            if (user_state !== null) { // если пользователь есть  
+                this.commonEvents();             
+                return true;
+            } else {//если пользователя нет        
+                window.location.hash = "#enter";
+            }
+        });  
     }
 
-    handleLogoutUser() {               
-        this.model.logout();                
+    setDefaultRoute() {
+        window.location.hash = "#info";
+    }
+
+    commonEvents(){
+        this.view.logout_btn.addEventListener('click', this.handleLogoutUser.bind(this));
+    }
+
+    enterRoute() {       
+        this.model.callRegistration().then(this.enterRouteEventController());
+    }
+
+    enterRouteEventController() {
+        let elements = this.view.enterRouteElements;
+        elements["signInBtn"].addEventListener('click', function() {
+            elements["container"].classList.remove("right-panel-active");
+        })
+        elements["signUpBtn"].addEventListener('click', function() {
+            elements["container"].classList.add("right-panel-active");
+        })
+        //создание аккаунта
+        elements["firstForm"].addEventListener("submit", (e) => {
+            e.preventDefault();
+            this.handleCreateAccount();
+        });
+        //вход в аккаунт
+        elements["secondForm"].addEventListener("submit", (e) => {
+            e.preventDefault();
+            this.handleLoginAccount();
+        });
+    }
+
+    handleCreateAccount() {
+        let email = this.view._getValuesSignUp[0];
+        let password = this.view._getValuesSignUp[1];
+            if (email.length !== 0 && password.length !== 0) { 
+                var self = this;                                      
+                self.model.create_account(email, password).then(function() {                                    
+                    self.checkUserState().then(result=> {
+                        if (result) {
+                            self.setDefaultRoute();
+                        }
+                    })
+                });
+            } 
+    }
+
+    handleLoginAccount() {
+        let email = this.view._getValiesLogIn[0];
+        let password = this.view._getValiesLogIn[1];
+        if (email.length !== 0 && password.length !== 0) { 
+            var self = this; 
+            self.model.login(email, password).then(function() {                                    
+                self.checkUserState().then(result=> {
+                    if (result) {
+                        self.setDefaultRoute();
+                    }
+                })
+            });
+        } 
+    }
+
+    handleLogoutUser() {        
+        this.model.logout().then(res => {
+            if (res) { //если logout выполнен успешно
+                this.checkUserState();
+            }
+        })
     }
 
      //функции для заполнения контента в блоке с id = "root" в зависимости от хэша в адресной строке (вызываются из роутера)
-    async infoRoute() {
-        console.log('This is infoRoute');
+    async infoRoute() {        
+        this.model.infoRouteLoad();
     }
 
-    rateRoute() {  
-
+    rateRoute() { 
          //сначала подгружаем верстку через модель, достаем необходимые элементы и вешаем листнеры на них, затем иницируем слушатель событий
         let step = this.rateRouteState;
         switch (step) {
@@ -61,8 +124,7 @@ export default class Controller {
         }        
     }
 
-    rateRouteEventController() {
-        
+    rateRouteEventController() {        
         var self = this;
         //вешаем на управляющие элементы обработчики событий
         let elements = Object.entries(self.view.rateRouteElements);        
@@ -140,10 +202,8 @@ export default class Controller {
         })
     }
     
-    showRatingRoute() {
-        
-      this.model.showRatingParameters().then(this.showRatingEventController());       
-       
+    showRatingRoute() {        
+        this.model.showRatingParameters().then(this.showRatingEventController());     
     }
 
     showRatingEventController(){

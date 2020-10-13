@@ -9,22 +9,19 @@ export default class Router {
 
     getRouteInfo() {
         const hash = location.hash ? location.hash.slice(1) : ''; //узнаем какой хэш и отрезаем решетку
-
-        const [name, id] = hash.split("/");
-        
-        return {name, params: { id }};
+        const name = hash.split("/");          
+        return name[0];
     }
     
     handleHash() { //на основе имени хэша вызываем соответствующий метод контроллера
-        const { name } = this.getRouteInfo();
+        const name = this.getRouteInfo();
         if (name) {
             const routeName = name + "Route";
             this.controller[routeName]();
         }
     }
 
-    init() {
-        
+    init() {        
         addEventListener('hashchange', this.handleHash.bind(this));
         this.handleHash();
     }

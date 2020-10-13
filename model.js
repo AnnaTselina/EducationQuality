@@ -2,14 +2,16 @@ export default class Model {
     constructor(view){        
         this.view = view;  
         
+        //rateRoute
         this.chosen_parameters = {};
         this.evaluated_criterias = {}; //тут должны храниться критерии и оценки
         this.addedComment = null;
 
-
         //showRatingRoute
         this.uniToSearchIn = null;
-    }    
+    } 
+    
+    //вспомогательные методы для работы с конструктором
     setChosenParameters(field, chosen_option) {
         this.chosen_parameters[field] = chosen_option;
     }
@@ -19,16 +21,21 @@ export default class Model {
     setComment(com) {
         this.addedComment = com;
     }
-    
-
     async cleanData() {
         this.chosen_parameters = {};
-        this.evaluated_criterias = {}; //тут должны храниться критерии и оценки
+        this.evaluated_criterias = {}; 
         this.addedComment = null;
     }
 
+
+    //методы для работы с регистрацией/входом
     checkState () {
         return new Promise(resolve => firebase.auth().onAuthStateChanged(user => resolve(user)));       
+    }
+
+    //функция отображения окна регистрации
+    async callRegistration(){
+        this.view.showRegistration();
     }
 
     create_account(userEmail, userPass) { //создание аккаунта   
@@ -55,15 +62,23 @@ export default class Model {
         })
     }
 
-    logout() {
-        firebase.auth().signOut();
+    async logout() {
+        return await firebase.auth().signOut().then(function() {
+            return true;
+        }).catch(function(error) {
+            window.alert(error);
+        });
+    }
+
+    /*Методы для InfoRoute */
+    infoRouteLoad() {
+        this.view.infoRouteShow();
     }
 
 
     /*методы для RateRoute*/ 
     async handleParameters(){
-        //TODO: ТУТ НАЧИНАЕТСЯ ВЗАИМОДЕЙСТВИЕ С RATErOUTE
-       this.view.workWithRatingParameters(); //запускаем окошко с параметрами для выбора         
+        this.view.workWithRatingParameters(); //запускаем окошко с параметрами для выбора         
     }
 
     handleChosenOption(field, chosen_option) {        

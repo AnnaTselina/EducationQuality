@@ -11,35 +11,16 @@
     <body>
 
     <!--Навигационная панель-->
-        <div class = "nav_panel">
-
-                <div><a href="#info">EdQ</a></div>
-                <div><a href="#showRating">Просмотреть оценки</a></div>
-                <div><a href="#rate">Выставить оценки</a></div>                
-                <div><button id ="logout_btn">Выйти</button></div>
-
-        </div>
-
-        <!--Модальное окно для регистрации-->
-        <div id='modal' class='modal'>
-            <div class="modal-content">
-                <h3>Войти / зарегистрироваться</h3>
-                <div class='input_fields'>
-                <input type='email' placeholder='Email...' id= 'email_field'/><br>
-                <input type='password' placeholder = "Пароль..." id = 'password_field'/><br>
-                
-                <button id='log-acc'>Войти в аккаунт</button>
-                <p>Если вы первый раз на сайте, то введите ваш адрес электронной почты, придумайте запоминающийся пароль и нажните кнопку снизу</p>
-                <button id='create-acc'>Создать новый аккаунт</button>
-                </div>
-
-            </div> 
-        </div>
+    <div class = "nav_panel" id="navigation">
+        <div><p>EdQ</p></div>
+        <div><a href="#info">О проекте</a></div>
+        <div><a href="#showRating">Просмотреть оценки</a></div>
+        <div><a href="#rate">Выставить оценки</a></div>                
+        <div><button id ="logout_btn">Выйти</button></div>
+    </div>
 
     <!--Основное содержание-->
-    <div id="root">  
-        
-    </div>
+    <div id="root"></div>
 
 
         <!--Подключаем Firebase-->

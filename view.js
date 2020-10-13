@@ -5,11 +5,12 @@ export default class View {
             this.model = myModel;
         }
 
-
         //Корневой элемент, куда помещаем все содержимое
         this.app = document.getElementById('root');
-        
+        this.logout_btn = document.getElementById('logout_btn');
 
+        //TODO: ЭТИ ЭЛЕМЕНТЫ ТОЖЕ НАДО УБРАТЬ
+/*
         //элементы окошка регистрации
         this.modal = document.getElementById('modal');
         this.createAccButton = document.getElementById('create-acc');        
@@ -17,7 +18,9 @@ export default class View {
         this.emailField = document.getElementById('email_field');
         this.passwordField = document.getElementById('password_field');       
         this.logout_btn = document.getElementById('logout_btn');
-        
+       */ 
+
+        this.enterRouteElements = {};
 
         //элементы для RateRoute
         this.rateRouteElements = { };
@@ -27,6 +30,7 @@ export default class View {
 
         
         this.htmlLayouts = {
+            registration_window: ' <div id="modal" class="modal"> <h1>EdQ</h1> <h3>- проект по оценке качества университетского образования</h3> <div class="container right-panel-active"> <!-- Зарегистрироваться --> <div class="container__form container--signup"> <form action="#" class="form" id="form1"> <h2 class="form__title">Зарегистрироваться</h2> <input type="email" placeholder="Email" id="signup_email" class="input" /> <input type="password" placeholder="Пароль" id="signup_password" class="input" /> <button class="btn" type="submit">Зарегистрироваться</button> </form> </div> <!-- Sign In --> <div class="container__form container--signin"> <form action="#" class="form" id="form2"> <h2 class="form__title">Войти</h2> <input type="email" placeholder="Email" id="signin_email" class="input" /> <input type="password" placeholder="Пароль" id="signin_password" class="input" /> <button class="btn" type="submit">Войти</button> </form> </div> <!-- Overlay --> <div class="container__overlay"> <div class="overlay"> <div class="overlay__panel overlay--left"> <button class="btn" id="signIn">Войти</button> </div> <div class="overlay__panel overlay--right"> <button class="btn" id="signUp">Зарегистрироваться</button> </div> </div> </div> </div> </div>',
             get_parameters:  '<div id="parameters_choice"><form><h3>Выберите необходимые параметры:</h3><label>ВУЗ:</label><select id="uni_choice"><option value = "0"> </option></select><br><label>Дисциплина:</label><select id="subject_choice"><option value = "0"> </option></select><br><label>Преподаватель:</label><select id="teacher_choice"><option value = "0"> </option></select><br><label>Тип занятия:</label><select id="type_of_class"><option value = "0"> </option></select><br><div id="notifications"></div><button id="evaluate_button">Оценить</button></form></div>', 
             confirmation_window: " <div id = 'confirmation_window'><h4>Подтвердите выбранные параметры</h4><table><tr><td>ВУЗ:</td><td id = 'chosen_uni_text'> </td></tr><tr><td>Дисциплина:</td><td id = 'chosen_subj_text'> </td></tr><tr><td>Преподаватель:</td><td id = 'chosen_teacher_text'> </td></tr><tr><td>Тип занятий:</td><td id = 'chosen_type_text'> </td></tr></table><div class = 'confirmation_buttons'><button id = 'start_evaluation'>Верно, начать оценивание</button> <button id= 'change_parameters'>Выбрать другие параметры</button></div></div>",
             evaluation_window: '<div id ="evaluation_window"> <p id="criteria_name"></p> <div id="criteria_stars"> <div class="stars" data-stars="1"> <svg height="50" width="50" class="star rating" data-rating="1"> <polygon id="star" points="23,0,28.290067270632257,15.718847050625474,44.874299874788534,15.892609129376208,31.559508646656383,25.781152949374526,36.519060802726884,41.60739087062379,23,32,9.48093919727312,41.60739087062379,14.440491353343619,25.78115294937453,1.1257001252114662,15.892609129376215,17.70993272936774,15.718847050625474" style="fill-rule:nonzero;"></polygon> </svg> <svg height="50" width="50" class="star rating" data-rating="2"> <polygon id="star" points="23,0,28.290067270632257,15.718847050625474,44.874299874788534,15.892609129376208,31.559508646656383,25.781152949374526,36.519060802726884,41.60739087062379,23,32,9.48093919727312,41.60739087062379,14.440491353343619,25.78115294937453,1.1257001252114662,15.892609129376215,17.70993272936774,15.718847050625474" style="fill-rule:nonzero;"></polygon> </svg> <svg height="50" width="50" class="star rating" data-rating="3"> <polygon id="star" points="23,0,28.290067270632257,15.718847050625474,44.874299874788534,15.892609129376208,31.559508646656383,25.781152949374526,36.519060802726884,41.60739087062379,23,32,9.48093919727312,41.60739087062379,14.440491353343619,25.78115294937453,1.1257001252114662,15.892609129376215,17.70993272936774,15.718847050625474" style="fill-rule:nonzero;"></polygon> </svg> <svg height="50" width="50" class="star rating" data-rating="4"> <polygon id="star" points="23,0,28.290067270632257,15.718847050625474,44.874299874788534,15.892609129376208,31.559508646656383,25.781152949374526,36.519060802726884,41.60739087062379,23,32,9.48093919727312,41.60739087062379,14.440491353343619,25.78115294937453,1.1257001252114662,15.892609129376215,17.70993272936774,15.718847050625474" style="fill-rule:nonzero;"></polygon> </svg> <svg height="50" width="50" class="star rating" data-rating="5"> <polygon id="star" points="23,0,28.290067270632257,15.718847050625474,44.874299874788534,15.892609129376208,31.559508646656383,25.781152949374526,36.519060802726884,41.60739087062379,23,32,9.48093919727312,41.60739087062379,14.440491353343619,25.78115294937453,1.1257001252114662,15.892609129376215,17.70993272936774,15.718847050625474" style="fill-rule:nonzero;"></polygon> </svg> </div> </div> <div id="next_criteria"> <button id ="next_criteria_button"> <svg width="31" height="28"> <path d="M21.205,5.007c-0.429-0.444-1.143-0.444-1.587,0c-0.429,0.429-0.429,1.143,0,1.571l8.047,8.047H1.111 C0.492,14.626,0,15.118,0,15.737c0,0.619,0.492,1.127,1.111,1.127h26.554l-8.047,8.032c-0.429,0.444-0.429,1.159,0,1.587 c0.444,0.444,1.159,0.444,1.587,0l9.952-9.952c0.444-0.429,0.444-1.143,0-1.571L21.205,5.007z" fill="#571457" data-original="#1e201d"/> </svg> </button> </div> </div> ',
@@ -51,57 +55,39 @@ export default class View {
         }
     }
 
-    init() {
-        this.checkUserStateAndModal();
+
+    showRegistration() {
+        this.app.innerHTML = this.htmlLayouts.registration_window;
+        this.setElement(this.enterRouteElements, "signInBtn", document.getElementById("signIn"));
+        this.setElement(this.enterRouteElements, "signUpBtn",  document.getElementById("signUp"));
+        this.setElement(this.enterRouteElements, "firstForm", document.getElementById("form1"));
+        this.setElement(this.enterRouteElements, "secondForm", document.getElementById("form2"));
+        this.setElement(this.enterRouteElements, "container", document.querySelector(".container"));
+        this.setElement(this.enterRouteElements, "signup_email", document.getElementById('signup_email'));
+        this.setElement(this.enterRouteElements, "signup_password", document.getElementById('signup_password'));
+        this.setElement(this.enterRouteElements, "signin_email", document.getElementById('signin_email'));
+        this.setElement(this.enterRouteElements, "signin_password", document.getElementById('signin_password'));
     }
 
-    checkUserStateAndModal() {
-        this.model.checkState().then(user_state => {         
-            if (user_state !== null) {                
-                this.modal.style.display = 'none';
-            } else {                
-                this.modal.style.display = 'block';
-            }
-        });  
-    }
-    
-     //достаем значения инпутов в модальном окне
-    get _userEmailAndPass() {
-        let values = [this.emailField.value, this.passwordField.value]
+    get _getValuesSignUp() {
+        let values = [this.enterRouteElements["signup_email"].value, this.enterRouteElements["signup_password"].value]
         return values;
-    }   
-
-    //Обработчики событий
-    bindCreateAccount(handler) {
-        this.createAccButton.addEventListener('click', event => {
-            event.preventDefault();
-            if (this._userEmailAndPass[0].length !== 0 && this._userEmailAndPass[1].length !== 0) {                         
-                handler(this._userEmailAndPass[0], this._userEmailAndPass[1]).then(setTimeout(this.checkUserStateAndModal.bind(this), 2000));
-                
-            }            
-        });     
     } 
-    
-    bindLoginUser(handler) {
-        this.loginUser.addEventListener('click', event => {
-            event.preventDefault();
-            if (this._userEmailAndPass[0].length !== 0 && this._userEmailAndPass[1].length !== 0) {                         
-                handler(this._userEmailAndPass[0], this._userEmailAndPass[1]).then(setTimeout(this.checkUserStateAndModal.bind(this), 2000));
-            }  
-        })
+
+    get _getValiesLogIn() {
+        let values = [this.enterRouteElements["signin_email"].value, this.enterRouteElements["signin_password"].value]
+        return values;
     }
 
-    bindLogoutUser(handler) {
-        this.logout_btn.addEventListener('click', event => {
-            event.preventDefault();
-            handler();
-            this.checkUserStateAndModal();
-            }  
-        )        
+    /*Параметры для Info Route  - дефолтный путь*/ 
+    infoRouteShow(){        
+        document.getElementById('navigation').style.display = 'flex';
+        this.app.innerHTML = " ";
     }
 
      //работаем с окном с параметрами
     workWithRatingParameters() {
+        document.getElementById('navigation').style.display = 'flex';
         this.app.innerHTML = this.htmlLayouts.get_parameters;
         let uni_choice = document.getElementById('uni_choice');
         let subject_choice = document.getElementById('subject_choice');
@@ -301,7 +287,8 @@ export default class View {
     }
 
     //МЕТОДЫ ДЛЯ SHOWRATING ROUTE
-    displayShowRatingParameters() {        
+    displayShowRatingParameters() {  
+        document.getElementById('navigation').style.display = 'flex';      
         this.app.innerHTML = this.htmlLayouts.showRating_fields;
         //добавляем управляющие элементы для showRatingRoute
         let chooseUni = document.getElementById('choose_uni');
