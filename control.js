@@ -140,9 +140,9 @@ export default class Controller {
                     event.preventDefault();
                     
                     switch (event.target.id) {  
-                        case "evaluate_button": 
-                            self.changeRateRouteState("confirmation"); //указываем состояние 
-                            self.rateRoute(); 
+                        case "evaluate_button":                         
+                                self.changeRateRouteState("confirmation"); //указываем состояние 
+                                self.rateRoute();  
                         break;
                         case "start_evaluation":
                             self.changeRateRouteState("evaluation");
@@ -183,9 +183,9 @@ export default class Controller {
             }
             if(e.target.id === "next_criteria_button"){ 
                 //здесь операции по окончании рекурсии               
-                if (self.view.criteriaI > (Object.keys(self.model.evaluated_criterias).length)) {
-                     //записываем результат в модель
-                    let results = Object.entries(self.view.result_of_evaluation);                    
+                if (self.view.criteriaI == (Object.keys(self.model.evaluated_criterias).length)) {
+                     //записываем результат в модель                     
+                    let results = Object.entries(self.view.result_of_evaluation); 
                     for (let i=0; i<results.length; i++) {
                         self.model.setEvaluatedCriterias(results[i][0], results[i][1]);
                     }
@@ -213,9 +213,10 @@ export default class Controller {
         elements["choose_uni"].addEventListener('change', function(e) {
             if (e.target.options[e.target.selectedIndex].innerHTML.length !== 0) {
                 self.model.handleChosenUniInShowRating(e.target.options[e.target.selectedIndex].innerHTML); //получаем выбранное значение в поле select 
-                elements["textBoxSearch"].disabled = false;
+                elements["textBoxSearch"].disabled = false;               
             } else {
                 elements["textBoxSearch"].disabled = true;
+                
             }      
         })
         elements["textBoxSearch"].addEventListener('keyup', async (e) => await this.model.searchByName(e.target.value));

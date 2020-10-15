@@ -75,7 +75,7 @@ body {
 	overflow: hidden;
 	position: relative;
     width: 100%;
-    margin: 50px auto 0 auto;
+    margin: 30px auto 0 auto;
 }
 
 .container__form {
@@ -231,57 +231,74 @@ body {
     padding: 0px 200px;   
     justify-content: space-between;
     flex-wrap: wrap;
+    background-color: var(--white);
 }
 
 .nav_panel div {      
     text-align: center;
-    line-height: 100px;
-    font-size: 18px;
-    
+    line-height: 80px;
+    font-size: 20px; 
+}
+
+.nav_panel div:first-child  {
+    color: var(--turquoise);
+    font-weight: 900;
 }
 
 .nav_panel div a { 
     text-decoration: none;
+    padding: 10px;
+    color: black;
 }
 
-.nav_panel div:nth-child(2):hover, div:nth-child(3):hover, div:nth-child(4):hover {
-    text-shadow: 2px 2px 4px white;
+.nav_panel div:nth-child(2) a:hover, div:nth-child(3) a:hover, div:nth-child(4) a:hover {
+    border-top: #60606e solid 1px;
     transition: 0.3s;    
     -moz-transition: 0.3s;
 }
 
 /*стилизация кнопки "Выйти"*/
 #logout_btn {
-    border: 0px;
-    border-radius: 5px;
-    padding: 4px 25px;
-    transition: 0.3s;
-    border: 3px solid white;
-    -moz-transition: 0.3s;
+    background-color: var(--turquoise);	
+	border-radius: 20px;
+	border: 1px solid var(--turquoise);
+	color: white;
+	cursor: pointer;
+	font-size: 0.8rem;
+	font-weight: bold;
+	letter-spacing: 0.1rem;
+	padding: 10px 30px;
+	text-transform: uppercase;
+	transition: transform 80ms ease-in;
 }
 
-#logout_btn:hover {
-    background-color: white;
-    color: rgb(87, 20, 87);
-    cursor: pointer;
+#logout_btn:active {
+	transform: scale(0.95);
+}
+
+#logout_btn:focus {
+	outline: none;
 }
 
 
-
-
-
-
+#root {
+    padding: 20px 200px;
+}
 
 
 
 
 /*Вкладка "Выставить оценки", содержимое*/
 #parameters_choice {
-    background-color: rgb(255, 255, 255);
-    padding: 30px;
-    border: 2px solid rgb(87, 20, 87);
-    border-radius: 10px;
-    box-shadow: 2px 2px 3px 2px darkgrey;
+    background-color: var(--white) ;
+	border-radius: 0.7rem;
+	box-shadow: 0 0.9rem 1.7rem rgba(0, 0, 0, 0.25),
+		0 0.7rem 0.7rem rgba(0, 0, 0, 0.22);
+    padding: 30px 0;
+	max-width: 758px;
+	overflow: hidden;
+    width: 100%;
+    margin: 30px auto 0 auto;
 }
 
 #parameters_choice h3 {
@@ -306,40 +323,57 @@ body {
     margin-bottom: 20px;
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
+    border-color: var(--white);
     cursor: pointer;
-}
-
-#parameters_choice option {
-    height: 40px;
-    
 }
 
 #notifications {
     height: 20px;
     margin: 10px 0 20px 0;
-    color: rgb(189, 58, 58);
+    color: var(--turquoise);	
 }
 
 #evaluate_button {
-    background: rgba(100, 46, 95, 0.116);
-    font-family: 'Montserrat', sans-serif;
-    color: rgb(87, 20, 87);
-    border-radius: 5px;
-    padding: 15px;
-    display: block;
-    width: 150px;
-    margin: 0 auto;
-    border: 2px solid rgb(87, 20, 87);
+    background-color: var(--turquoise);	
+	border-radius: 20px;
+	border: 1px solid var(--white);	
+	font-size: 0.8rem;	
+	letter-spacing: 0.1rem;
+	padding: 10px 30px;
+	text-transform: uppercase;
+	transition: transform 80ms ease-in;    
+    font-family: 'Montserrat', sans-serif;   
+    display: block;    
+    margin: 0 auto;    
     font-weight: 700;
+
+  
+
 }
+
+
+#evaluate_button:active {
+	transform: scale(0.95);
+}
+
+#evaluate_button:focus {
+	outline: none;
+}
+
+
+
 
 /*Окошко для подтверждения критериев*/
 #confirmation_window {
-    background-color: rgb(255, 255, 255);
+    background-color: var(--white) ;
+	border-radius: 0.7rem;
+	box-shadow: 0 0.9rem 1.7rem rgba(0, 0, 0, 0.25),
+		0 0.7rem 0.7rem rgba(0, 0, 0, 0.22);
     padding: 30px;
-    border: 2px solid rgb(87, 20, 87);
-    border-radius: 10px;
-    box-shadow: 2px 2px 3px 2px darkgrey;
+	max-width: 758px;
+	overflow: hidden;
+    width: 100%;
+    margin: 30px auto 0 auto;
 }
 
 #confirmation_window h4 {
@@ -348,7 +382,7 @@ body {
 }
 
 #confirmation_window table {   
-    margin: 0 auto 20px auto;
+    margin: 0 auto;
 }
 
 #confirmation_window table td {
@@ -361,25 +395,53 @@ body {
 }
 
 .confirmation_buttons button{
-    width: 200px;
-    height: 45px;
-    margin: 0 10px;
-    cursor: pointer;
-    font-size: 14px;
-    color: white;
-    background-color: rgb(87, 20, 87);
-    border-radius: 5px;
-    font-weight: 600;
+    background-color: var(--turquoise);	
+	border-radius: 20px;
+	border: 1px solid var(--turquoise);
+	color: white;
+	cursor: pointer;
+	font-size: 0.8rem;
+	font-weight: bold;
+	letter-spacing: 0.1rem;
+	padding: 10px 30px;
+	text-transform: uppercase;
+    transition: transform 80ms ease-in;
+    width: 220px;
+    margin: 10px;
+}
+
+
+.confirmation_buttons button:active {
+	transform: scale(0.95);
+}
+
+.confirmation_buttons button:focus {
+	outline: none;
 }
 
 /*окошки с выставлением оценок*/
 #evaluation_window {
-    background-color: rgb(255, 255, 255);
+    background-color: var(--white) ;
+	border-radius: 0.7rem;
+	box-shadow: 0 0.9rem 1.7rem rgba(0, 0, 0, 0.25),
+		0 0.7rem 0.7rem rgba(0, 0, 0, 0.22);
     padding: 30px;
-    border: 2px solid rgb(87, 20, 87);
-    border-radius: 10px;
-    box-shadow: 2px 2px 3px 2px darkgrey;
-    margin-top: 20px;
+	max-width: 758px;
+	overflow: hidden;
+    width: 100%;
+	margin: 30px auto 30px auto;
+	
+	/*TODO: ЗДЕСЬ ВСЕ ДЛЯ АНИМАЦИИ*/
+	position: relative;
+}
+
+@keyframes slide {
+    from {
+		right: 0;
+	}
+	to {
+		right: 1200px;		
+	}
 }
 
 #next_criteria {
@@ -406,7 +468,7 @@ body {
     display: flex;
 }
 .stars:hover .star polygon {
-    fill: rgb(87, 20, 87) !important;
+    fill: var(--turquoise) !important;
 }
 .stars .star polygon {
     fill: #d8d8d8;
@@ -415,7 +477,7 @@ body {
     fill: #d8d8d8 !important;
 }
 .stars[data-stars] .star polygon {
-    fill: rgb(87, 20, 87);
+    fill: var(--turquoise);
 }
 .stars[data-stars="1"] .star:nth-child(1) ~ .star polygon {
     fill: #d8d8d8;
@@ -435,18 +497,22 @@ body {
 
 /*Оставление комментариев*/
 #leave_comment {
-    margin-top: 10px;
-    background-color: rgb(255, 255, 255);
+    background-color: var(--white) ;
+	border-radius: 0.7rem;
+	box-shadow: 0 0.9rem 1.7rem rgba(0, 0, 0, 0.25),
+		0 0.7rem 0.7rem rgba(0, 0, 0, 0.22);
     padding: 30px;
-    border: 2px solid rgb(87, 20, 87);
-    border-radius: 10px;
-    box-shadow: 2px 2px 3px 2px darkgrey;
+	max-width: 758px;
+	overflow: hidden;
+    width: 100%;
+    margin: 30px auto 0 auto;
     
 }
 
 
 #leave_comment h3 {
     margin-bottom: 10px;
+    text-align: center;
 }
 #leave_comment p {
     margin-bottom: 20px;
@@ -455,9 +521,13 @@ body {
 #leave_comment textarea {
     width: 100%;
     height: 100px;
-    font-size: 16px;
-    padding: 10px;
+    font-size: 16px;    
     box-sizing: border-box;
+    background-color: #fff;
+	border: none;
+	padding: 0.9rem 0.9rem;
+	margin: 0.5rem 0;
+	width: 100%;
 }
 #leave_comment .button_area {
     text-align: right;
@@ -465,31 +535,38 @@ body {
 }
 
 #leave_comment .button_area button {
-    margin-top: 10px;
-    background: rgb(87, 20, 87);
-    color: #fff;
-    width: 150px;
-    border: 0px;
-    border-radius: 5px;
-    padding: 10px;      
-    transition: 0.3s;
-    border: 1px solid rgb(87, 20, 87);    
-    font-size: 16px;
+    background-color: var(--turquoise);	
+	border-radius: 20px;
+	border: 1px solid var(--turquoise);
+	color: white;
+	cursor: pointer;
+	font-size: 0.8rem;
+	font-weight: bold;
+	letter-spacing: 0.1rem;
+	padding: 10px 30px;
+	text-transform: uppercase;
+    transition: transform 80ms ease-in;    
+    margin: 10px;
 }
 
-#leave_comment .button_area button:hover {
-    background-color: rgb(220, 147, 235);
-    color: rgb(87, 20, 87);
-    cursor: pointer;
+#leave_comment .button_area button:active {
+	transform: scale(0.95);
+}
+
+#leave_comment .button_area button:focus {
+	outline: none;
 }
 
 #thank_you_window {
-    margin-top: 10px;
-    background-color: rgb(255, 255, 255);
+    background-color: var(--white) ;
+	border-radius: 0.7rem;
+	box-shadow: 0 0.9rem 1.7rem rgba(0, 0, 0, 0.25),
+		0 0.7rem 0.7rem rgba(0, 0, 0, 0.22);
     padding: 30px;
-    border: 2px solid rgb(87, 20, 87);
-    border-radius: 10px;
-    box-shadow: 2px 2px 3px 2px darkgrey;
+	max-width: 758px;
+	overflow: hidden;
+    width: 100%;
+    margin: 30px auto 0 auto;
     text-align: center;
 }
 
@@ -505,23 +582,37 @@ body {
     width: 30%;
 }
 
-#thank_you_window button {
-    margin-top: 20px;
-    background: rgb(87, 20, 87);
-    color: #fff;
-    width: 150px;
-    border: 0px;
-    border-radius: 5px;
-    padding: 10px;      
-    transition: 0.3s;
-    border: 1px solid rgb(87, 20, 87);    
-    font-size: 16px;
+#thank_you_window table td:first-child {
+    text-align: left;
 }
 
-#thank_you_window button:hover {
-    background-color: rgb(220, 147, 235);
-    color: rgb(87, 20, 87);
-    cursor: pointer;
+#thank_you_window table td:nth-child(2){
+    color: var(--turquoise);
+    font-weight: 900;
+    font-size: 20px;
+}
+
+#thank_you_window button {
+    background-color: var(--turquoise);	
+	border-radius: 20px;
+	border: 1px solid var(--turquoise);
+	color: white;
+	cursor: pointer;
+	font-size: 0.8rem;
+	font-weight: bold;
+	letter-spacing: 0.1rem;
+	padding: 10px 30px;
+	text-transform: uppercase;
+    transition: transform 80ms ease-in;    
+    margin: 20px;
+}
+
+#thank_you_window button:active {
+	transform: scale(0.95);
+}
+
+#thank_you_window button:focus {
+	outline: none;
 }
 
 
@@ -530,7 +621,9 @@ body {
 #choose_uni {
     width: 10%;
     height: 40px;
-    
+    font-weight: 700;
+    border-color: var(--white);
+    cursor: pointer;
 }
 
 #textBoxSearch {
@@ -539,6 +632,7 @@ body {
     display: block;
     float: right;
     box-sizing: border-box;
+    border-color: var(--white);
     padding: 5px;
 }
 
@@ -551,57 +645,90 @@ body {
 
 /*Оформление маленькой карточки*/
 .littleCard {
-    margin-top: 20px;
-    background-color: rgb(255, 255, 255);
+    background-color: var(--white) ;
+	border-radius: 0.7rem;
     padding: 30px;
-    border: 2px solid rgb(87, 20, 87);
-    border-radius: 10px;
-    box-shadow: 2px 2px 3px 2px darkgrey;
-    width: 400px;
+	/*max-width: 758px;*/
+	overflow: hidden;
+   /* width: 100%;*/
+    margin-top: 30px; 
+    width: 350px;
 }
 
 .littleCard .personalPhoto {
     height: 100px;
     float: left;
     margin-right: 20px;
+    margin-bottom: 25px;
 }
 
 .littleCard p {
-    color: rgb(87, 20, 87);
     margin-bottom: 7px;     
+}
+
+.littleCard span {
+    color: var(--turquoise);
 }
 
 .littleCard button {
     display: block;
+    background-color: var(--turquoise);	
+	border-radius: 20px;
+	border: 1px solid var(--turquoise);
+	color: white;
+	cursor: pointer;
+	font-size: 0.8rem;
+	font-weight: bold;
+	letter-spacing: 0.1rem;
+	padding: 10px 30px;
+	text-transform: uppercase;
+    transition: transform 80ms ease-in; 
     margin: 0 auto;
-    margin-top: 10px;
-    background: rgb(87, 20, 87);
-    color: #fff;   
-    border-radius: 5px;
-    padding: 10px;      
-    transition: 0.3s;
-    border: 1px solid rgb(87, 20, 87);    
-    font-size: 16px;
 }
-.littleCard button:hover {
-    background-color: rgb(220, 147, 235);
-    color: rgb(87, 20, 87);
-    cursor: pointer;
 
+.littleCard button:active {
+	transform: scale(0.95);
+}
+
+.littleCard button:focus {
+	outline: none;
 }
 
 
 /*это для большой карточки*/
-.bigCard {
-    width: 50%;
-    background-color: #fff;
-    margin: 0 auto;
-    background-color: rgb(255, 255, 255);
-    padding: 30px;
-    border: 2px solid rgb(87, 20, 87);
-    border-radius: 10px;
-    box-shadow: 2px 2px 3px 2px darkgrey;
+/*Стилизация модального окна*/
+.modal-bigCard {
+    /*display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-attachment: fixed;
+	background-position: center;
+	background-repeat: no-repeat;
+    background-size: cover; 
+    padding-top: 100px; /* Location of the box */
 }
+
+.bigCard {
+    width: 40%;
+    background-color: var(--white) ;
+    border-radius: 0.7rem;
+    box-shadow: 0 0.9rem 1.7rem rgba(0, 0, 0, 0.25),
+        0 0.7rem 0.7rem rgba(0, 0, 0, 0.22);
+    margin: 0 auto;
+    padding: 30px;
+    overflow: auto;
+    height: 70%;
+    
+    
+}
+
+
 
 .bigCard img {
     float: left;
@@ -610,9 +737,9 @@ body {
 }
 
 .bigCard p {
-    color: rgb(87, 20, 87);
-    margin-bottom: 7px; 
-   
+    margin: 20px 0; 
+    font-weight: 900;
+    text-align: center;
 }
 
 .bigCard td {
@@ -620,4 +747,65 @@ body {
     height: 40px;
 }
 
+.bigCard td span {
+    color: var(--turquoise);
+}
 
+.bigCard #criteria_table tr:nth-child(2n) {
+    background-color: white;	
+}
+
+.bigCard #criteria_table td{
+    padding: 5px 10px;
+}
+
+.bigCard #comment_block {
+	background-color: var(--turquoise);	
+	border-radius: 20px;
+	border: 1px solid var(--turquoise);
+	color: white;
+	font-size: 0.8rem;
+	font-weight: bold;
+	padding: 10px;
+	margin-bottom: 20px;
+	
+}
+
+.bigCard #comment_block p:first-child {	
+	margin: 0 0 5px 0;
+	text-align: left;
+}
+
+.bigCard #comment_block p:nth-child(2) {
+	background-color: white;
+	color: black;	
+	border: 1px solid var(--turquoise);
+	margin: 0;
+	text-align: left;
+	padding: 5px;
+	font-size: 14px;
+}
+
+.bigCard button {
+    background-color: var(--turquoise);	
+	border-radius: 20px;
+	border: 1px solid var(--turquoise);
+	color: white;
+	cursor: pointer;
+	font-size: 0.8rem;
+	font-weight: bold;
+	letter-spacing: 0.1rem;
+	padding: 10px 30px;
+	text-transform: uppercase;
+    transition: transform 80ms ease-in; 
+    display: block;
+    margin: 0 auto;
+}
+
+.bigCard button:active {
+	transform: scale(0.95);
+}
+
+.bigCard button:focus {
+	outline: none;
+}

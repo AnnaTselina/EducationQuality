@@ -9,17 +9,6 @@ export default class View {
         this.app = document.getElementById('root');
         this.logout_btn = document.getElementById('logout_btn');
 
-        //TODO: ЭТИ ЭЛЕМЕНТЫ ТОЖЕ НАДО УБРАТЬ
-/*
-        //элементы окошка регистрации
-        this.modal = document.getElementById('modal');
-        this.createAccButton = document.getElementById('create-acc');        
-        this.loginUser = document.getElementById('log-acc');
-        this.emailField = document.getElementById('email_field');
-        this.passwordField = document.getElementById('password_field');       
-        this.logout_btn = document.getElementById('logout_btn');
-       */ 
-
         this.enterRouteElements = {};
 
         //элементы для RateRoute
@@ -33,7 +22,7 @@ export default class View {
             registration_window: ' <div id="modal" class="modal"> <h1>EdQ</h1> <h3>- проект по оценке качества университетского образования</h3> <div class="container right-panel-active"> <!-- Зарегистрироваться --> <div class="container__form container--signup"> <form action="#" class="form" id="form1"> <h2 class="form__title">Зарегистрироваться</h2> <input type="email" placeholder="Email" id="signup_email" class="input" /> <input type="password" placeholder="Пароль" id="signup_password" class="input" /> <button class="btn" type="submit">Зарегистрироваться</button> </form> </div> <!-- Sign In --> <div class="container__form container--signin"> <form action="#" class="form" id="form2"> <h2 class="form__title">Войти</h2> <input type="email" placeholder="Email" id="signin_email" class="input" /> <input type="password" placeholder="Пароль" id="signin_password" class="input" /> <button class="btn" type="submit">Войти</button> </form> </div> <!-- Overlay --> <div class="container__overlay"> <div class="overlay"> <div class="overlay__panel overlay--left"> <button class="btn" id="signIn">Войти</button> </div> <div class="overlay__panel overlay--right"> <button class="btn" id="signUp">Зарегистрироваться</button> </div> </div> </div> </div> </div>',
             get_parameters:  '<div id="parameters_choice"><form><h3>Выберите необходимые параметры:</h3><label>ВУЗ:</label><select id="uni_choice"><option value = "0"> </option></select><br><label>Дисциплина:</label><select id="subject_choice"><option value = "0"> </option></select><br><label>Преподаватель:</label><select id="teacher_choice"><option value = "0"> </option></select><br><label>Тип занятия:</label><select id="type_of_class"><option value = "0"> </option></select><br><div id="notifications"></div><button id="evaluate_button">Оценить</button></form></div>', 
             confirmation_window: " <div id = 'confirmation_window'><h4>Подтвердите выбранные параметры</h4><table><tr><td>ВУЗ:</td><td id = 'chosen_uni_text'> </td></tr><tr><td>Дисциплина:</td><td id = 'chosen_subj_text'> </td></tr><tr><td>Преподаватель:</td><td id = 'chosen_teacher_text'> </td></tr><tr><td>Тип занятий:</td><td id = 'chosen_type_text'> </td></tr></table><div class = 'confirmation_buttons'><button id = 'start_evaluation'>Верно, начать оценивание</button> <button id= 'change_parameters'>Выбрать другие параметры</button></div></div>",
-            evaluation_window: '<div id ="evaluation_window"> <p id="criteria_name"></p> <div id="criteria_stars"> <div class="stars" data-stars="1"> <svg height="50" width="50" class="star rating" data-rating="1"> <polygon id="star" points="23,0,28.290067270632257,15.718847050625474,44.874299874788534,15.892609129376208,31.559508646656383,25.781152949374526,36.519060802726884,41.60739087062379,23,32,9.48093919727312,41.60739087062379,14.440491353343619,25.78115294937453,1.1257001252114662,15.892609129376215,17.70993272936774,15.718847050625474" style="fill-rule:nonzero;"></polygon> </svg> <svg height="50" width="50" class="star rating" data-rating="2"> <polygon id="star" points="23,0,28.290067270632257,15.718847050625474,44.874299874788534,15.892609129376208,31.559508646656383,25.781152949374526,36.519060802726884,41.60739087062379,23,32,9.48093919727312,41.60739087062379,14.440491353343619,25.78115294937453,1.1257001252114662,15.892609129376215,17.70993272936774,15.718847050625474" style="fill-rule:nonzero;"></polygon> </svg> <svg height="50" width="50" class="star rating" data-rating="3"> <polygon id="star" points="23,0,28.290067270632257,15.718847050625474,44.874299874788534,15.892609129376208,31.559508646656383,25.781152949374526,36.519060802726884,41.60739087062379,23,32,9.48093919727312,41.60739087062379,14.440491353343619,25.78115294937453,1.1257001252114662,15.892609129376215,17.70993272936774,15.718847050625474" style="fill-rule:nonzero;"></polygon> </svg> <svg height="50" width="50" class="star rating" data-rating="4"> <polygon id="star" points="23,0,28.290067270632257,15.718847050625474,44.874299874788534,15.892609129376208,31.559508646656383,25.781152949374526,36.519060802726884,41.60739087062379,23,32,9.48093919727312,41.60739087062379,14.440491353343619,25.78115294937453,1.1257001252114662,15.892609129376215,17.70993272936774,15.718847050625474" style="fill-rule:nonzero;"></polygon> </svg> <svg height="50" width="50" class="star rating" data-rating="5"> <polygon id="star" points="23,0,28.290067270632257,15.718847050625474,44.874299874788534,15.892609129376208,31.559508646656383,25.781152949374526,36.519060802726884,41.60739087062379,23,32,9.48093919727312,41.60739087062379,14.440491353343619,25.78115294937453,1.1257001252114662,15.892609129376215,17.70993272936774,15.718847050625474" style="fill-rule:nonzero;"></polygon> </svg> </div> </div> <div id="next_criteria"> <button id ="next_criteria_button"> <svg width="31" height="28"> <path d="M21.205,5.007c-0.429-0.444-1.143-0.444-1.587,0c-0.429,0.429-0.429,1.143,0,1.571l8.047,8.047H1.111 C0.492,14.626,0,15.118,0,15.737c0,0.619,0.492,1.127,1.111,1.127h26.554l-8.047,8.032c-0.429,0.444-0.429,1.159,0,1.587 c0.444,0.444,1.159,0.444,1.587,0l9.952-9.952c0.444-0.429,0.444-1.143,0-1.571L21.205,5.007z" fill="#571457" data-original="#1e201d"/> </svg> </button> </div> </div> ',
+            evaluation_window: '<div id ="evaluation_window"> <p id="criteria_name"></p> <div id="criteria_stars"> <div class="stars" data-stars="1"> <svg height="50" width="50" class="star rating" data-rating="1"> <polygon id="star" points="23,0,28.290067270632257,15.718847050625474,44.874299874788534,15.892609129376208,31.559508646656383,25.781152949374526,36.519060802726884,41.60739087062379,23,32,9.48093919727312,41.60739087062379,14.440491353343619,25.78115294937453,1.1257001252114662,15.892609129376215,17.70993272936774,15.718847050625474" style="fill-rule:nonzero;"></polygon> </svg> <svg height="50" width="50" class="star rating" data-rating="2"> <polygon id="star" points="23,0,28.290067270632257,15.718847050625474,44.874299874788534,15.892609129376208,31.559508646656383,25.781152949374526,36.519060802726884,41.60739087062379,23,32,9.48093919727312,41.60739087062379,14.440491353343619,25.78115294937453,1.1257001252114662,15.892609129376215,17.70993272936774,15.718847050625474" style="fill-rule:nonzero;"></polygon> </svg> <svg height="50" width="50" class="star rating" data-rating="3"> <polygon id="star" points="23,0,28.290067270632257,15.718847050625474,44.874299874788534,15.892609129376208,31.559508646656383,25.781152949374526,36.519060802726884,41.60739087062379,23,32,9.48093919727312,41.60739087062379,14.440491353343619,25.78115294937453,1.1257001252114662,15.892609129376215,17.70993272936774,15.718847050625474" style="fill-rule:nonzero;"></polygon> </svg> <svg height="50" width="50" class="star rating" data-rating="4"> <polygon id="star" points="23,0,28.290067270632257,15.718847050625474,44.874299874788534,15.892609129376208,31.559508646656383,25.781152949374526,36.519060802726884,41.60739087062379,23,32,9.48093919727312,41.60739087062379,14.440491353343619,25.78115294937453,1.1257001252114662,15.892609129376215,17.70993272936774,15.718847050625474" style="fill-rule:nonzero;"></polygon> </svg> <svg height="50" width="50" class="star rating" data-rating="5"> <polygon id="star" points="23,0,28.290067270632257,15.718847050625474,44.874299874788534,15.892609129376208,31.559508646656383,25.781152949374526,36.519060802726884,41.60739087062379,23,32,9.48093919727312,41.60739087062379,14.440491353343619,25.78115294937453,1.1257001252114662,15.892609129376215,17.70993272936774,15.718847050625474" style="fill-rule:nonzero;"></polygon> </svg> </div> </div> <div id="next_criteria"> <button id ="next_criteria_button"> <svg width="31" height="28"> <path d="M21.205,5.007c-0.429-0.444-1.143-0.444-1.587,0c-0.429,0.429-0.429,1.143,0,1.571l8.047,8.047H1.111 C0.492,14.626,0,15.118,0,15.737c0,0.619,0.492,1.127,1.111,1.127h26.554l-8.047,8.032c-0.429,0.444-0.429,1.159,0,1.587 c0.444,0.444,1.159,0.444,1.587,0l9.952-9.952c0.444-0.429,0.444-1.143,0-1.571L21.205,5.007z" fill="var(--turquoise)" data-original="#1e201d"/> </svg> </button> </div> </div> ',
             leave_comment_field: '<div id="leave_comment"><h3>Хотите ли вы оставить отзыв? </h3><p>Пожалуйста, помните об уважении. Комментарии, содержащие нецензурные выражения будут удаляться.</p><textarea id = "comment" placeholder = "Хороший преподаватель и занятия интересные..." maxlength = "300"></textarea><br><div class ="button_area"><button id="finish_evaluation">Готово</button></div></div>',
             thank_you_window: ' <div id="thank_you_window"><h3>Спасибо за ваше мнение!</h3><p>Ваши оценки: </p><table></table><button id="evaluate_more">Оценить еще</button></div> ',
             showRating_fields: '<select id="choose_uni"><option></option></select><input type="text" disabled id="textBoxSearch" placeholder="Начните вводить фамилию/дисциплину. Пример: `Петрова Бухгалтерский учет`"><br><div id="littleCardsBox"></div>'
@@ -195,21 +184,14 @@ export default class View {
         if (this.rateRouteElements["type_choice"].value.length == 1 || state == "disable") {
             submit_button.disabled = true;
             submit_button.style.backgroundColor = '#fff';
-            submit_button.style.color = 'rgb(87, 20, 87)';
+            submit_button.style.color = 'black';
             submit_button.style.cursor = 'default';
         } else {
             submit_button.disabled = false;
-            submit_button.style.backgroundColor = 'rgba(91, 50, 110, 0.199)';
-            submit_button.style.color = 'black';
+            submit_button.style.backgroundColor = 'var(--turquoise)';
+            submit_button.style.color = 'white';
             submit_button.style.cursor = 'pointer';
-            submit_button.onmouseover = function() {
-                submit_button.style.backgroundColor = 'rgb(87, 20, 87)';
-                submit_button.style.color = '#fff';
-                    }
-            submit_button.onmouseout = function() {              
-                submit_button.style.backgroundColor = 'rgba(91, 50, 110, 0.199)';
-                submit_button.style.color = 'rgb(3, 3, 3)';
-                    }
+            submit_button.style.border = "1px solid var(--turquoise);"
             }
     }
     
@@ -244,21 +226,27 @@ export default class View {
     criteriasIteration(length, array) { 
 
         var self = this;
-        if (self.criteriaI == length) { //условие остановки   
-            self.incrementIteration(); //от отлавливания в контроллере     
+        if (self.criteriaI == length) { //условие остановки  
             return; 
-        } else {            
-            document.getElementById("evaluation_field").innerHTML = self.htmlLayouts.evaluation_window; 
+        } else {     
+            console.log(self.criteriaI, length);
+            document.getElementById("evaluation_field").innerHTML = self.htmlLayouts.evaluation_window;            
             document.getElementById('criteria_name').innerHTML = array[self.criteriaI];                        
-            self.incrementIteration(); //увеличиваем счетчик итерации
+            self.incrementIteration(); //увеличиваем счетчик номера критерия
             //здесь операции в процессе рекурсии
-            document.getElementById("next_criteria").onclick =  function(){  
+            
+            document.getElementById("next_criteria").onclick =  function(e){  
                 //записываем получившиеся элементы 
                 let name_of_criteria = document.getElementById('criteria_name').innerHTML;
                 let value_for_criteria = document.getElementsByClassName('stars')[0].dataset.stars;                 
                 self.write_result_of_evaluation(name_of_criteria, value_for_criteria);
                 
-                return self.criteriasIteration(length, array);
+                e.target.parentNode.parentNode.style.animation= "slide 0.7s";   
+                e.target.parentNode.parentNode.addEventListener("animationend", function() {
+                    return self.criteriasIteration(length, array);
+                })            
+                        
+               // return setTimeout(function(){self.criteriasIteration(length, array)}, 700);
             }
             
         }
@@ -319,10 +307,10 @@ export default class View {
         let card = document.createElement('div');        
         card.className +="littleCard";
         let img = document.createElement('img');
-        img.src = "http://bseu.by/personalpages/Lavrova/lavrova.jpg";
+        img.src = data["photoURL"];
         img.className += 'personalPhoto';
         card.appendChild(img);
-        let otherText = '<p>Дисциплина: <span id="subject_name">' + data['Дисциплина'] +'</span></p><p>Преподаватель: <span id = "teacher_name">'+ data['Преподаватель']+'</span></p><p>Тип занятия: <span id="type_of_class_name">'+ data['Тип занятия']+ '</span></p><p>Общая оценка: <span id="average_point">'+ data['Общая оценка']+'</span></p><p>Количество оценок: <span id="number_of_evaluations">'+ data['Количество оценивших']+'</span></p>'
+        let otherText = '<p>'+  data['Дисциплина'] +'</p><p>'+ data['Преподаватель']+'</p><p>'+ data['Тип занятия']+ '</p><p><span>Общая оценка: </span>'+ data['Общая оценка']+'</p><p><span>Количество оценок: </span>'+ data['Количество оценивших']+'</p>'
         card.insertAdjacentHTML('beforeend', otherText);
         let button = document.createElement('button');
         button.className += "show";
@@ -340,26 +328,32 @@ export default class View {
     showMoreInformation(d){
         //тут все модальное окно
         let modal = document.createElement('div');
-        modal.className += 'modal';
+        modal.className += 'modal-bigCard';
 
         let modalContent = document.createElement('div');
         modalContent.className += 'bigCard';
         let img = document.createElement('img');
-        img.src = "http://bseu.by/personalpages/Lavrova/lavrova.jpg";
+        console.log(d);
+        /*TODO: Какого хрена? */
+        img.src = d["photoURL"];
         img.className += 'personalPhoto';
         modalContent.appendChild(img);
-        let otherText = '<table><tr><td>Дисциплина: </td><td>'+ d['Дисциплина'] +'</td></tr><tr><td>Преподаватель: </td><td>'+ d['Преподаватель'] +'</td></tr><tr><td>Тип занятия: </td><td>'+ d['Тип занятия'] +'</td></tr><tr><td>Общая оценка: </td><td>' + d['Общая оценка']+ '</td></tr><tr><td>Количество оценивших: </td><td>'+d['Количество оценивших']+'</td></tr></table>';
+        let otherText = '<table><tr><td><span>Дисциплина: </span></td><td>'+ d['Дисциплина'] +'</td></tr><tr><td><span>Преподаватель: </span></td><td>'+ d['Преподаватель'] +'</td></tr><tr><td><span>Тип занятия: </span></td><td>'+ d['Тип занятия'] +'</td></tr><tr><td><span>Общая оценка: </span></td><td>' + d['Общая оценка']+ '</td></tr><tr><td><span>Количество оценивших: </span></td><td>'+d['Количество оценивших']+'</td></tr></table>';
         modalContent.insertAdjacentHTML('beforeend', otherText);
         let criteriaHeading = document.createElement('p');
         criteriaHeading.innerHTML = 'Критерии:';
         criteriaHeading.style.textAlign = "center";
         modalContent.appendChild(criteriaHeading);
         let criteriaTable = document.createElement('table');
+        criteriaTable.id = "criteria_table";
+        let criteriaTableBody = document.createElement('tbody');
+        criteriaTable.appendChild(criteriaTableBody);
         criteriaTable.style.margin = "0 auto";
         let criterias = Object.entries(d['Критерии']);
+        
         for (let i =0; i< criterias.length; i++) {
             let row = '<tr><td>'+ criterias[i][0] +'</td><td>'+ criterias[i][1] +'</td></tr>';
-            criteriaTable.insertAdjacentHTML('beforeend', row);
+            criteriaTableBody.insertAdjacentHTML('beforeend', row);
         }
         modalContent.appendChild(criteriaTable);
 
@@ -372,6 +366,7 @@ export default class View {
             for (let i = 0; i<d["Комментарии"].length; i++) {
                 
                 let commentBlock = document.createElement('div');
+                commentBlock.id = "comment_block"
                 let commentName = document.createElement('p');
                 commentName.innerHTML = Object.keys(d["Комментарии"][i])[0];
                 let commentContent = document.createElement('p');
@@ -389,7 +384,7 @@ export default class View {
         
 
         let closeButton = document.createElement('button');
-        closeButton.innerHTML = 'Скрыть';
+        closeButton.innerHTML = 'Закрыть';
         modalContent.appendChild(closeButton);
 
         
