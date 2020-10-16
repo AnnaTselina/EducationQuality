@@ -332,10 +332,12 @@ export default class Model {
     }
 
 
-    async searchByName(search) {      
+    async searchByName(search) {   
+           
         let snapshot = await db.collectionGroup(this.uniToSearchIn)
         .where ('keywords', 'array-contains', search.toLowerCase())
         //TODO: дописать .orderBy('')
+        //.limit(10) // устанавливаем лимит на количество загружаемых карточек
         .get();
         this.view.showLittleCards(snapshot);
         }
