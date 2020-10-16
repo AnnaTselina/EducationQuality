@@ -16,7 +16,7 @@ export default class View {
 
         //элементы showRating Route
         this.showRatingElements = {};
-
+        
         
         this.htmlLayouts = {
             registration_window: ' <div id="modal" class="modal"> <h1>EdQ</h1> <h3>- проект по оценке качества университетского образования</h3> <div class="container right-panel-active"> <!-- Зарегистрироваться --> <div class="container__form container--signup"> <form action="#" class="form" id="form1"> <h2 class="form__title">Зарегистрироваться</h2> <input type="email" placeholder="Email" id="signup_email" class="input" /> <input type="password" placeholder="Пароль" id="signup_password" class="input" /> <button class="btn" type="submit">Зарегистрироваться</button> </form> </div> <!-- Sign In --> <div class="container__form container--signin"> <form action="#" class="form" id="form2"> <h2 class="form__title">Войти</h2> <input type="email" placeholder="Email" id="signin_email" class="input" /> <input type="password" placeholder="Пароль" id="signin_password" class="input" /> <button class="btn" type="submit">Войти</button> </form> </div> <!-- Overlay --> <div class="container__overlay"> <div class="overlay"> <div class="overlay__panel overlay--left"> <button class="btn" id="signIn">Войти</button> </div> <div class="overlay__panel overlay--right"> <button class="btn" id="signUp">Зарегистрироваться</button> </div> </div> </div> </div> </div>',
@@ -297,11 +297,21 @@ export default class View {
         })
     }
 
-    //добавление карточки 
+    //в случае если карточек еще вообще нет (или делается новый запрос в input)
     showLittleCards(snapsh) {
         this.showRatingElements['littleCardsBox'].innerHTML = ' '; //очищает блок 
+        this.createLittleCards(snapsh);
+    }
+
+    addMoreLittleCards(snapsh) {
+        this.createLittleCards(snapsh);
+    }
+
+    //добавление карточки 
+    createLittleCards(snapsh) {     
+        
         //добавляем карточки
-        snapsh.docs.forEach(doc => {          
+        snapsh.docs.forEach(doc => { 
         let data = doc.data();        
         //создание маленькой карточки
         let card = document.createElement('div');        
@@ -329,12 +339,9 @@ export default class View {
         //тут все модальное окно
         let modal = document.createElement('div');
         modal.className += 'modal-bigCard';
-
         let modalContent = document.createElement('div');
         modalContent.className += 'bigCard';
-        let img = document.createElement('img');
-        console.log(d);
-        /*TODO: Какого хрена? */
+        let img = document.createElement('img');    
         img.src = d["photoURL"];
         img.className += 'personalPhoto';
         modalContent.appendChild(img);

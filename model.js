@@ -9,6 +9,7 @@ export default class Model {
 
         //showRatingRoute
         this.uniToSearchIn = null;
+        this.lastShownCardId = null;
     } 
     
     //вспомогательные методы для работы с конструктором
@@ -333,13 +334,34 @@ export default class Model {
 
 
     async searchByName(search) {   
-           
-        let snapshot = await db.collectionGroup(this.uniToSearchIn)
-        .where ('keywords', 'array-contains', search.toLowerCase())
-        //TODO: дописать .orderBy('')
-        //.limit(10) // устанавливаем лимит на количество загружаемых карточек
-        .get();
-        this.view.showLittleCards(snapshot);
+        if (!this.lastShownCardId) { //если карточки еще не было
+            let snapshot = await db.collection(this.uniToSearchIn)
+            .where ('keywords', 'array-contains', search.toLowerCase())
+            .orderBy(firebase.firestore.FieldPath.documentId())
+            //.startAfter(this.lastShownCardId)
+            .limit(10) // устанавливаем лимит на количество загружаемых карточек
+            .get();
+    
+            //записываем id последнего из 10 документов
+            this.lastShownCardId = snapshot.docs[snapshot.docs.length -1];
+            
+            
+            this.view.showLittleCards(snapshot);//передаем документы в view
+        } else { //если карточки уже есть
+            let snapshot = await db.collection(this.uniToSearchIn)
+            .where ('keywords', 'array-contains', search.toLowerCase())
+            .orderBy(firebase.firestore.FieldPath.documentId())
+            .startAfter(this.lastShownCardId)
+            .limit(10) // устанавливаем лимит на количество загружаемых карточек
+            .get();
+    
+            //записываем id последнего из 10 документов
+            this.lastShownCardId = snapshot.docs[snapshot.docs.length -1];
+            
+            
+            this.view.addMoreLittleCards(snapshot);//передаем документы в view
+        }
+       
         }
         
     

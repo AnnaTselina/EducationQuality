@@ -203,12 +203,14 @@ export default class Controller {
     }
     
     showRatingRoute() {        
-        this.model.showRatingParameters().then(this.showRatingEventController());     
+        this.model.showRatingParameters().then(this.showRatingEventController());    
+        //подключаем слушатель событий для проверки скролла 
     }
 
     showRatingEventController(){
         var self = this;
         let elements = this.view.showRatingElements;
+        let value;
         
         elements["choose_uni"].addEventListener('change', function(e) {
             if (e.target.options[e.target.selectedIndex].innerHTML.length !== 0) {
@@ -219,18 +221,31 @@ export default class Controller {
                 
             }      
         })
-        elements["textBoxSearch"].addEventListener('keyup', async (e) => await this.model.searchByName(e.target.value));
-        
-        /*
-        elements['littleCardsBox'].addEventListener('click', function(event) {
-            let target = event.target;            
-            if(target.classList.contains('show')) {
-                console.log(target.parentNode);
+        elements["textBoxSearch"].addEventListener('keyup', async (e) => {
+            await this.model.searchByName(e.target.value);
+            value = e.target.value;
+        });
+
+
+        //для имплементации lazyLoading (infinite scroll) необходимо знать когда полоса прокурутки находится внизу экрана
+        window.addEventListener("scroll", async (e) => {
+            let scrollable = document.documentElement.scrollHeight - window.innerHeight; //на сколько вообще можно промотать
+            let scrolled = window.scrollY //на сколько реально промотали
+            if(Math.ceil(scrolled) === scrollable) { //когда мы достигаем дна
+                await this.model.searchByName(value);
             }
-        })*/
+        });
     }
+/*
 
-
+async lazyLoad() {
+    
+    let scrollable = document.documentElement.scrollHeight - window.innerHeight; //на сколько вообще можно промотать
+    let scrolled = window.scrollY //на сколько реально промотали
+    if(Math.ceil(scrolled) === scrollable) { //когда мы достигаем дна
+        console.log(this.model);
+    }
+}*/
 
 
 
