@@ -231,8 +231,12 @@ export default class Controller {
         window.addEventListener("scroll", async (e) => {
             let scrollable = document.documentElement.scrollHeight - window.innerHeight; //на сколько вообще можно промотать
             let scrolled = window.scrollY //на сколько реально промотали
+
             if(Math.ceil(scrolled) === scrollable) { //когда мы достигаем дна
+               //при загрузке последнего документа lastShownCard ничего не содержит
+                if (this.model.lastShownCard) {  
                 await this.model.searchByName(value);
+                }
             }
         });
     }

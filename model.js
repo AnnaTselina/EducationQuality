@@ -9,7 +9,7 @@ export default class Model {
 
         //showRatingRoute
         this.uniToSearchIn = null;
-        this.lastShownCardId = null;
+        this.lastShownCard = null;
     } 
     
     //вспомогательные методы для работы с конструктором
@@ -334,16 +334,15 @@ export default class Model {
 
 
     async searchByName(search) {   
-        if (!this.lastShownCardId) { //если карточки еще не было
+        if (!this.lastShownCard) { //если карточки еще не было
             let snapshot = await db.collection(this.uniToSearchIn)
             .where ('keywords', 'array-contains', search.toLowerCase())
-            .orderBy(firebase.firestore.FieldPath.documentId())
-            //.startAfter(this.lastShownCardId)
+            .orderBy(firebase.firestore.FieldPath.documentId())            
             .limit(10) // устанавливаем лимит на количество загружаемых карточек
             .get();
     
             //записываем id последнего из 10 документов
-            this.lastShownCardId = snapshot.docs[snapshot.docs.length -1];
+            this.lastShownCard = snapshot.docs[snapshot.docs.length -1];
             
             
             this.view.showLittleCards(snapshot);//передаем документы в view
@@ -351,13 +350,13 @@ export default class Model {
             let snapshot = await db.collection(this.uniToSearchIn)
             .where ('keywords', 'array-contains', search.toLowerCase())
             .orderBy(firebase.firestore.FieldPath.documentId())
-            .startAfter(this.lastShownCardId)
+            .startAfter(this.lastShownCard)
             .limit(10) // устанавливаем лимит на количество загружаемых карточек
             .get();
     
             //записываем id последнего из 10 документов
-            this.lastShownCardId = snapshot.docs[snapshot.docs.length -1];
-            
+            this.lastShownCard = snapshot.docs[snapshot.docs.length -1];
+            console.log(snapshot.docs );
             
             this.view.addMoreLittleCards(snapshot);//передаем документы в view
         }
