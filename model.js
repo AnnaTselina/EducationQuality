@@ -41,13 +41,28 @@ export default class Model {
 
     create_account(userEmail, userPass) { //создание аккаунта   
         return new Promise((resolve, reject) => {
-            resolve(firebase.auth().createUserWithEmailAndPassword(userEmail, userPass).catch(function(error) {
+            resolve(
+                firebase.auth().createUserWithEmailAndPassword(userEmail, userPass).then(function() {
+                    db.collection("Users").doc().set({
+                        "user": userEmail
+            })
+                }
+                ).catch(function(error) {
                 // Handle Errors here.
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                // ...
-                window.alert("Error: " + errorMessage);
-            }));
+                var errorCode = error.code;                
+                var errorMessage;
+                switch (errorCode){
+                    case "auth/weak-password":
+                        errorMessage = "Пароль должен содержать не менее 6 символов";
+                        break;
+                    case "auth/email-already-in-use":
+                        errorMessage = "Введенный email уже используется другим аккаунтом";
+                        break;
+                }
+                window.alert("Ошибка: " + errorMessage);
+            })
+
+            );
         })   
     }
         
@@ -56,9 +71,19 @@ export default class Model {
             resolve(firebase.auth().signInWithEmailAndPassword(userEmail, userPass).catch(function(error) {
                 // Handle Errors here.
                 var errorCode = error.code;
-                var errorMessage = error.message;
+                var errorMessage
+                console.log(errorCode);
+                switch (errorCode) {
+                    case "auth/user-not-found":
+                        errorMessage = "Пользователя с таким идентификатором не существует. Возможно, аккаунт был удален или не создан.";
+                        break;
+                    case "auth/wrong-password":
+                        errorMessage = "Введен неправильный пароль";
+                        break;
+                    
+                }
                 // ...
-                window.alert("Error: " + errorMessage);
+                window.alert("Ошибка: " + errorMessage);
             }));
         })
     }
@@ -72,8 +97,16 @@ export default class Model {
     }
 
     /*Методы для InfoRoute */
-    infoRouteLoad() {
-        this.view.infoRouteShow();
+    async infoRouteLoad() {
+        this.view.infoRouteShow(); //подгружаем основную верстку
+    }
+
+    
+    //здесь получаем статистику для info
+    async getInfoOnProject() {
+        let courses = await db.collection("БГЭУ").get().then(res => {return res.size});
+        let users = await db.collection('Users').get().then(res => {return res.size});
+        return [courses, users];      
     }
 
 
@@ -251,7 +284,6 @@ export default class Model {
 
         async function updateValues(refer, query) {
             let result = await getValues(query);
-            console.log(result);           
             let ref = refer;
             let docId = result['docId']
             let curAvgPoint = result['curAvgPoint'];
@@ -303,8 +335,8 @@ export default class Model {
         const arrName = [];
         let curName = '';
         name.split('').forEach(letter => {
-          curName += letter;
-          arrName.push(curName);
+            curName += letter;
+            arrName.push(curName);
         });
         return arrName;
     }
@@ -330,21 +362,20 @@ export default class Model {
     //записываем выбранный университет
     handleChosenUniInShowRating(uni) {
         this.uniToSearchIn = uni;
+        this.view.clearLittleCardsBox();
     }
 
 
-    async searchByName(search) {   
+    async searchByName(search) {  
+        
         if (!this.lastShownCard) { //если карточки еще не было
             let snapshot = await db.collection(this.uniToSearchIn)
             .where ('keywords', 'array-contains', search.toLowerCase())
             .orderBy(firebase.firestore.FieldPath.documentId())            
             .limit(10) // устанавливаем лимит на количество загружаемых карточек
-            .get();
-    
+            .get();    
             //записываем id последнего из 10 документов
-            this.lastShownCard = snapshot.docs[snapshot.docs.length -1];
-            
-            
+            this.lastShownCard = snapshot.docs[snapshot.docs.length -1];           
             this.view.showLittleCards(snapshot);//передаем документы в view
         } else { //если карточки уже есть
             let snapshot = await db.collection(this.uniToSearchIn)
@@ -352,21 +383,20 @@ export default class Model {
             .orderBy(firebase.firestore.FieldPath.documentId())
             .startAfter(this.lastShownCard)
             .limit(10) // устанавливаем лимит на количество загружаемых карточек
-            .get();
-    
+            .get();  
             //записываем id последнего из 10 документов
-            this.lastShownCard = snapshot.docs[snapshot.docs.length -1];
-            console.log(snapshot.docs );
-            
+            this.lastShownCard = snapshot.docs[snapshot.docs.length -1];         
             this.view.addMoreLittleCards(snapshot);//передаем документы в view
         }
-       
-        }
-        
+    }
+    
+    clearLastShownCard() {
+        this.lastShownCard = null;
+    }
     
 
 
-    }
+}
 
 
 

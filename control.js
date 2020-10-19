@@ -96,9 +96,46 @@ export default class Controller {
     }
 
      //функции для заполнения контента в блоке с id = "root" в зависимости от хэша в адресной строке (вызываются из роутера)
-    async infoRoute() {        
-        this.model.infoRouteLoad();
+    infoRoute() {        
+        this.model.infoRouteLoad().then(this.infoRouteController.bind(this));
+        
     }
+
+    async infoRouteController() {
+        
+        let elements = this.view.infoRouteElements;        
+
+        //получаем общее количество оцененных сущностей
+        let results = await this.model.getInfoOnProject();
+        
+
+        //функция счетчика
+    
+            function counter(elem, start, end, duration) {
+                
+                let current = start,
+                range = end - start,
+                increment = end > start ? 1 : -1,
+                step = Math.abs(Math.floor(duration / range)),
+                timer = setInterval(() => {
+                current += increment;
+                elem.textContent = current;
+                if (current == end) {
+                clearInterval(timer);
+            }
+                }, step);
+            }
+            
+            counter(elements["num_courses"], 0, results[0], 1500);
+            counter(elements["num_users"], 0, results[1], 1600);
+            
+
+        
+
+
+    }
+
+
 
     rateRoute() { 
          //сначала подгружаем верстку через модель, достаем необходимые элементы и вешаем листнеры на них, затем иницируем слушатель событий
@@ -222,8 +259,10 @@ export default class Controller {
             }      
         })
         elements["textBoxSearch"].addEventListener('keyup', async (e) => {
+            this.model.clearLastShownCard(); //когда вводим новый параметр запроса чистим поле последнего документа для предыдущего запроса
             await this.model.searchByName(e.target.value);
             value = e.target.value;
+            
         });
 
 
@@ -231,30 +270,16 @@ export default class Controller {
         window.addEventListener("scroll", async (e) => {
             let scrollable = document.documentElement.scrollHeight - window.innerHeight; //на сколько вообще можно промотать
             let scrolled = window.scrollY //на сколько реально промотали
-
+            
             if(Math.ceil(scrolled) === scrollable) { //когда мы достигаем дна
                //при загрузке последнего документа lastShownCard ничего не содержит
+                
                 if (this.model.lastShownCard) {  
                 await this.model.searchByName(value);
                 }
             }
         });
     }
-/*
-
-async lazyLoad() {
-    
-    let scrollable = document.documentElement.scrollHeight - window.innerHeight; //на сколько вообще можно промотать
-    let scrolled = window.scrollY //на сколько реально промотали
-    if(Math.ceil(scrolled) === scrollable) { //когда мы достигаем дна
-        console.log(this.model);
-    }
-}*/
-
-
-
-
-
 
 }
 

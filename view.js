@@ -11,6 +11,8 @@ export default class View {
 
         this.enterRouteElements = {};
 
+        this.infoRouteElements = {};
+
         //элементы для RateRoute
         this.rateRouteElements = { };
 
@@ -20,6 +22,7 @@ export default class View {
         
         this.htmlLayouts = {
             registration_window: ' <div id="modal" class="modal"> <h1>EdQ</h1> <h3>- проект по оценке качества университетского образования</h3> <div class="container right-panel-active"> <!-- Зарегистрироваться --> <div class="container__form container--signup"> <form action="#" class="form" id="form1"> <h2 class="form__title">Зарегистрироваться</h2> <input type="email" placeholder="Email" id="signup_email" class="input" /> <input type="password" placeholder="Пароль" id="signup_password" class="input" /> <button class="btn" type="submit">Зарегистрироваться</button> </form> </div> <!-- Sign In --> <div class="container__form container--signin"> <form action="#" class="form" id="form2"> <h2 class="form__title">Войти</h2> <input type="email" placeholder="Email" id="signin_email" class="input" /> <input type="password" placeholder="Пароль" id="signin_password" class="input" /> <button class="btn" type="submit">Войти</button> </form> </div> <!-- Overlay --> <div class="container__overlay"> <div class="overlay"> <div class="overlay__panel overlay--left"> <button class="btn" id="signIn">Войти</button> </div> <div class="overlay__panel overlay--right"> <button class="btn" id="signUp">Зарегистрироваться</button> </div> </div> </div> </div> </div>',
+            information: '<div class = "header"><div class="container_info"><div class="main_info"><h1>EdQ</h1><p id ="project_description"> - проект, позволяющий ...</p></div><div id="numbers_boxes"></div></div></div>',
             get_parameters:  '<div id="parameters_choice"><form><h3>Выберите необходимые параметры:</h3><label>ВУЗ:</label><select id="uni_choice"><option value = "0"> </option></select><br><label>Дисциплина:</label><select id="subject_choice"><option value = "0"> </option></select><br><label>Преподаватель:</label><select id="teacher_choice"><option value = "0"> </option></select><br><label>Тип занятия:</label><select id="type_of_class"><option value = "0"> </option></select><br><div id="notifications"></div><button id="evaluate_button">Оценить</button></form></div>', 
             confirmation_window: " <div id = 'confirmation_window'><h4>Подтвердите выбранные параметры</h4><table><tr><td>ВУЗ:</td><td id = 'chosen_uni_text'> </td></tr><tr><td>Дисциплина:</td><td id = 'chosen_subj_text'> </td></tr><tr><td>Преподаватель:</td><td id = 'chosen_teacher_text'> </td></tr><tr><td>Тип занятий:</td><td id = 'chosen_type_text'> </td></tr></table><div class = 'confirmation_buttons'><button id = 'start_evaluation'>Верно, начать оценивание</button> <button id= 'change_parameters'>Выбрать другие параметры</button></div></div>",
             evaluation_window: '<div id ="evaluation_window"> <p id="criteria_name"></p> <div id="criteria_stars"> <div class="stars" data-stars="1"> <svg height="50" width="50" class="star rating" data-rating="1"> <polygon id="star" points="23,0,28.290067270632257,15.718847050625474,44.874299874788534,15.892609129376208,31.559508646656383,25.781152949374526,36.519060802726884,41.60739087062379,23,32,9.48093919727312,41.60739087062379,14.440491353343619,25.78115294937453,1.1257001252114662,15.892609129376215,17.70993272936774,15.718847050625474" style="fill-rule:nonzero;"></polygon> </svg> <svg height="50" width="50" class="star rating" data-rating="2"> <polygon id="star" points="23,0,28.290067270632257,15.718847050625474,44.874299874788534,15.892609129376208,31.559508646656383,25.781152949374526,36.519060802726884,41.60739087062379,23,32,9.48093919727312,41.60739087062379,14.440491353343619,25.78115294937453,1.1257001252114662,15.892609129376215,17.70993272936774,15.718847050625474" style="fill-rule:nonzero;"></polygon> </svg> <svg height="50" width="50" class="star rating" data-rating="3"> <polygon id="star" points="23,0,28.290067270632257,15.718847050625474,44.874299874788534,15.892609129376208,31.559508646656383,25.781152949374526,36.519060802726884,41.60739087062379,23,32,9.48093919727312,41.60739087062379,14.440491353343619,25.78115294937453,1.1257001252114662,15.892609129376215,17.70993272936774,15.718847050625474" style="fill-rule:nonzero;"></polygon> </svg> <svg height="50" width="50" class="star rating" data-rating="4"> <polygon id="star" points="23,0,28.290067270632257,15.718847050625474,44.874299874788534,15.892609129376208,31.559508646656383,25.781152949374526,36.519060802726884,41.60739087062379,23,32,9.48093919727312,41.60739087062379,14.440491353343619,25.78115294937453,1.1257001252114662,15.892609129376215,17.70993272936774,15.718847050625474" style="fill-rule:nonzero;"></polygon> </svg> <svg height="50" width="50" class="star rating" data-rating="5"> <polygon id="star" points="23,0,28.290067270632257,15.718847050625474,44.874299874788534,15.892609129376208,31.559508646656383,25.781152949374526,36.519060802726884,41.60739087062379,23,32,9.48093919727312,41.60739087062379,14.440491353343619,25.78115294937453,1.1257001252114662,15.892609129376215,17.70993272936774,15.718847050625474" style="fill-rule:nonzero;"></polygon> </svg> </div> </div> <div id="next_criteria"> <button id ="next_criteria_button"> <svg width="31" height="28"> <path d="M21.205,5.007c-0.429-0.444-1.143-0.444-1.587,0c-0.429,0.429-0.429,1.143,0,1.571l8.047,8.047H1.111 C0.492,14.626,0,15.118,0,15.737c0,0.619,0.492,1.127,1.111,1.127h26.554l-8.047,8.032c-0.429,0.444-0.429,1.159,0,1.587 c0.444,0.444,1.159,0.444,1.587,0l9.952-9.952c0.444-0.429,0.444-1.143,0-1.571L21.205,5.007z" fill="var(--turquoise)" data-original="#1e201d"/> </svg> </button> </div> </div> ',
@@ -71,13 +74,47 @@ export default class View {
     /*Параметры для Info Route  - дефолтный путь*/ 
     infoRouteShow(){        
         document.getElementById('navigation').style.display = 'flex';
-        this.app.innerHTML = " ";
+        this.app.style.padding = "0px";
+        this.app.innerHTML = this.htmlLayouts.information;
+        const box = document.getElementById("numbers_boxes");
+        
+
+        //количество оцененных курсов
+        let courses = document.createElement('div');        
+        courses.classList += "counter";
+        let numCourses = document.createElement('div');
+        numCourses.classList += "numbers";
+        numCourses.id = "numCourses";
+        let textCourses = document.createElement('div');
+        textCourses.classList += "texts";
+        textCourses.innerHTML = "- количество оцененных курсов";
+        courses.appendChild(numCourses);
+        courses.appendChild(textCourses);
+        box.appendChild(courses);
+
+        //количество пользователей в системе
+        let users = document.createElement('div');        
+        users.classList += "counter";
+        let numUsers = document.createElement('div');
+        numUsers.classList += "numbers";
+        numUsers.id = "numUsers";
+        let textUsers = document.createElement('div');
+        textUsers.classList += "texts";
+        textUsers.innerHTML = "- количество пользователей в системе";
+        users.appendChild(numUsers);
+        users.appendChild(textUsers);
+        box.appendChild(users);
+
+
+        this.setElement(this.infoRouteElements, 'num_courses', numCourses);
+        this.setElement(this.infoRouteElements, 'num_users', numUsers);
     }
 
      //работаем с окном с параметрами
     workWithRatingParameters() {
         document.getElementById('navigation').style.display = 'flex';
         this.app.innerHTML = this.htmlLayouts.get_parameters;
+        this.app.style.padding = "20px 200px";
         let uni_choice = document.getElementById('uni_choice');
         let subject_choice = document.getElementById('subject_choice');
         let teacher_choice = document.getElementById('teacher_choice');
@@ -229,7 +266,6 @@ export default class View {
         if (self.criteriaI == length) { //условие остановки  
             return; 
         } else {     
-            console.log(self.criteriaI, length);
             document.getElementById("evaluation_field").innerHTML = self.htmlLayouts.evaluation_window;            
             document.getElementById('criteria_name').innerHTML = array[self.criteriaI];                        
             self.incrementIteration(); //увеличиваем счетчик номера критерия
@@ -269,15 +305,14 @@ export default class View {
         }
         if (com !== null) {
             table.insertAdjacentHTML('beforeend', "<tr><td>Комментарий: </td><td> " + com + "</td></tr")
-        } 
-
-        
+        }  
     }
 
     //МЕТОДЫ ДЛЯ SHOWRATING ROUTE
     displayShowRatingParameters() {  
         document.getElementById('navigation').style.display = 'flex';      
         this.app.innerHTML = this.htmlLayouts.showRating_fields;
+        this.app.style.padding = "20px 200px";
         //добавляем управляющие элементы для showRatingRoute
         let chooseUni = document.getElementById('choose_uni');
         let inputField = document.getElementById('textBoxSearch');
@@ -299,7 +334,7 @@ export default class View {
 
     //в случае если карточек еще вообще нет (или делается новый запрос в input)
     showLittleCards(snapsh) {
-        this.showRatingElements['littleCardsBox'].innerHTML = ' '; //очищает блок 
+        this.clearLittleCardsBox();
         this.createLittleCards(snapsh);
     }
 
@@ -385,6 +420,8 @@ export default class View {
 
         } else {
             let noComment = document.createElement('p');
+            noComment.style.fontSize ="14px";
+            noComment.style.fontWeight ="400";
             noComment.innerHTML = "Комментариев нет";
             modalContent.appendChild(noComment);
         }
@@ -392,9 +429,7 @@ export default class View {
 
         let closeButton = document.createElement('button');
         closeButton.innerHTML = 'Закрыть';
-        modalContent.appendChild(closeButton);
-
-        
+        modalContent.appendChild(closeButton);        
 
         modal.appendChild(modalContent);
         this.showRatingElements['littleCardsBox'].appendChild(modal);
@@ -405,6 +440,9 @@ export default class View {
         })
     }
     
+    clearLittleCardsBox() {
+        this.showRatingElements['littleCardsBox'].innerHTML = ' '; //очищает блок 
+    }
 
     }
 
