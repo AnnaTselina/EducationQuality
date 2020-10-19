@@ -293,9 +293,16 @@ body {
 	height: 850px;	
 }
 
-.container_info {
-	padding: 100px 200px 0 200px;
+.container_info {	
+	display: flex;
+	padding: 100px 200px;
+	justify-content: space-between;
 }
+
+.container_info #info {
+	width: 60%;
+}
+
 
 .header h1 {
     color: #60606e;
@@ -307,30 +314,27 @@ body {
 	
 }
 
-.header #project_description {
+.header .project_description {
 	display: inline-block;
 	margin-left: 20px;
 	color: #60606e;
     font-size: 18px;
-    font-weight: 400;
-    line-height: 30px;
+    font-weight: 400;    
     text-align: justify;
-    line-height: 2em;
+	line-height: 2em;
+	margin-top: 20px;
 }
 
-.header .main_info {
-	padding: 0 20%;
-}
+
 
 .header #numbers_boxes {
-	margin-top: 100px;
-	display: flex;
+	margin-top: 100px;	
 }
 
-.counter {
+.counter {		
+	margin-bottom: 40px;
 	display: flex;
 	align-items: center;
-	width: 50%;
 }
 
 .numbers {
@@ -345,6 +349,7 @@ body {
 
 .texts {
 	display: inline-block;
+	width: 220px;
 }
 
 

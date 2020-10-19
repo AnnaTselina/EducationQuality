@@ -164,4 +164,4 @@ let starsEl = document.querySelectorAll('.star.rating');
             <p id ="project_description"> - проект, позволяющий ...</p>
         </div>
 
-<div class = "header"><h1>EdQ</h1><p id ="project_description"> - проект, позволяющий ...</p></div>
+<div class = "header"></div>
