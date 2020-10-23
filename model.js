@@ -198,7 +198,7 @@ export default class Model {
         let values = Object.values(self.evaluated_criterias).map(function (item) {
             return Number(item);
         })
-        let avgPoint = values.reduce(reducer)/values.length; //среднее арифметическое всех оценок
+        let avgPoint = (values.reduce(reducer)/values.length).toFixed(1); //среднее арифметическое всех оценок
         let currentUser = firebase.auth().currentUser.email;
         let comment = {
             [currentUser]: self.addedComment
