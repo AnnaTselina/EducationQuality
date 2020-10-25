@@ -43,7 +43,8 @@ body {
 }
 
 .modal h3 {
-    color: whitesmoke;
+	color: whitesmoke;
+	font-size: 16px;
 }
 
 :root {
@@ -63,6 +64,7 @@ body {
 	font-weight: 300;
 	margin: 0;
 	margin-bottom: 1.25rem;
+	font-size: 16px;
 }
 
 .container {
@@ -70,7 +72,7 @@ body {
 	border-radius: 0.7rem;
 	box-shadow: 0 0.9rem 1.7rem rgba(0, 0, 0, 0.25),
 		0 0.7rem 0.7rem rgba(0, 0, 0, 0.22);
-	height: 420px;
+	height: 380px;
 	max-width: 758px;
 	overflow: hidden;
 	position: relative;
@@ -180,7 +182,7 @@ body {
 	border: 1px solid var(--turquoise);
 	color: var(--white);
 	cursor: pointer;
-	font-size: 0.8rem;
+	font-size: 0.6rem;
 	font-weight: bold;
 	letter-spacing: 0.1rem;
 	padding: 0.9rem 4rem;
@@ -236,8 +238,8 @@ body {
 
 .nav_panel div {      
     text-align: center;
-    line-height: 80px;
-    font-size: 20px; 
+    line-height: 60px;
+    font-size: 16px; 
 }
 
 .nav_panel div:first-child  {
@@ -264,7 +266,7 @@ body {
 	border: 1px solid var(--turquoise);
 	color: white;
 	cursor: pointer;
-	font-size: 0.8rem;
+	font-size: 0.6rem;
 	font-weight: bold;
 	letter-spacing: 0.1rem;
 	padding: 10px 30px;
@@ -295,7 +297,7 @@ body {
 
 .container_info {	
 	display: flex;
-	padding: 100px 200px;
+	padding: 80px 200px;
 	justify-content: space-between;
 }
 
@@ -318,10 +320,10 @@ body {
 	display: inline-block;
 	margin-left: 20px;
 	color: #60606e;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 400;    
     text-align: justify;
-	line-height: 2em;
+	line-height: 1.7em;
 	margin-top: 20px;
 }
 
@@ -363,12 +365,13 @@ body {
 	max-width: 758px;
 	overflow: hidden;
     width: 100%;
-    margin: 30px auto 0 auto;
+    margin: 0 auto;
 }
 
 #parameters_choice h3 {
     margin-bottom: 30px;
-    text-align: center;
+	text-align: center;
+	font-size: 16px;
 }
 
 #parameters_choice form {
@@ -378,13 +381,13 @@ body {
 #parameters_choice label {
     display: inline-block;   
     width: 190px;
-    font-size: 18px;
+    font-size: 14px;
     text-align: left;
 }
 
 #parameters_choice select {
     width: 40%;
-    height: 40px;
+    height: 30px;
     margin-bottom: 20px;
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
@@ -395,14 +398,15 @@ body {
 #notifications {
     height: 20px;
     margin: 10px 0 20px 0;
-    color: var(--turquoise);	
+	color: var(--turquoise);
+	font-size: 12px;	
 }
 
 #evaluate_button {
     background-color: var(--turquoise);	
 	border-radius: 20px;
 	border: 1px solid var(--white);	
-	font-size: 0.8rem;	
+	font-size: 0.6rem;	
 	letter-spacing: 0.1rem;
 	padding: 10px 30px;
 	text-transform: uppercase;
@@ -411,11 +415,7 @@ body {
     display: block;    
     margin: 0 auto;    
     font-weight: 700;
-
-  
-
 }
-
 
 #evaluate_button:active {
 	transform: scale(0.95);
@@ -434,16 +434,17 @@ body {
 	border-radius: 0.7rem;
 	box-shadow: 0 0.9rem 1.7rem rgba(0, 0, 0, 0.25),
 		0 0.7rem 0.7rem rgba(0, 0, 0, 0.22);
-    padding: 30px;
+    padding: 20px;
 	max-width: 758px;
 	overflow: hidden;
     width: 100%;
-    margin: 30px auto 0 auto;
+    margin: 0 auto;
 }
 
 #confirmation_window h4 {
     text-align: center;
-    margin-bottom: 20px;
+	margin-bottom: 20px;
+	font-size: 14px;
 }
 
 #confirmation_window table {   
@@ -452,7 +453,8 @@ body {
 
 #confirmation_window table td {
     width: 210px;
-    height: 25px;
+	height: 25px;
+	font-size: 14px;
 }
 
 .confirmation_buttons {
@@ -465,7 +467,7 @@ body {
 	border: 1px solid var(--turquoise);
 	color: white;
 	cursor: pointer;
-	font-size: 0.8rem;
+	font-size: 0.6rem;
 	font-weight: bold;
 	letter-spacing: 0.1rem;
 	padding: 10px 30px;
@@ -490,7 +492,7 @@ body {
 	border-radius: 0.7rem;
 	box-shadow: 0 0.9rem 1.7rem rgba(0, 0, 0, 0.25),
 		0 0.7rem 0.7rem rgba(0, 0, 0, 0.22);
-    padding: 30px;
+    padding: 20px;
 	max-width: 758px;
 	overflow: hidden;
     width: 100%;
@@ -505,6 +507,10 @@ body {
 	to {
 		right: 1600px;	
 	}
+}
+
+#evaluation_window p {
+	font-size: 14px;
 }
 
 #next_criteria {
@@ -564,7 +570,7 @@ body {
 	border-radius: 0.7rem;
 	box-shadow: 0 0.9rem 1.7rem rgba(0, 0, 0, 0.25),
 		0 0.7rem 0.7rem rgba(0, 0, 0, 0.22);
-    padding: 30px;
+    padding: 20px;
 	max-width: 758px;
 	overflow: hidden;
     width: 100%;
@@ -575,16 +581,17 @@ body {
 
 #leave_comment h3 {
     margin-bottom: 10px;
-    text-align: center;
+	text-align: center;
+	font-size: 14px;
 }
 #leave_comment p {
     margin-bottom: 20px;
-    font-size: 14px;
+    font-size: 12px;
 }
 #leave_comment textarea {
     width: 100%;
     height: 100px;
-    font-size: 16px;    
+    font-size: 14px;    
     box-sizing: border-box;
     background-color: #fff;
 	border: none;
@@ -603,7 +610,7 @@ body {
 	border: 1px solid var(--turquoise);
 	color: white;
 	cursor: pointer;
-	font-size: 0.8rem;
+	font-size: 0.6rem;
 	font-weight: bold;
 	letter-spacing: 0.1rem;
 	padding: 10px 30px;
@@ -629,12 +636,17 @@ body {
 	max-width: 758px;
 	overflow: hidden;
     width: 100%;
-    margin: 30px auto 0 auto;
+    margin: 0 auto;
     text-align: center;
 }
 
+#thank_you_window h3 {
+	font-size: 14px;
+} 
+
 #thank_you_window p {
-    margin: 15px 0px;
+	margin: 15px 0px;
+	font-size: 14px;
 }
 
 #thank_you_window table {
@@ -646,13 +658,14 @@ body {
 }
 
 #thank_you_window table td:first-child {
+	font-size: 12px;
     text-align: left;
 }
 
 #thank_you_window table td:nth-child(2){
     color: var(--turquoise);
     font-weight: 900;
-    font-size: 20px;
+    font-size: 16px;
 }
 
 #thank_you_window button {
@@ -661,7 +674,7 @@ body {
 	border: 1px solid var(--turquoise);
 	color: white;
 	cursor: pointer;
-	font-size: 0.8rem;
+	font-size: 0.6rem;
 	font-weight: bold;
 	letter-spacing: 0.1rem;
 	padding: 10px 30px;
@@ -683,14 +696,14 @@ body {
 /*Show rating route*/
 #choose_uni {
     width: 10%;
-    height: 40px;
+    height: 30px;
     font-weight: 700;
     border-color: var(--white);
     cursor: pointer;
 }
 
 #textBoxSearch {
-    height: 40px;
+    height: 30px;
     width: 80%;
     display: block;
     float: right;
@@ -714,11 +727,11 @@ body {
 .littleCard {
     background-color: var(--white) ;
 	border-radius: 0.7rem;
-    padding: 30px;
+    padding: 20px;
 	/*max-width: 758px;*/
 	overflow: hidden;
     margin-top: 30px; 
-    width: 315px;
+    width: 270px;
 }
 
 .littleCard .personalPhoto {
@@ -729,7 +742,8 @@ body {
 }
 
 .littleCard p {
-    margin-bottom: 7px;     
+	margin-bottom: 7px;  
+	font-size: 14px;   
 }
 
 .littleCard span {
@@ -743,10 +757,10 @@ body {
 	border: 1px solid var(--turquoise);
 	color: white;
 	cursor: pointer;
-	font-size: 0.8rem;
+	font-size: 0.6rem;
 	font-weight: bold;
 	letter-spacing: 0.1rem;
-	padding: 10px 30px;
+	padding: 10px 20px;
 	text-transform: uppercase;
     transition: transform 80ms ease-in; 
     margin: 0 auto;
@@ -810,11 +824,12 @@ body {
 
 .bigCard td {
     width: 220px;  
-    height: 40px;
+	height: 40px;
+	font-size: 14px
 }
 
 .bigCard td span {
-    color: var(--turquoise);
+	color: var(--turquoise);
 }
 
 .bigCard #criteria_table tr:nth-child(2n) {
@@ -849,7 +864,7 @@ body {
 	margin: 0;
 	text-align: left;
 	padding: 5px;
-	font-size: 14px;
+	font-size: 12px;
 }
 
 .bigCard button {
@@ -858,7 +873,7 @@ body {
 	border: 1px solid var(--turquoise);
 	color: white;
 	cursor: pointer;
-	font-size: 0.8rem;
+	font-size: 0.6rem;
 	font-weight: bold;
 	letter-spacing: 0.1rem;
 	padding: 10px 30px;
