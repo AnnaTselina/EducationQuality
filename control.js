@@ -62,7 +62,8 @@ export default class Controller {
         let password = this.view._getValuesSignUp[1];
             if (email.length !== 0 && password.length !== 0) { 
                 var self = this;                                      
-                self.model.create_account(email, password).then(function() {                                    
+                self.model.create_account(email, password).then(function() {    
+                    self.model.setPersistence();                                
                     self.checkUserState().then(result=> {
                         if (result) {
                             self.setDefaultRoute();
