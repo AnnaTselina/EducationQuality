@@ -68,7 +68,11 @@ export default class Model {
         
     login(userEmail, userPass) { //вход в систему
         return new Promise((resolve) => {
-            resolve(firebase.auth().signInWithEmailAndPassword(userEmail, userPass).catch(function(error) {
+            resolve(
+                firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+                .then(function() {
+                    firebase.auth().signInWithEmailAndPassword(userEmail, userPass);
+                }).catch(function(error) {
                 // Handle Errors here.
                 var errorCode = error.code;
                 var errorMessage                
@@ -83,7 +87,8 @@ export default class Model {
                 }
                 // ...
                 window.alert("Ошибка: " + errorMessage);
-            }));
+            })
+            );
         })
     }
 
