@@ -44,8 +44,11 @@ export default class Model {
             resolve(
                 firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
                 .then(function() {
-                    firebase.auth().createUserWithEmailAndPassword(userEmail, userPass);
-                    return  db.collection("Users").doc().set({ "user": userEmail })
+                    return function() {
+                        firebase.auth().createUserWithEmailAndPassword(userEmail, userPass).then(function() {
+                            db.collection("Users").doc().set({ "user": userEmail })
+                        })
+                    } 
                 })
                 .catch(function(error) {
                         // Handle Errors here.
