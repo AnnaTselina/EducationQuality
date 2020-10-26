@@ -69,32 +69,37 @@ export default class Model {
     login(userEmail, userPass) { //вход в систему
         return new Promise((resolve) => {
             resolve(
-                firebase.auth().signInWithEmailAndPassword(userEmail, userPass).catch(function(error) {
-                // Handle Errors here.
-                var errorCode = error.code;
-                var errorMessage                
-                switch (errorCode) {
-                    case "auth/user-not-found":
-                        errorMessage = "Пользователя с таким идентификатором не существует. Возможно, аккаунт был удален или не создан.";
-                        break;
-                    case "auth/wrong-password":
-                        errorMessage = "Введен неправильный пароль";
-                        break;
-                    
-                }
-                // ...
-                window.alert("Ошибка: " + errorMessage);
-            })
+                firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+                    .then(function() {
+                        // Existing and future Auth states are now persisted in the current
+                        // session only. Closing the window would clear any existing state even
+                        // if a user forgets to sign out.
+                        // ...
+                        // New sign-in will be persisted with session persistence.
+                        return firebase.auth().signInWithEmailAndPassword(userEmail, userPass)
+                    })
+                    .catch(function(error) {
+                        // Handle Errors here.
+                        var errorCode = error.code;
+                        var errorMessage                
+                        switch (errorCode) {
+                            case "auth/user-not-found":
+                                errorMessage = "Пользователя с таким идентификатором не существует. Возможно, аккаунт был удален или не создан.";
+                                break;
+                            case "auth/wrong-password":
+                                errorMessage = "Введен неправильный пароль";
+                                break;
+                            
+                        }
+                        // ...
+                        window.alert("Ошибка: " + errorMessage);
+                    })
+                
             );
         })
     }
 
-    setPersistence() {
-        return new Promise((resolve) => {
-            resolve(window.alert(firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)));
-            
-        }) 
-    }
+
 
     async logout() {
         return await firebase.auth().signOut().then(function() {
