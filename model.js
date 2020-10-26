@@ -66,8 +66,7 @@ export default class Model {
                             }
                             window.alert("Ошибка: " + errorMessage);
                     })
-
-            )       
+            );       
         })   
     }
 
