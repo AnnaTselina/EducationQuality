@@ -42,27 +42,26 @@ export default class Model {
     create_account(userEmail, userPass) { //создание аккаунта   
         return new Promise((resolve, reject) => {
             resolve(
-                firebase.auth().createUserWithEmailAndPassword(userEmail, userPass).then(function() {
-                    db.collection("Users").doc().set({
-                        "user": userEmail
-            })
-                }
-                ).catch(function(error) {
-                // Handle Errors here.
-                var errorCode = error.code;                
-                var errorMessage;
-                switch (errorCode){
-                    case "auth/weak-password":
-                        errorMessage = "Пароль должен содержать не менее 6 символов";
-                        break;
-                    case "auth/email-already-in-use":
-                        errorMessage = "Введенный email уже используется другим аккаунтом";
-                        break;
-                }
-                window.alert("Ошибка: " + errorMessage);
-            })
-
-            );
+                firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+                .then(function() {
+                    firebase.auth().createUserWithEmailAndPassword(userEmail, userPass);
+                    return  db.collection("Users").doc().set({ "user": userEmail })
+                })
+                .catch(function(error) {
+                        // Handle Errors here.
+                        var errorCode = error.code;                
+                        var errorMessage;
+                        switch (errorCode){
+                            case "auth/weak-password":
+                                errorMessage = "Пароль должен содержать не менее 6 символов";
+                                break;
+                            case "auth/email-already-in-use":
+                                errorMessage = "Введенный email уже используется другим аккаунтом";
+                                break;
+                        }
+                        window.alert("Ошибка: " + errorMessage);
+                })
+            )       
         })   
     }
         
