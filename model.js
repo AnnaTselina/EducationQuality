@@ -42,25 +42,31 @@ export default class Model {
     create_account(userEmail, userPass) { //создание аккаунта   
         return new Promise((resolve, reject) => {
             resolve(
+               
                 firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-                .then(function() {
-                    console.log(1);
-                    return firebase.auth().createUserWithEmailAndPassword(userEmail, userPass);                    
-                })
-                .catch(function(error) {
-                        // Handle Errors here.
-                        var errorCode = error.code;                
-                        var errorMessage;
-                        switch (errorCode){
-                            case "auth/weak-password":
-                                errorMessage = "Пароль должен содержать не менее 6 символов";
-                                break;
-                            case "auth/email-already-in-use":
-                                errorMessage = "Введенный email уже используется другим аккаунтом";
-                                break;
-                        }
-                        window.alert("Ошибка: " + errorMessage);
-                })
+                    .then(function() {
+                        // Existing and future Auth states are now persisted in the current
+                        // session only. Closing the window would clear any existing state even
+                        // if a user forgets to sign out.
+                        // ...
+                        // New sign-in will be persisted with session persistence.
+                        return firebase.auth().createUserWithEmailAndPassword(userEmail, userPass);
+                    })
+                    .catch(function(error) {
+                            // Handle Errors here.
+                            var errorCode = error.code;                
+                            var errorMessage;
+                            switch (errorCode){
+                                case "auth/weak-password":
+                                    errorMessage = "Пароль должен содержать не менее 6 символов";
+                                    break;
+                                case "auth/email-already-in-use":
+                                    errorMessage = "Введенный email уже используется другим аккаунтом";
+                                    break;
+                            }
+                            window.alert("Ошибка: " + errorMessage);
+                    })
+
             )       
         })   
     }
