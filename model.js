@@ -91,8 +91,10 @@ export default class Model {
 
     setPersistence() {
         return new Promise((resolve) => {
-            resolve(firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL));
-            console.log(1);
+            resolve(firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)).then(function(){
+                console.log(1);
+            });
+            
         }) 
     }
 
