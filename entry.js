@@ -1,5 +1,5 @@
 //это рабочий скрипт, где происходит компиляция всех элементов модели MVC
-window.alert(1);
+
 import Model from './model.js';
 import View from './view.js';
 import Controller from './control.js';
