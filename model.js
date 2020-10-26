@@ -71,8 +71,7 @@ export default class Model {
             resolve(firebase.auth().signInWithEmailAndPassword(userEmail, userPass).catch(function(error) {
                 // Handle Errors here.
                 var errorCode = error.code;
-                var errorMessage
-                console.log(errorCode);
+                var errorMessage                
                 switch (errorCode) {
                     case "auth/user-not-found":
                         errorMessage = "Пользователя с таким идентификатором не существует. Возможно, аккаунт был удален или не создан.";
