@@ -44,12 +44,7 @@ export default class Model {
             resolve(
                 firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
                 .then(function() {
-                    return function() {
-                        console.log(1);
-                        firebase.auth().createUserWithEmailAndPassword(userEmail, userPass).then(function() {
-                            db.collection("Users").doc().set({ "user": userEmail })
-                        })
-                    } 
+                    return firebase.auth().createUserWithEmailAndPassword(userEmail, userPass);                    
                 })
                 .catch(function(error) {
                         // Handle Errors here.
@@ -67,6 +62,10 @@ export default class Model {
                 })
             )       
         })   
+    }
+
+    addUsertousersList(userEmail) {
+        return new Promise(db.collection("Users").doc().set({ "user": userEmail })); 
     }
         
     login(userEmail, userPass) { //вход в систему

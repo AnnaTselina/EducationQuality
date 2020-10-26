@@ -63,7 +63,7 @@ export default class Controller {
             if (email.length !== 0 && password.length !== 0) { 
                 var self = this;                                      
                 self.model.create_account(email, password).then(function() {    
-                                                
+                    self.model.addUsertousersList(email);                            
                     self.checkUserState().then(result=> {
                         if (result) {
                             self.setDefaultRoute();
