@@ -42,14 +42,8 @@ export default class Model {
     create_account(userEmail, userPass) { //создание аккаунта   
         return new Promise((resolve, reject) => {
             resolve(
-               
                 firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
                     .then(function() {
-                        // Existing and future Auth states are now persisted in the current
-                        // session only. Closing the window would clear any existing state even
-                        // if a user forgets to sign out.
-                        // ...
-                        // New sign-in will be persisted with session persistence.
                         return firebase.auth().createUserWithEmailAndPassword(userEmail, userPass);
                     })
                     .catch(function(error) {
@@ -79,11 +73,6 @@ export default class Model {
             resolve(
                 firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
                     .then(function() {
-                        // Existing and future Auth states are now persisted in the current
-                        // session only. Closing the window would clear any existing state even
-                        // if a user forgets to sign out.
-                        // ...
-                        // New sign-in will be persisted with session persistence.
                         return firebase.auth().signInWithEmailAndPassword(userEmail, userPass)
                     })
                     .catch(function(error) {
@@ -347,10 +336,6 @@ export default class Model {
         
     }
 
-
-    //методы для showRatingRoute
-
-
     //методы для генерации keywords
     createKeywords(name) {
         const arrName = [];
@@ -375,6 +360,9 @@ export default class Model {
             ])
         ];
     }
+
+
+    //методы для showRatingRoute
 
     async showRatingParameters(){       
         this.view.displayShowRatingParameters(); //подгружаем поля с параметрами

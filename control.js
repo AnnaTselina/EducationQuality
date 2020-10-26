@@ -129,11 +129,6 @@ export default class Controller {
             
             counter(elements["num_courses"], 0, results[0], 1500);
             counter(elements["num_users"], 0, results[1], 1600);
-            
-
-        
-
-
     }
 
 
@@ -234,8 +229,6 @@ export default class Controller {
 
                 }
 
-                
-                
             };
         })
     }
