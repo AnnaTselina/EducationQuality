@@ -71,7 +71,9 @@ export default class Model {
     }
 
     addUsertousersList(userEmail) {
-        return new Promise(db.collection("Users").doc().set({ "user": userEmail })); 
+        return new Promise(resolve => {
+            resolve(db.collection("Users").doc().set({ "user": userEmail }));
+        }); 
     }
         
     login(userEmail, userPass) { //вход в систему
