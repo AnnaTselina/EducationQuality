@@ -45,6 +45,7 @@ export default class Model {
                 firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
                 .then(function() {
                     return function() {
+                        console.log(1);
                         firebase.auth().createUserWithEmailAndPassword(userEmail, userPass).then(function() {
                             db.collection("Users").doc().set({ "user": userEmail })
                         })
