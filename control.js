@@ -246,7 +246,9 @@ export default class Controller {
         elements["choose_uni"].addEventListener('change', function(e) {
             if (e.target.options[e.target.selectedIndex].innerHTML.length !== 0) {
                 self.model.handleChosenUniInShowRating(e.target.options[e.target.selectedIndex].innerHTML); //получаем выбранное значение в поле select 
-                elements["textBoxSearch"].disabled = false;               
+                elements["textBoxSearch"].disabled = false;  
+                self.model.searchByName(elements["textBoxSearch"].value);    
+                value = elements["textBoxSearch"].value;         
             } else {
                 elements["textBoxSearch"].disabled = true;
                 
@@ -254,6 +256,7 @@ export default class Controller {
         })
         elements["textBoxSearch"].addEventListener('keyup', async (e) => {
             this.model.clearLastShownCard(); //когда вводим новый параметр запроса чистим поле последнего документа для предыдущего запроса
+            
             await this.model.searchByName(e.target.value);
             value = e.target.value;
             
@@ -266,8 +269,7 @@ export default class Controller {
             let scrolled = window.scrollY //на сколько реально промотали
             
             if(Math.ceil(scrolled) === scrollable) { //когда мы достигаем дна
-               //при загрузке последнего документа lastShownCard ничего не содержит
-                
+               //при загрузке последнего документа lastShownCard ничего не содержит                
                 if (this.model.lastShownCard) {  
                 await this.model.searchByName(value);
                 }

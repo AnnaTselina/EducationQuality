@@ -308,11 +308,11 @@ body {
 
 .header h1 {
     color: #60606e;
-    font-size: 30px;
-    font-weight: 700;
+    font-size: 40px;
+    font-weight: 900;
     display: inline-block;
     line-height: 48px;    
-	background: url(pic/aquafon.jpg) no-repeat bottom left;
+	color: var(--turquoise);
 	
 }
 

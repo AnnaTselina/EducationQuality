@@ -359,10 +359,15 @@ export default class View {
         //создание маленькой карточки
         let card = document.createElement('div');        
         card.className +="littleCard";
-        let img = document.createElement('img');
-        img.src = "pic/teachers/" + data["photoURL"] + ".jpg";
-        img.className += 'personalPhoto';
-        card.appendChild(img);
+
+        //делаем проверку присутствия фотографии
+        
+        if (data["photoURL"].length != 0) {
+            let img = document.createElement('img');
+            img.src = "pic/teachers/" + data["photoURL"] + ".jpg";
+            img.className += 'personalPhoto';
+            card.appendChild(img);
+        }
         let otherText = '<p>'+  data['Дисциплина'] +'</p><p>'+ data['Преподаватель']+'</p><p>'+ data['Тип занятия']+ '</p><p><span>Общая оценка: </span>'+ data['Общая оценка']+'</p><p><span>Количество оценок: </span>'+ data['Количество оценивших']+'</p>'
         card.insertAdjacentHTML('beforeend', otherText);
         let button = document.createElement('button');
@@ -384,10 +389,13 @@ export default class View {
         modal.className += 'modal-bigCard';
         let modalContent = document.createElement('div');
         modalContent.className += 'bigCard';
-        let img = document.createElement('img');  
-        img.src = "pic/teachers/" + d["photoURL"] + ".jpg"
-        img.className += 'personalPhoto';
-        modalContent.appendChild(img);
+
+        if (d["photoURL"] != 0 ) {
+            let img = document.createElement('img');  
+            img.src = "pic/teachers/" + d["photoURL"] + ".jpg"
+            img.className += 'personalPhoto';
+            modalContent.appendChild(img);
+        }
         let otherText = '<table><tr><td><span>Дисциплина: </span></td><td>'+ d['Дисциплина'] +'</td></tr><tr><td><span>Преподаватель: </span></td><td>'+ d['Преподаватель'] +'</td></tr><tr><td><span>Тип занятия: </span></td><td>'+ d['Тип занятия'] +'</td></tr><tr><td><span>Общая оценка: </span></td><td>' + d['Общая оценка']+ '</td></tr><tr><td><span>Количество оценивших: </span></td><td>'+d['Количество оценивших']+'</td></tr></table>';
         modalContent.insertAdjacentHTML('beforeend', otherText);
         let criteriaHeading = document.createElement('p');
