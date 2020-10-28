@@ -457,6 +457,7 @@ export default class View {
     }
     
     clearLittleCardsBox() {
+        
         this.showRatingElements['littleCardsBox'].innerHTML = ' '; //очищает блок 
     }
 

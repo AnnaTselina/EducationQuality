@@ -251,6 +251,7 @@ export default class Controller {
                 value = elements["textBoxSearch"].value;         
             } else {
                 elements["textBoxSearch"].disabled = true;
+                self.model.handleChosenUniInShowRating(null);
                 
             }      
         })

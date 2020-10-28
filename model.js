@@ -370,7 +370,8 @@ export default class Model {
 
     //записываем выбранный университет
     handleChosenUniInShowRating(uni) {
-        this.uniToSearchIn = uni;
+        this.uniToSearchIn = uni;    
+        this.lastShownCard = null;   
         this.view.clearLittleCardsBox();
     }
 

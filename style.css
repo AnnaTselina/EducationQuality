@@ -731,7 +731,9 @@ body {
 	/*max-width: 758px;*/
 	overflow: hidden;
     margin-top: 30px; 
-    width: 270px;
+	width: 270px;
+	position: relative;
+	height: 250px;
 }
 
 .littleCard .personalPhoto {
@@ -743,7 +745,8 @@ body {
 
 .littleCard p {
 	margin-bottom: 7px;  
-	font-size: 14px;   
+	font-size: 14px;  
+	
 }
 
 .littleCard span {
@@ -763,7 +766,11 @@ body {
 	padding: 10px 20px;
 	text-transform: uppercase;
     transition: transform 80ms ease-in; 
-    margin: 0 auto;
+	margin: 0 auto;
+	
+	position: absolute;
+    bottom: 20px;
+    left: 25%;
 }
 
 .littleCard button:active {
