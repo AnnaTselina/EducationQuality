@@ -4,6 +4,8 @@ export default class Controller {
         this.view = view;  
         
         this.rateRouteState = "parameters_choice"; //состояние окна Rate по умолчанию
+        this.textBoxValue = null;
+        this.callLazyLoading = this.lazyLoading.bind(this);
         this.changeRateRouteState = function (state) {
             this.rateRouteState = state;
         }
@@ -103,7 +105,8 @@ export default class Controller {
     }
 
     async infoRouteController() {
-        
+        //Убираем обработчик скроллинга
+        window.removeEventListener("scroll", this.callLazyLoading);
         let elements = this.view.infoRouteElements;        
 
         //получаем общее количество оцененных сущностей
@@ -157,8 +160,14 @@ export default class Controller {
         }        
     }
 
-    rateRouteEventController() {        
+    rateRouteEventController() { 
+        
         var self = this;
+        //Убираем обработчик скроллинга
+        window.removeEventListener("scroll", self.callLazyLoading);
+
+
+        
         //вешаем на управляющие элементы обработчики событий
         let elements = Object.entries(self.view.rateRouteElements);        
         for (var i=0; i< elements.length; i++) {
@@ -241,14 +250,14 @@ export default class Controller {
     showRatingEventController(){
         var self = this;
         let elements = this.view.showRatingElements;
-        let value;
+        
         
         elements["choose_uni"].addEventListener('change', function(e) {
             if (e.target.options[e.target.selectedIndex].innerHTML.length !== 0) {
                 self.model.handleChosenUniInShowRating(e.target.options[e.target.selectedIndex].innerHTML); //получаем выбранное значение в поле select 
                 elements["textBoxSearch"].disabled = false;  
                 self.model.searchByName(elements["textBoxSearch"].value);    
-                value = elements["textBoxSearch"].value;         
+                self.textBoxValue = elements["textBoxSearch"].value;         
             } else {
                 elements["textBoxSearch"].disabled = true;
                 self.model.handleChosenUniInShowRating(null);
@@ -259,24 +268,33 @@ export default class Controller {
             this.model.clearLastShownCard(); //когда вводим новый параметр запроса чистим поле последнего документа для предыдущего запроса
             
             await this.model.searchByName(e.target.value);
-            value = e.target.value;
+            self.textBoxValue = e.target.value;
             
         });
 
-
+        
         //для имплементации lazyLoading (infinite scroll) необходимо знать когда полоса прокурутки находится внизу экрана
-        window.addEventListener("scroll", async (e) => {
-            let scrollable = document.documentElement.scrollHeight - window.innerHeight; //на сколько вообще можно промотать
-            let scrolled = window.scrollY //на сколько реально промотали
-            
-            if(Math.ceil(scrolled) === scrollable) { //когда мы достигаем дна
-               //при загрузке последнего документа lastShownCard ничего не содержит                
-                if (this.model.lastShownCard) {  
-                await this.model.searchByName(value);
-                }
-            }
-        });
+        window.addEventListener("scroll", self.callLazyLoading);
     }
+
+    lazyLoading() {
+        const self = this;
+        console.log(self);
+        let scrollable = document.documentElement.scrollHeight - window.innerHeight; //на сколько вообще можно промотать
+        let scrolled = window.scrollY //на сколько реально промотали
+        
+
+        if(Math.ceil(scrolled) === scrollable) { //когда мы достигаем дна
+            console.log(1);
+           //при загрузке последнего документа lastShownCard ничего не содержит    
+            if (self.model.lastShownCard) {  
+            self.model.searchByName(self.textBoxValue);
+            
+            }
+        }
+    }
+
+    
 
 }
 
